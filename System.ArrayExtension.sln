@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.ArrayExtension.Accelerated", "System.ArrayExtension.Accelerated\System.ArrayExtension.Accelerated.csproj", "{AED1CD43-2F8C-4794-B907-CBC9745C0A5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayExt.Accel.Testing", "ArrayExt.Accel.Testing\ArrayExt.Accel.Testing.csproj", "{15110510-AD77-4092-8471-CF2370B3CE4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AED1CD43-2F8C-4794-B907-CBC9745C0A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED1CD43-2F8C-4794-B907-CBC9745C0A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED1CD43-2F8C-4794-B907-CBC9745C0A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED1CD43-2F8C-4794-B907-CBC9745C0A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15110510-AD77-4092-8471-CF2370B3CE4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15110510-AD77-4092-8471-CF2370B3CE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15110510-AD77-4092-8471-CF2370B3CE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15110510-AD77-4092-8471-CF2370B3CE4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
