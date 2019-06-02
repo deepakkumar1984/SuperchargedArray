@@ -18,16 +18,21 @@ namespace System.ArrayExtension.Accelerated
 
         private static ComputeContext context = null;
 
-
-        public static Dictionary<int, string> Devices
+        public static List<Device> Devices
         {
             get
             {
-                Dictionary<int, string> result = new Dictionary<int, string>();
+                List<Device> result = new List<Device>();
 
                 for (int i = 0; i < devices.Count; i++)
                 {
-                    result.Add(i, devices[i].Name);
+                    result.Add(new Device()
+                    {
+                        ID = i,
+                        Name = devices[i].Name,
+                        Type = (DeviceType)devices[i].Type,
+                        Vendor = devices[i].Vendor
+                    });
                 }
 
                 return result;
@@ -68,7 +73,10 @@ namespace System.ArrayExtension.Accelerated
             compiledKernels = new List<ComputeKernel>();
             
             CreateKernels(CLCode.ArithmeticKernel);
-            //CreateKernels(CLCode.TrignometryKernel);
+            CreateKernels(CLCode.TrignometryKernel);
+            CreateKernels(CLCode.General);
+            CreateKernels(CLCode.LogExpPow);
+            CreateKernels(CLCode.Rounding);
         }
 
         public static void CustomKernel(string code)

@@ -16,7 +16,7 @@ __kernel void ndarr_mul(global read_only float *a, global read_only float *b, gl
 {
 	const int i = get_global_id(0);
 
-	r[i] = a[i] * b[i];,
+	r[i] = a[i] * b[i];
 }
 
 __kernel void ndarr_div(global read_only float *a, global read_only float *b, global write_only float *r)
@@ -59,3 +59,4 @@ __kernel void ndarr_abs(global read_only float *x, global write_only float *r)
 
 	r[i] = fabs(x[i]);
 }
+

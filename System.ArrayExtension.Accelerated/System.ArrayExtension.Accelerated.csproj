@@ -14,12 +14,15 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-      <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;OSX</DefineConstants>
+      <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;WIN</DefineConstants>
       <DocumentationFile></DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
       <None Remove="Kernels\ArithmeticKernel.c" />
+      <None Remove="Kernels\General.c" />
+      <None Remove="Kernels\LogExpPow.c" />
+      <None Remove="Kernels\Rounding.c" />
     </ItemGroup>
     <ItemGroup>
       <None Update="System.ArrayExtension.Accelerated.dll.config">
@@ -40,7 +43,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Resource Include="Kernels\ArithmeticKernel.c" />
+      <EmbeddedResource Include="Kernels\Rounding.c" />
+      <EmbeddedResource Include="Kernels\LogExpPow.c" />
+      <EmbeddedResource Include="Kernels\General.c" />
+      <EmbeddedResource Include="Kernels\ArithmeticKernel.c" />
       <EmbeddedResource Include="Kernels\TrignometryKernel.c" />
     </ItemGroup>
     <ItemGroup>

@@ -121,6 +121,15 @@
   <data name="ArithmeticKernel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ArithmeticKernel.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="General" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>General.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="LogExpPow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LogExpPow.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Rounding" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Rounding.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="TrignometryKernel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>TrignometryKernel.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
