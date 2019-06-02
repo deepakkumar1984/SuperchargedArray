@@ -9,12 +9,20 @@ namespace ArrayExt.Accel.Testing
     {
         static void Main(string[] args)
         {
-            Accelerator.Init(1);
-            var devices = Accelerator.Devices;
-            foreach (var item in Accelerator.Kernels)
+            try
             {
+                Accelerator.Init(1);
+                var devices = Accelerator.Devices;
+                foreach (var item in Accelerator.Kernels)
+                {
                     Console.WriteLine(item);
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
 
             Console.ReadLine();
 
