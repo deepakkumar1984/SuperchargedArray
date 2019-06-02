@@ -117,20 +117,304 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ArithmeticKernel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>ArithmeticKernel.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="Arithmetic" xml:space="preserve">
+    <value>__kernel void ndarr_add(global read_only float *a, global read_only float *b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] + b[i];
+}
+
+__kernel void ndarr_sub(global read_only float *a, global read_only float *b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] - b[i];
+}
+
+__kernel void ndarr_mul(global read_only float *a, global read_only float *b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] * b[i];
+}
+
+__kernel void ndarr_div(global read_only float *a, global read_only float *b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] / b[i];
+}
+
+__kernel void ndarr_mod(global read_only float *a, float b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = fmod(a[i], b);
+}
+
+__kernel void ndarr_neg(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = -x[i];
+}
+
+
+__kernel void ndarr_sign(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	if (x[i] &gt; 0)
+		r[i] = 1;
+	else if (x[i] &lt; 0)
+		r[i] = -1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_abs(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = fabs(x[i]);
+}</value>
   </data>
-  <data name="General" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>General.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="General" xml:space="preserve">
+    <value>__kernel void ndarr_fill(global float *x, float value)
+{
+	const int i = get_global_id(0);
+
+	x[i] = value;
+}
+
+__kernel void ndarr_gt(global read_only float *a, global read_only float *b, global read_only float *r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &gt; b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_ge(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &gt;= b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_lt(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &lt; b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_le(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &lt;= b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_eq(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] == b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_ne(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] != b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}</value>
   </data>
-  <data name="LogExpPow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>LogExpPow.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="LogExpPow" xml:space="preserve">
+    <value>__kernel void ndarr_exp(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = exp(x[i]);
+}
+
+__kernel void ndarr_log(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log(x[i]);
+}
+
+__kernel void ndarr_log1p(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log1p(x[i]);
+}
+
+__kernel void ndarr_log10(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log10(x[i]);
+}
+
+__kernel void ndarr_sqrt(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sqrt(x[i]);
+}
+
+__kernel void ndarr_pow(global read_only float* x, float value, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(x[i], value);
+}
+
+__kernel void ndarr_tpow(float value, global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(value, x[i]);
+}
+
+__kernel void ndarr_square(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(x[i], 2);
+}</value>
   </data>
-  <data name="Rounding" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Rounding.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="Rounding" xml:space="preserve">
+    <value>__kernel void ndarr_floor(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = floor(x[i]);
+}
+
+__kernel void ndarr_ceil(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = ceil(x[i]);
+}
+
+__kernel void ndarr_round(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = round(x[i]);
+}
+
+__kernel void ndarr_trunc(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = trunc(x[i]);
+}
+
+__kernel void ndarr_clip(global read_only float* x, float min, float max, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (x[i] &gt; min &amp;&amp; x[i] &lt; max)
+		r[i] = x[i];
+	else if (x[i] &gt;= max)
+		r[i] = max;
+	else if (x[i] &lt;= min)
+		r[i] = min;
+}</value>
   </data>
-  <data name="TrignometryKernel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>TrignometryKernel.c;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="Trignometry" xml:space="preserve">
+    <value>__kernel void ndarr_sin(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sin(x[i]);
+}
+
+__kernel void ndarr_cos(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = cos(x[i]);
+}
+
+__kernel void ndarr_tan(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = tan(x[i]);
+}
+
+__kernel void ndarr_arcsin(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = asin(x[i]);
+}
+
+__kernel void ndarr_arccos(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = acos(x[i]);
+}
+
+__kernel void ndarr_arctan(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = atan(x[i]);
+}
+
+__kernel void ndarr_sinh(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sinh(x[i]);
+}
+
+__kernel void ndarr_cosh(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = cosh(x[i]);
+}
+
+__kernel void ndarr_tanh(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = tanh(x[i]);
+}
+
+__kernel void ndarr_arctan2(global read_only float *y, global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = atan2(y[i], x[i]);
+}</value>
   </data>
 </root>

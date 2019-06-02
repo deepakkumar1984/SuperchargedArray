@@ -22,7 +22,7 @@ namespace System.ArrayExtension.Accelerated.Kernels {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CLCode {
+    public class CLCode {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace System.ArrayExtension.Accelerated.Kernels {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("System.ArrayExtension.Accelerated.Kernels.CLCode", typeof(CLCode).Assembly);
@@ -51,7 +51,7 @@ namespace System.ArrayExtension.Accelerated.Kernels {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -81,9 +81,9 @@ namespace System.ArrayExtension.Accelerated.Kernels {
         ///
         ///	r[i] = a[i] * b[i]; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ArithmeticKernel {
+        public static string Arithmetic {
             get {
-                return ResourceManager.GetString("ArithmeticKernel", resourceCulture);
+                return ResourceManager.GetString("Arithmetic", resourceCulture);
             }
         }
         
@@ -114,7 +114,7 @@ namespace System.ArrayExtension.Accelerated.Kernels {
         ///	else
         ///		r[i] = 0; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string General {
+        public static string General {
             get {
                 return ResourceManager.GetString("General", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace System.ArrayExtension.Accelerated.Kernels {
         ///
         ///__kernel void ndarr_log10(global read_only float* x, global write_only float [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string LogExpPow {
+        public static string LogExpPow {
             get {
                 return ResourceManager.GetString("LogExpPow", resourceCulture);
             }
@@ -174,7 +174,7 @@ namespace System.ArrayExtension.Accelerated.Kernels {
         ///
         ///__kernel void ndarr_trunc(global read_only float* x, global write_only [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Rounding {
+        public static string Rounding {
             get {
                 return ResourceManager.GetString("Rounding", resourceCulture);
             }
@@ -204,9 +204,9 @@ namespace System.ArrayExtension.Accelerated.Kernels {
         ///
         ///__kernel void ndarr_arcsin(global read_only float *x, global write_only float *r [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string TrignometryKernel {
+        public static string Trignometry {
             get {
-                return ResourceManager.GetString("TrignometryKernel", resourceCulture);
+                return ResourceManager.GetString("Trignometry", resourceCulture);
             }
         }
     }

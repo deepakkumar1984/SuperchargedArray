@@ -72,8 +72,8 @@ namespace System.ArrayExtension.Accelerated
         {
             compiledKernels = new List<ComputeKernel>();
             
-            CreateKernels(CLCode.ArithmeticKernel);
-            CreateKernels(CLCode.TrignometryKernel);
+            CreateKernels(CLCode.Arithmetic);
+            CreateKernels(CLCode.Trignometry);
             CreateKernels(CLCode.General);
             CreateKernels(CLCode.LogExpPow);
             CreateKernels(CLCode.Rounding);
