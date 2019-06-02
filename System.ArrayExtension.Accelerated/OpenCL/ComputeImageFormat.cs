@@ -40,7 +40,7 @@ namespace System.ArrayExtension.Accelerated.OpenCL
     /// <remarks> This structure defines the type, count and size of the image channels. </remarks>
     /// <seealso cref="ComputeImage"/>
     [StructLayout(LayoutKind.Sequential)]
-    public struct ComputeImageFormat
+    internal struct ComputeImageFormat
     {
         #region Fields
 

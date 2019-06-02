@@ -3,3 +3,9 @@
 ################################################################################
 
 /.vs/OpenCL.Tensor/v15
+/.vs/System.ArrayExtension/v16
+/ArrayExt.Accel.Testing/bin/Debug/netcoreapp2.2
+/ArrayExt.Accel.Testing/obj
+/System.ArrayExtension.Accelerated/bin/Debug/netstandard2.0
+/System.ArrayExtension.Accelerated/obj/Debug/netstandard2.0
+/System.ArrayExtension.Accelerated/obj

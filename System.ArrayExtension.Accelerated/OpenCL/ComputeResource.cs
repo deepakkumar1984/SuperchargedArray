@@ -39,7 +39,7 @@ namespace System.ArrayExtension.Accelerated.OpenCL
     /// </summary>
     /// <remarks> An OpenCL resource is an OpenCL object that can be created and deleted by the application. </remarks>
     /// <seealso cref="ComputeObject"/>
-    public abstract class ComputeResource : ComputeObject, IDisposable
+    internal abstract class ComputeResource : ComputeObject, IDisposable
     {
         #region Public methods
 

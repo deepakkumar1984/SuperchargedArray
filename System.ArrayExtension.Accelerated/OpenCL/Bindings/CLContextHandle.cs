@@ -37,7 +37,7 @@ namespace System.ArrayExtension.Accelerated.OpenCL.Bindings
     /// <summary>
     /// Represents the <see cref="ComputeContext"/> ID.
     /// </summary>
-    public struct CLContextHandle
+    internal struct CLContextHandle
     {
         internal CLContextHandle(IntPtr value)
         {

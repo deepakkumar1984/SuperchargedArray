@@ -37,7 +37,7 @@ namespace System.ArrayExtension.Accelerated.OpenCL.Bindings
     /// <summary>
     /// Represents the <see cref="ComputeEvent"/> ID.
     /// </summary>
-    public struct CLEventHandle
+    internal struct CLEventHandle
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IntPtr _value;

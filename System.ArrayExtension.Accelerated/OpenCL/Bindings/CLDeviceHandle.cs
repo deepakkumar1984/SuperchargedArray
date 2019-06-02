@@ -37,7 +37,7 @@ namespace System.ArrayExtension.Accelerated.OpenCL.Bindings
     /// <summary>
     /// Represents the <see cref="ComputeDevice"/> ID.
     /// </summary>
-    public struct CLDeviceHandle
+    internal struct CLDeviceHandle
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IntPtr _value;

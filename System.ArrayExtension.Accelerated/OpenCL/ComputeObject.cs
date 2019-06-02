@@ -40,7 +40,7 @@ namespace System.ArrayExtension.Accelerated.OpenCL
     /// Represents an OpenCL object.
     /// </summary>
     /// <remarks> An OpenCL object is an object that is identified by its handle in the OpenCL environment. </remarks>
-    public abstract class ComputeObject : IEquatable<ComputeObject>
+    internal abstract class ComputeObject : IEquatable<ComputeObject>
     {
         #region Fields
 

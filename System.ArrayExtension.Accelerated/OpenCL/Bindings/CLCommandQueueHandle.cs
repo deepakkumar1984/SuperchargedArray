@@ -37,7 +37,7 @@ namespace System.ArrayExtension.Accelerated.OpenCL.Bindings
     /// <summary>
     /// Represents the <see cref="ComputeCommandQueue"/> ID.
     /// </summary>
-    public struct CLCommandQueueHandle
+    internal struct CLCommandQueueHandle
     {
         internal CLCommandQueueHandle(IntPtr externalValue)
         {

@@ -14,17 +14,33 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-      <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;OSX</DefineConstants>
+      <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;WIN</DefineConstants>
       <DocumentationFile></DocumentationFile>
     </PropertyGroup>
-    <ItemGroup>
-      <Folder Include="Kernels" />
-    </ItemGroup>
 
     <ItemGroup>
       <None Update="System.ArrayExtension.Accelerated.dll.config">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Properties\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Kernels\CLCode.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>CLCode.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Kernels\CLCode.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>CLCode.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>
