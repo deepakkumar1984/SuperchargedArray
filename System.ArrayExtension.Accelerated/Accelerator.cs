@@ -14,7 +14,7 @@ namespace System.ArrayExtension.Accelerated
 
         internal static ComputePlatform DefaultPlatorm = null;
 
-        internal static List<ComputeKernel> Kernels = null;
+        internal static List<ComputeKernel> compiledKernels = null;
 
         private static ComputeContext context = null;
 
@@ -32,6 +32,11 @@ namespace System.ArrayExtension.Accelerated
 
                 return result;
             }
+        }
+
+        public static List<string> Kernels
+        {
+            get { return compiledKernels.Select(x => x.FunctionName).ToList(); }
         }
 
         public static void Init(int id = 0)
@@ -60,10 +65,17 @@ namespace System.ArrayExtension.Accelerated
 
         public static void LoadKernels()
         {
-            Kernels = new List<ComputeKernel>();
+            compiledKernels = new List<ComputeKernel>();
+            
             CreateKernels(CLCode.ArithmeticKernel);
+            //CreateKernels(CLCode.TrignometryKernel);
         }
 
+        public static void CustomKernel(string code)
+        {
+            CreateKernels(code);
+        }
+        
         private static void CreateKernels(string code)
         {
             try
@@ -71,7 +83,7 @@ namespace System.ArrayExtension.Accelerated
                 var program = new ComputeProgram(context, code);
                 
                 program.Build(null, null, null, IntPtr.Zero);
-                Kernels.AddRange(program.CreateAllKernels());
+                compiledKernels.AddRange(program.CreateAllKernels());
             }
             catch(Exception ex)
             {
