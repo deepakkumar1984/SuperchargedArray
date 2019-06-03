@@ -3,3 +3,8 @@
 ################################################################################
 
 /.vs/OpenCL.Tensor/v15
+/Examples/OpenCL.Tensor.Testing/bin/Debug/netcoreapp2.2
+/Examples/OpenCL.Tensor.Testing/obj
+/OpenCL.Tensor/.vs/OpenCL.Tensor/v16
+/OpenCL.Tensor/bin/Debug/netstandard2.0
+/OpenCL.Tensor/obj
