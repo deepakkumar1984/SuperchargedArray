@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Arithmetic" xml:space="preserve">
+    <value>__kernel void ndarr_add(global read_only float *a, global read_only float *b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] + b[i];
+}
+
+__kernel void ndarr_sub(global read_only float *a, global read_only float *b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] - b[i];
+}
+
+__kernel void ndarr_mul(global read_only float *a, global read_only float *b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] * b[i];
+}
+
+__kernel void ndarr_div(global read_only float *a, global read_only float *b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] / b[i];
+}
+
+__kernel void ndarr_mod(global read_only float *a, float b, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = fmod(a[i], b);
+}
+
+__kernel void ndarr_neg(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = -x[i];
+}
+
+
+__kernel void ndarr_sign(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	if (x[i] &gt; 0)
+		r[i] = 1;
+	else if (x[i] &lt; 0)
+		r[i] = -1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_abs(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = fabs(x[i]);
+}</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>__kernel void ndarr_fill(global float *x, float value)
+{
+	const int i = get_global_id(0);
+
+	x[i] = value;
+}
+
+__kernel void ndarr_gt(global read_only float *a, global read_only float *b, global read_only float *r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &gt; b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_ge(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &gt;= b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_lt(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &lt; b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_le(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &lt;= b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_eq(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] == b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_ne(global read_only float* a, global read_only float* b, global read_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] != b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}</value>
+  </data>
+  <data name="LogExpPow" xml:space="preserve">
+    <value>__kernel void ndarr_exp(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = exp(x[i]);
+}
+
+__kernel void ndarr_log(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log(x[i]);
+}
+
+__kernel void ndarr_log1p(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log1p(x[i]);
+}
+
+__kernel void ndarr_log10(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log10(x[i]);
+}
+
+__kernel void ndarr_sqrt(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sqrt(x[i]);
+}
+
+__kernel void ndarr_pow(global read_only float* x, float value, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(x[i], value);
+}
+
+__kernel void ndarr_tpow(float value, global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(value, x[i]);
+}
+
+__kernel void ndarr_square(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(x[i], 2);
+}</value>
+  </data>
+  <data name="Rounding" xml:space="preserve">
+    <value>__kernel void ndarr_floor(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = floor(x[i]);
+}
+
+__kernel void ndarr_ceil(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = ceil(x[i]);
+}
+
+__kernel void ndarr_round(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = round(x[i]);
+}
+
+__kernel void ndarr_trunc(global read_only float* x, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = trunc(x[i]);
+}
+
+__kernel void ndarr_clip(global read_only float* x, float min, float max, global write_only float* r)
+{
+	const int i = get_global_id(0);
+
+	if (x[i] &gt; min &amp;&amp; x[i] &lt; max)
+		r[i] = x[i];
+	else if (x[i] &gt;= max)
+		r[i] = max;
+	else if (x[i] &lt;= min)
+		r[i] = min;
+}</value>
+  </data>
+  <data name="Trignometry" xml:space="preserve">
+    <value>__kernel void ndarr_sin(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sin(x[i]);
+}
+
+__kernel void ndarr_cos(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = cos(x[i]);
+}
+
+__kernel void ndarr_tan(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = tan(x[i]);
+}
+
+__kernel void ndarr_arcsin(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = asin(x[i]);
+}
+
+__kernel void ndarr_arccos(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = acos(x[i]);
+}
+
+__kernel void ndarr_arctan(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = atan(x[i]);
+}
+
+__kernel void ndarr_sinh(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sinh(x[i]);
+}
+
+__kernel void ndarr_cosh(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = cosh(x[i]);
+}
+
+__kernel void ndarr_tanh(global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = tanh(x[i]);
+}
+
+__kernel void ndarr_arctan2(global read_only float *y, global read_only float *x, global write_only float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = atan2(y[i], x[i]);
+}</value>
+  </data>
+</root>

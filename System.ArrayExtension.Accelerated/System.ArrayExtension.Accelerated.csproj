@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;OSX;DEBUG;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+      <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;OSX</DefineConstants>
+      <DocumentationFile></DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Kernels\ArithmeticKernel.c" />
+      <None Remove="Kernels\General.c" />
+      <None Remove="Kernels\LogExpPow.c" />
+      <None Remove="Kernels\Rounding.c" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Update="System.ArrayExtension.Accelerated.dll.config">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Properties\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Kernels\CLCode.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>CLCode.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Kernels\Rounding.c" />
+      <EmbeddedResource Include="Kernels\LogExpPow.c" />
+      <EmbeddedResource Include="Kernels\General.c" />
+      <EmbeddedResource Include="Kernels\ArithmeticKernel.c" />
+      <EmbeddedResource Include="Kernels\TrignometryKernel.c" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Kernels\CLCode.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>CLCode.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>

@@ -8,3 +8,9 @@
 /OpenCL.Tensor/.vs/OpenCL.Tensor/v16
 /OpenCL.Tensor/bin/Debug/netstandard2.0
 /OpenCL.Tensor/obj
+/.vs/System.ArrayExtension/v16
+/ArrayExt.Accel.Testing/bin/Debug/netcoreapp2.2
+/ArrayExt.Accel.Testing/obj
+/System.ArrayExtension.Accelerated/bin/Debug/netstandard2.0
+/System.ArrayExtension.Accelerated/obj/Debug/netstandard2.0
+/System.ArrayExtension.Accelerated/obj
