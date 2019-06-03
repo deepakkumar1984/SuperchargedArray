@@ -122,7 +122,11 @@ namespace System.ArrayExtension
         public void CopyToStorage(long storageIndex, IntPtr src, long byteCount)
         {
             var dstPtr = PtrAtElement(storageIndex);
-            MemoryCopier.Copy(dstPtr, src, (ulong)byteCount);
+            
+            unsafe
+            {
+                Buffer.MemoryCopy(src.ToPointer(), dstPtr.ToPointer(), byteCount, byteCount);
+            }
         }
 
         /// <summary>
@@ -134,7 +138,10 @@ namespace System.ArrayExtension
         public void CopyFromStorage(IntPtr dst, long storageIndex, long byteCount)
         {
             var srcPtr = PtrAtElement(storageIndex);
-            MemoryCopier.Copy(dst, srcPtr, (ulong)byteCount);
+            unsafe
+            {
+                Buffer.MemoryCopy(srcPtr.ToPointer(), dst.ToPointer(), byteCount, byteCount);
+            }
         }
     }
 }
