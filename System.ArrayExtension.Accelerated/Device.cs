@@ -20,5 +20,10 @@ namespace System.ArrayExtension.Accelerated
         public string Vendor { get; set; }
 
         public DeviceType Type { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}: {2}-> {1}", ID, Name, Type);
+        }
     }
 }

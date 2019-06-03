@@ -14,3 +14,8 @@
 /System.ArrayExtension.Accelerated/bin/Debug/netstandard2.0
 /System.ArrayExtension.Accelerated/obj/Debug/netstandard2.0
 /System.ArrayExtension.Accelerated/obj
+/.vs/System.ArrayExtension/v15
+/Examples/ArrayExt.Accel.Testing/bin/Debug/netcoreapp2.2
+/Examples/ArrayExt.Accel.Testing/obj
+/System.ArrayExtension/bin/Debug/netstandard2.0
+/System.ArrayExtension/obj

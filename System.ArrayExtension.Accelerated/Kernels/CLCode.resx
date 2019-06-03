@@ -118,50 +118,91 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Arithmetic" xml:space="preserve">
-    <value>__kernel void ndarr_add(global read_only float *a, global read_only float *b, global write_only float *r)
+    <value>__kernel void ndarr_add_float(global float *a, global float *b, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = a[i] + b[i];
 }
 
-__kernel void ndarr_sub(global read_only float *a, global read_only float *b, global write_only float *r)
+__kernel void ndarr_add_double(global double *a, global double *b, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] + b[i];
+}
+
+__kernel void ndarr_sub_float(global float *a, global float *b, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = a[i] - b[i];
 }
 
-__kernel void ndarr_mul(global read_only float *a, global read_only float *b, global write_only float *r)
+__kernel void ndarr_sub_double(global double *a, global double *b, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] - b[i];
+}
+
+__kernel void ndarr_mul_float(global float *a, global float *b, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = a[i] * b[i];
 }
 
-__kernel void ndarr_div(global read_only float *a, global read_only float *b, global write_only float *r)
+__kernel void ndarr_mul_double(global double *a, global double *b, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = a[i] * b[i];
+}
+
+__kernel void ndarr_div_float(global float *a, global float *b, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = a[i] / b[i];
 }
 
-__kernel void ndarr_mod(global read_only float *a, float b, global write_only float *r)
+__kernel void ndarr_div_double(global double *a, global double *b, global double *r)
 {
 	const int i = get_global_id(0);
 
-	r[i] = fmod(a[i], b);
+	r[i] = a[i] / b[i];
 }
 
-__kernel void ndarr_neg(global read_only float *x, global write_only float *r)
+__kernel void ndarr_mod_float(global float *a, global float *b, global float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = fmod(a[i], b[i]);
+}
+
+__kernel void ndarr_mod_double(global double *a, global double *b, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = fmod(a[i], b[i]);
+}
+
+__kernel void ndarr_neg_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = -x[i];
 }
 
+__kernel void ndarr_neg_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
 
-__kernel void ndarr_sign(global read_only float *x, global write_only float *r)
+	r[i] = -x[i];
+}
+
+__kernel void ndarr_sign_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
@@ -173,7 +214,26 @@ __kernel void ndarr_sign(global read_only float *x, global write_only float *r)
 		r[i] = 0;
 }
 
-__kernel void ndarr_abs(global read_only float *x, global write_only float *r)
+__kernel void ndarr_sign_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	if (x[i] &gt; 0)
+		r[i] = 1;
+	else if (x[i] &lt; 0)
+		r[i] = -1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_abs_float(global float *x, global float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = fabs(x[i]);
+}
+
+__kernel void ndarr_abs_double(global double *x, global double *r)
 {
 	const int i = get_global_id(0);
 
@@ -181,14 +241,14 @@ __kernel void ndarr_abs(global read_only float *x, global write_only float *r)
 }</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>__kernel void ndarr_fill(global float *x, float value)
+    <value>__kernel void ndarr_fill_float(global float *x, float value)
 {
 	const int i = get_global_id(0);
 
 	x[i] = value;
 }
 
-__kernel void ndarr_gt(global read_only float *a, global read_only float *b, global read_only float *r)
+__kernel void ndarr_gt_float(global float *a, global float *b, global float *r)
 {
 	const int i = get_global_id(0);
 
@@ -198,7 +258,7 @@ __kernel void ndarr_gt(global read_only float *a, global read_only float *b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_ge(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_ge_float(global float* a, global float* b, global float* r)
 {
 	const int i = get_global_id(0);
 
@@ -208,7 +268,7 @@ __kernel void ndarr_ge(global read_only float* a, global read_only float* b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_lt(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_lt_float(global float* a, global float* b, global float* r)
 {
 	const int i = get_global_id(0);
 
@@ -218,7 +278,7 @@ __kernel void ndarr_lt(global read_only float* a, global read_only float* b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_le(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_le_float(global float* a, global float* b, global float* r)
 {
 	const int i = get_global_id(0);
 
@@ -228,7 +288,7 @@ __kernel void ndarr_le(global read_only float* a, global read_only float* b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_eq(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_eq_float(global float* a, global float* b, global float* r)
 {
 	const int i = get_global_id(0);
 
@@ -238,7 +298,74 @@ __kernel void ndarr_eq(global read_only float* a, global read_only float* b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_ne(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_ne_float(global float* a, global float* b, global float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] != b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_fill_double(global double *x, double value, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = value;
+}
+
+__kernel void ndarr_gt_double(global double *a, global double *b, global double *r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &gt; b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_ge_double(global double* a, global double* b, global double* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &gt;= b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_lt_double(global double* a, global double* b, global double* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &lt; b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_le_double(global double* a, global double* b, global double* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] &lt;= b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_eq_double(global double* a, global double* b, global double* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] == b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_ne_double(global double* a, global double* b, global double* r)
 {
 	const int i = get_global_id(0);
 
@@ -249,56 +376,112 @@ __kernel void ndarr_ne(global read_only float* a, global read_only float* b, glo
 }</value>
   </data>
   <data name="LogExpPow" xml:space="preserve">
-    <value>__kernel void ndarr_exp(global read_only float* x, global write_only float* r)
+    <value>__kernel void ndarr_exp_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = exp(x[i]);
 }
 
-__kernel void ndarr_log(global read_only float* x, global write_only float* r)
+__kernel void ndarr_log_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = log(x[i]);
 }
 
-__kernel void ndarr_log1p(global read_only float* x, global write_only float* r)
+__kernel void ndarr_log1p_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = log1p(x[i]);
 }
 
-__kernel void ndarr_log10(global read_only float* x, global write_only float* r)
+__kernel void ndarr_log10_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = log10(x[i]);
 }
 
-__kernel void ndarr_sqrt(global read_only float* x, global write_only float* r)
+__kernel void ndarr_sqrt_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = sqrt(x[i]);
 }
 
-__kernel void ndarr_pow(global read_only float* x, float value, global write_only float* r)
+__kernel void ndarr_pow_float(global float* x, float value, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = pow(x[i], value);
 }
 
-__kernel void ndarr_tpow(float value, global read_only float* x, global write_only float* r)
+__kernel void ndarr_tpow_float(float value, global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = pow(value, x[i]);
 }
 
-__kernel void ndarr_square(global read_only float* x, global write_only float* r)
+__kernel void ndarr_square_float(global float* x, global float* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(x[i], 2);
+}
+
+__kernel void ndarr_exp_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = exp(x[i]);
+}
+
+__kernel void ndarr_log_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log(x[i]);
+}
+
+__kernel void ndarr_log1p_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log1p(x[i]);
+}
+
+__kernel void ndarr_log10_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = log10(x[i]);
+}
+
+__kernel void ndarr_sqrt_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sqrt(x[i]);
+}
+
+__kernel void ndarr_pow_double(global double* x, double value, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(x[i], value);
+}
+
+__kernel void ndarr_tpow_double(double value, global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = pow(value, x[i]);
+}
+
+__kernel void ndarr_square_double(global double* x, global double* r)
 {
 	const int i = get_global_id(0);
 
@@ -306,35 +489,75 @@ __kernel void ndarr_square(global read_only float* x, global write_only float* r
 }</value>
   </data>
   <data name="Rounding" xml:space="preserve">
-    <value>__kernel void ndarr_floor(global read_only float* x, global write_only float* r)
+    <value>__kernel void ndarr_floor_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = floor(x[i]);
 }
 
-__kernel void ndarr_ceil(global read_only float* x, global write_only float* r)
+__kernel void ndarr_ceil_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = ceil(x[i]);
 }
 
-__kernel void ndarr_round(global read_only float* x, global write_only float* r)
+__kernel void ndarr_round_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = round(x[i]);
 }
 
-__kernel void ndarr_trunc(global read_only float* x, global write_only float* r)
+__kernel void ndarr_trunc_float(global float* x, global float* r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = trunc(x[i]);
 }
 
-__kernel void ndarr_clip(global read_only float* x, float min, float max, global write_only float* r)
+__kernel void ndarr_clip_float(global float* x, float min, float max, global float* r)
+{
+	const int i = get_global_id(0);
+
+	if (x[i] &gt; min &amp;&amp; x[i] &lt; max)
+		r[i] = x[i];
+	else if (x[i] &gt;= max)
+		r[i] = max;
+	else if (x[i] &lt;= min)
+		r[i] = min;
+}
+
+__kernel void ndarr_floor_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = floor(x[i]);
+}
+
+__kernel void ndarr_ceil_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = ceil(x[i]);
+}
+
+__kernel void ndarr_round_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = round(x[i]);
+}
+
+__kernel void ndarr_trunc_double(global double* x, global double* r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = trunc(x[i]);
+}
+
+__kernel void ndarr_clip_double(global double* x, double min, double max, global double* r)
 {
 	const int i = get_global_id(0);
 
@@ -347,70 +570,140 @@ __kernel void ndarr_clip(global read_only float* x, float min, float max, global
 }</value>
   </data>
   <data name="Trignometry" xml:space="preserve">
-    <value>__kernel void ndarr_sin(global read_only float *x, global write_only float *r)
+    <value>__kernel void ndarr_sin_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = sin(x[i]);
 }
 
-__kernel void ndarr_cos(global read_only float *x, global write_only float *r)
+__kernel void ndarr_cos_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = cos(x[i]);
 }
 
-__kernel void ndarr_tan(global read_only float *x, global write_only float *r)
+__kernel void ndarr_tan_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = tan(x[i]);
 }
 
-__kernel void ndarr_arcsin(global read_only float *x, global write_only float *r)
+__kernel void ndarr_arcsin_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = asin(x[i]);
 }
 
-__kernel void ndarr_arccos(global read_only float *x, global write_only float *r)
+__kernel void ndarr_arccos_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = acos(x[i]);
 }
 
-__kernel void ndarr_arctan(global read_only float *x, global write_only float *r)
+__kernel void ndarr_arctan_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = atan(x[i]);
 }
 
-__kernel void ndarr_sinh(global read_only float *x, global write_only float *r)
+__kernel void ndarr_sinh_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = sinh(x[i]);
 }
 
-__kernel void ndarr_cosh(global read_only float *x, global write_only float *r)
+__kernel void ndarr_cosh_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = cosh(x[i]);
 }
 
-__kernel void ndarr_tanh(global read_only float *x, global write_only float *r)
+__kernel void ndarr_tanh_float(global float *x, global float *r)
 {
 	const int i = get_global_id(0);
 
 	r[i] = tanh(x[i]);
 }
 
-__kernel void ndarr_arctan2(global read_only float *y, global read_only float *x, global write_only float *r)
+__kernel void ndarr_arctan2_float(global float *y, global float *x, global float *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = atan2(y[i], x[i]);
+}
+
+__kernel void ndarr_sin_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sin(x[i]);
+}
+
+__kernel void ndarr_cos_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = cos(x[i]);
+}
+
+__kernel void ndarr_tan_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = tan(x[i]);
+}
+
+__kernel void ndarr_arcsin_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = asin(x[i]);
+}
+
+__kernel void ndarr_arccos_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = acos(x[i]);
+}
+
+__kernel void ndarr_arctan_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = atan(x[i]);
+}
+
+__kernel void ndarr_sinh_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = sinh(x[i]);
+}
+
+__kernel void ndarr_cosh_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = cosh(x[i]);
+}
+
+__kernel void ndarr_tanh_double(global double *x, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = tanh(x[i]);
+}
+
+__kernel void ndarr_arctan2_double(global double *y, global double *x, global double *r)
 {
 	const int i = get_global_id(0);
 

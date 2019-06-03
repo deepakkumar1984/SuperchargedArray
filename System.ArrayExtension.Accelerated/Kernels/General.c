@@ -1,11 +1,11 @@
-﻿__kernel void ndarr_fill(global float *x, float value)
+﻿__kernel void ndarr_fill_float(global float *x, float value)
 {
 	const int i = get_global_id(0);
 
 	x[i] = value;
 }
 
-__kernel void ndarr_gt(global read_only float *a, global read_only float *b, global read_only float *r)
+__kernel void ndarr_gt_float(global float *a, global float *b, global float *r)
 {
 	const int i = get_global_id(0);
 
@@ -15,7 +15,7 @@ __kernel void ndarr_gt(global read_only float *a, global read_only float *b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_ge(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_ge_float(global float* a, global float* b, global float* r)
 {
 	const int i = get_global_id(0);
 
@@ -25,7 +25,7 @@ __kernel void ndarr_ge(global read_only float* a, global read_only float* b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_lt(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_lt_float(global float* a, global float* b, global float* r)
 {
 	const int i = get_global_id(0);
 
@@ -35,7 +35,7 @@ __kernel void ndarr_lt(global read_only float* a, global read_only float* b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_le(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_le_float(global float* a, global float* b, global float* r)
 {
 	const int i = get_global_id(0);
 
@@ -45,7 +45,7 @@ __kernel void ndarr_le(global read_only float* a, global read_only float* b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_eq(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_eq_float(global float* a, global float* b, global float* r)
 {
 	const int i = get_global_id(0);
 
@@ -55,7 +55,74 @@ __kernel void ndarr_eq(global read_only float* a, global read_only float* b, glo
 		r[i] = 0;
 }
 
-__kernel void ndarr_ne(global read_only float* a, global read_only float* b, global read_only float* r)
+__kernel void ndarr_ne_float(global float* a, global float* b, global float* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] != b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_fill_double(global double *x, double value, global double *r)
+{
+	const int i = get_global_id(0);
+
+	r[i] = value;
+}
+
+__kernel void ndarr_gt_double(global double *a, global double *b, global double *r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] > b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_ge_double(global double* a, global double* b, global double* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] >= b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_lt_double(global double* a, global double* b, global double* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] < b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_le_double(global double* a, global double* b, global double* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] <= b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_eq_double(global double* a, global double* b, global double* r)
+{
+	const int i = get_global_id(0);
+
+	if (a[i] == b[i])
+		r[i] = 1;
+	else
+		r[i] = 0;
+}
+
+__kernel void ndarr_ne_double(global double* a, global double* b, global double* r)
 {
 	const int i = get_global_id(0);
 
