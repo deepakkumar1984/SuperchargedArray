@@ -19,3 +19,6 @@
 /Examples/ArrayExt.Accel.Testing/obj
 /System.ArrayExtension/bin/Debug/netstandard2.0
 /System.ArrayExtension/obj
+/Examples/ArrayExt.Accel.Testing/bin
+/System.ArrayExtension/bin
+/System.ArrayExtension.Accelerated/bin

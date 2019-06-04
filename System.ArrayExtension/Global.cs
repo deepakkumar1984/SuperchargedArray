@@ -6,6 +6,6 @@ namespace System.ArrayExtension
 {
     public partial class Global
     {
-        public static ArrayOps K { get; set; } = new ArrayOps();
+        public static ArrayOps OP { get; set; } = new ArrayOps();
     }
 }

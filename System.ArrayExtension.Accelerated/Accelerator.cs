@@ -103,7 +103,7 @@ namespace System.ArrayExtension.Accelerated
 
             ChangeDevice(id);
             LoadInternalKernels();
-            Global.K = new ArrayOps();
+            Global.OP = new ArrayOps();
         }
 
         /// <summary>
@@ -126,9 +126,7 @@ namespace System.ArrayExtension.Accelerated
             ComputeContextPropertyList properties = new ComputeContextPropertyList(_defaultPlatorm);
             _context = new ComputeContext(new ComputeDevice[] { _defaultDevice }, properties, null, IntPtr.Zero);
             LoadInternalKernels();
-#if DEBUG
             Console.WriteLine("Selected device: " + _defaultDevice.Name);
-#endif
         }
 
         /// <summary>
@@ -196,6 +194,16 @@ namespace System.ArrayExtension.Accelerated
             }
 
             return result;
+        }
+
+        public static void Dispose()
+        {
+            foreach (var item in _compiledKernels)
+            {
+                item.Dispose();   
+            }
+
+            _context.Dispose();
         }
         #endregion
 
@@ -300,7 +308,6 @@ namespace System.ArrayExtension.Accelerated
                 }
 
                 eventList.Clear();
-                kernel.Dispose();
             }
         }
 

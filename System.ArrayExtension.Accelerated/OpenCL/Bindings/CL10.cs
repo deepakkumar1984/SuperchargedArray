@@ -51,7 +51,7 @@ namespace System.ArrayExtension.Accelerated.OpenCL.Bindings
         #elif LINUX
             protected const string libName = "libOpenCL.so";
         #else
-            protected const string libName = "OpenCL.dll";
+            protected const string libName = "OpenCL";
         #endif
 
         

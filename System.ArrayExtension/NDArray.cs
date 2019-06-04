@@ -738,7 +738,7 @@ namespace System.ArrayExtension
 
         public NDArray Tile(long repetitions)
         {
-            return Global.K.Tile(this, repetitions);
+            return Global.OP.Tile(this, repetitions);
         }
 
         public NDArray GetRegion(long[] dimensionStarts, long[] dimensionSizes)
@@ -960,13 +960,13 @@ namespace System.ArrayExtension
 
         public void Fill(float value)
         {
-            Global.K.Fill(this, value);
+            Global.OP.Fill(this, value);
         }
 
         public static NDArray Constant(float value, DType dtype, params long[] sizes)
         {
             NDArray array = new NDArray(sizes, dtype);
-            Global.K.Fill(array, value);
+            Global.OP.Fill(array, value);
             return array;
         }
 
@@ -989,68 +989,68 @@ namespace System.ArrayExtension
 
         public static NDArray operator +(NDArray lhs, NDArray rhs)
         {
-            return Global.K.Add(lhs, rhs);
+            return Global.OP.Add(lhs, rhs);
         }
 
-        public static NDArray operator +(NDArray lhs, float rhs) { return Global.K.Add(lhs, rhs); }
+        public static NDArray operator +(NDArray lhs, float rhs) { return Global.OP.Add(lhs, rhs); }
 
-        public static NDArray operator +(float lhs, NDArray rhs) { return Global.K.Add(rhs, lhs); }
+        public static NDArray operator +(float lhs, NDArray rhs) { return Global.OP.Add(rhs, lhs); }
 
         public static NDArray operator -(NDArray lhs, NDArray rhs)
         {
-            return Global.K.Sub(lhs, rhs);
+            return Global.OP.Sub(lhs, rhs);
         }
 
-        public static NDArray operator -(NDArray lhs, float rhs) { return Global.K.Sub(lhs, rhs); }
+        public static NDArray operator -(NDArray lhs, float rhs) { return Global.OP.Sub(lhs, rhs); }
 
-        public static NDArray operator -(float lhs, NDArray rhs) { return Global.K.Sub(lhs, rhs); }
+        public static NDArray operator -(float lhs, NDArray rhs) { return Global.OP.Sub(lhs, rhs); }
 
         public static NDArray operator *(NDArray lhs, NDArray rhs)
         {
-            return Global.K.Mul(lhs, rhs);
+            return Global.OP.Mul(lhs, rhs);
         }
 
-        public static NDArray operator *(NDArray lhs, float rhs) { return Global.K.Mul(lhs, rhs); }
+        public static NDArray operator *(NDArray lhs, float rhs) { return Global.OP.Mul(lhs, rhs); }
 
-        public static NDArray operator *(float lhs, NDArray rhs) { return Global.K.Mul(rhs, lhs); }
+        public static NDArray operator *(float lhs, NDArray rhs) { return Global.OP.Mul(rhs, lhs); }
 
         public static NDArray operator /(NDArray lhs, NDArray rhs)
         {
-            return Global.K.Div(lhs, rhs);
+            return Global.OP.Div(lhs, rhs);
         }
 
-        public static NDArray operator /(NDArray lhs, float rhs) { return Global.K.Div(lhs, rhs); }
+        public static NDArray operator /(NDArray lhs, float rhs) { return Global.OP.Div(lhs, rhs); }
 
-        public static NDArray operator /(float lhs, NDArray rhs) { return Global.K.Div(rhs, lhs); }
+        public static NDArray operator /(float lhs, NDArray rhs) { return Global.OP.Div(rhs, lhs); }
 
-        public static NDArray operator >(NDArray lhs, NDArray rhs) { return Global.K.GreaterThan(lhs, rhs); }
+        public static NDArray operator >(NDArray lhs, NDArray rhs) { return Global.OP.GreaterThan(lhs, rhs); }
 
-        public static NDArray operator >(NDArray lhs, float rhs) { return Global.K.GreaterThan(lhs, rhs); }
+        public static NDArray operator >(NDArray lhs, float rhs) { return Global.OP.GreaterThan(lhs, rhs); }
 
         public static NDArray operator <(NDArray lhs, NDArray rhs)
         {
-            return Global.K.GreaterThan(rhs, lhs);
+            return Global.OP.GreaterThan(rhs, lhs);
         }
 
         public static NDArray operator <(NDArray lhs, float rhs)
         {
             NDArray rhs_t = NDArray.Constant(rhs, lhs.ElementType, lhs.shape);
-            return Global.K.GreaterThan(rhs_t, lhs);
+            return Global.OP.GreaterThan(rhs_t, lhs);
         }
 
-        public static NDArray operator >=(NDArray lhs, NDArray rhs) { return Global.K.GreaterOrEqual(lhs, rhs); }
+        public static NDArray operator >=(NDArray lhs, NDArray rhs) { return Global.OP.GreaterOrEqual(lhs, rhs); }
 
-        public static NDArray operator >=(NDArray lhs, float rhs) { return Global.K.GreaterOrEqual(lhs, rhs); }
+        public static NDArray operator >=(NDArray lhs, float rhs) { return Global.OP.GreaterOrEqual(lhs, rhs); }
 
         public static NDArray operator <=(NDArray lhs, NDArray rhs)
         {
-            return Global.K.GreaterOrEqual(rhs, lhs);
+            return Global.OP.GreaterOrEqual(rhs, lhs);
         }
 
         public static NDArray operator <=(NDArray lhs, float rhs)
         {
             NDArray rhs_t = NDArray.Constant(rhs, lhs.ElementType, lhs.shape);
-            return Global.K.GreaterOrEqual(rhs_t, lhs);
+            return Global.OP.GreaterOrEqual(rhs_t, lhs);
         }
         #endregion
 
