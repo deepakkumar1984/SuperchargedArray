@@ -11,5 +11,13 @@ namespace System.ArrayExtension.Accelerated
         {
             Accelerator.UseDevice(deviceId);
         }
+
+        public static void UseDefault(int processorPercentage = 100)
+        {
+            double ratio = (double)processorPercentage / 100;
+            ParallelThread = (int)(Environment.ProcessorCount * ratio);
+            OP = new ArrayOps();
+            Console.WriteLine("Selecting {0}% of CPU processing", processorPercentage);
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace ArrayExt.Accel.Testing
 
         public void RunArrayDefault(int count, NDArray a, NDArray b, int cpu)
         {
-            System.ArrayExtension.Global.UseDefault(cpu);
+            System.ArrayExtension.Accelerated.Global.UseDefault(cpu);
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
