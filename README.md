@@ -3,7 +3,7 @@
 The .NET default built-in System.Array is very limited in terms of processing and usability. Here is the extended version of the Array with accelerated speed to execute operations on almost any hardware supporting OpenCL like Intel CPU, NVIDIA, AMD, Intel GPU, FPGA etc.
 
 ## Easy to use:
-Create a array and perform some math operations. Currenly supporting float and double. 
+Create an array and perform some math operations. Currenly supporting float and double. 
 
 Below is how you will do in .NET standard Array. I am trying to implement a math operation for 3x2 Matrix array with elementwise operations. 
 
@@ -174,5 +174,5 @@ Selecting 66% of CPU processing, With Parallel Thread Time (in ms): 7716
 
 Selecting 100% of CPU processing, With Parallel Thread Time (in ms): 6420
 
-The .NET standard loop takes about 22 seconds, whereas with 100% CPU usage its 6 sec which is one-fourth of time taken. But for long running process using full CPU is not ideal. With accelerated approach, which internally uses SIMD (Single Instruction Multiple Data), you can achive greater speed without using 100% of the hardware. But you can always finetune to use 100% of the hardware and achive ultimate speed.
+The .NET standard loop takes about 22 seconds, whereas with 100% CPU parallel approach using ArrayExtension it finishes off in 6 sec which is one-fourth of time taken. But for long running process using full CPU is not ideal. With ArrayExtension.Accelerated, which internally uses SIMD (Single Instruction Multiple Data), you can achive greater speed without using 100% of the hardware. But you can always fine-tune to use 100% of the hardware and achieve ultimate speed.
 
