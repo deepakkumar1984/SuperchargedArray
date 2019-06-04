@@ -12,7 +12,7 @@ namespace ArrayExt.Accel.Testing
     {
         public void Run()
         {
-            int count = 1000000;
+            int count = 10000000;
             Random rnd = new Random();
 
             //Create variable A with random values
@@ -92,7 +92,7 @@ namespace ArrayExt.Accel.Testing
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                //Console.WriteLine("Error: " + ex.Message);
             }
         }
     }

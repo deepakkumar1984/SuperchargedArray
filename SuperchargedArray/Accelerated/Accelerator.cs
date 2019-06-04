@@ -225,7 +225,8 @@ namespace SuperchargedArray.Accelerated
             _compiledKernels = new List<ComputeKernel>();
 
             CreateKernels("InternalFloatKernels", SuperchargedArray.Properties.Resources.InternalFloatKernels);
-            CreateKernels("InternalDoubleKernels", SuperchargedArray.Properties.Resources.InternalDoubleKernels);
+            if(_defaultDevice.NativeVectorWidthDouble > 0)
+                CreateKernels("InternalDoubleKernels", SuperchargedArray.Properties.Resources.InternalDoubleKernels);
         }
 
         /// <summary>
@@ -277,7 +278,8 @@ namespace SuperchargedArray.Accelerated
                 TSource[] r = new TSource[length];
                 result = BuildKernelArguments<TSource>(inputs, kernel, length, returnResult);
                 commands.Execute(kernel, null, new long[] { length }, null, null);
-                commands.ReadFromBuffer(result, ref r, true, null);
+                commands.ReadFromBuffer(result, ref r, false, null);
+                
                 commands.Finish();
                 resultArray = r;
                 r = null;
@@ -309,7 +311,7 @@ namespace SuperchargedArray.Accelerated
                         kernel.SetMemoryArgument(i, result);
                     }
                     else
-                        kernel.SetMemoryArgument(i, new ComputeBuffer<float>(_context, ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<float>()));
+                        kernel.SetMemoryArgument(i, new ComputeBuffer<TSource>(_context, ComputeMemoryFlags.ReadWrite | ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<TSource>()));
                 else if (item.GetType().IsPrimitive)
                     kernel.SetValueArgument(i, (float)item);
 

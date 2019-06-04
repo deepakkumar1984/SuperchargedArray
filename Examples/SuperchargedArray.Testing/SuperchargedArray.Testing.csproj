@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DefineConstants>TRACE;DEBUG;NETCOREAPP;NETCOREAPP2_2;DEBUG;NETCOREAPP;NETCOREAPP2_2</DefineConstants>
+      <DefineConstants>TRACE;DEBUG;NETCOREAPP;NETCOREAPP2_2;DEBUG;NETCOREAPP;NETCOREAPP2_2;DEBUG;NETCOREAPP;NETCOREAPP2_2</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>

@@ -6,25 +6,31 @@
     <Version>0.2.0</Version>
     <Authors>Deepak Batini</Authors>
     <Company>Tech-Quantum</Company>
-    <Description>An extended version of the Array to accelerate operation, easy to use, multi dimensional</Description>
+    <Description>An extended version of the Array to accelerate operation, easy to use, multi dimensional. With SuperchargedArray.Accelerated namespace you will unlock SIMD potential to run the Array operation on any hardware like Intel CPU/GPU, NVIDIA, AMD etc.</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/tech-quantum/SuperchargedArray</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tech-quantum/SuperchargedArray</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>array-manipulations, array, fast array, ndarray, multi dimension array, tensor</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/tech-quantum/Arithmetica/master/icon128.png</PackageIconUrl>
+    <Title>SuperchargedArray</Title>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/tech-quantum/SuperchargedArray/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;OSX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;OSX</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD2_0;OSX</DefineConstants>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
