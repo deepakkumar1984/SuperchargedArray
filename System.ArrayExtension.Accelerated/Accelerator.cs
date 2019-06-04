@@ -178,19 +178,24 @@ namespace System.ArrayExtension.Accelerated
                 }
             }
 
-            var arr = ExecuteInternalArray(functionName, inputs, dType, returnResult);
+            Array resultArray = null;
+
+            if(dType == DType.Single)
+                resultArray = ExecuteInternalArray<float>(functionName, inputs, dType, returnResult);
+            else if (dType == DType.Double)
+                resultArray = ExecuteInternalArray<double>(functionName, inputs, dType, returnResult);
 
             NDArray result = null;
 
             if (!returnResult.HasValue)
             {
                 result = new NDArray(outputShape, dType);
-                result.LoadFrom(arr);
+                result.LoadFrom(resultArray);
             }
             else
             {
                 result = (NDArray)inputs[returnResult.Value];
-                result.LoadFrom(arr);
+                result.LoadFrom(resultArray);
             }
 
             return result;
@@ -252,10 +257,9 @@ namespace System.ArrayExtension.Accelerated
         /// <param name="inputs">The inputs.</param>
         /// <param name="outputs">The outputs.</param>
         /// <exception cref="ExecutionException"></exception>
-        private static Array ExecuteInternalArray(string functionName, object[] inputs, DType dType, int? returnResult = null)
+        private static Array ExecuteInternalArray<TSource>(string functionName, object[] inputs, DType dType, int? returnResult = null) where TSource : struct
         {
             ComputeKernel kernel = _compiledKernels.FirstOrDefault(x => (x.FunctionName == functionName));
-            ComputeEventList eventList = new ComputeEventList();
             ComputeCommandQueue commands = new ComputeCommandQueue(_context, _defaultDevice, ComputeCommandQueueFlags.None);
 
             if (kernel == null)
@@ -268,29 +272,15 @@ namespace System.ArrayExtension.Accelerated
                 long length = ndobject != null ? ndobject.Elements : 1;
                 Array resultArray = null;
 
-                if (dType == DType.Single)
-                {
-                    ComputeBuffer<float> result = null;
-                    float[] r = new float[length];
-                    result = BuildFloatKernelArguments(inputs, kernel, length, returnResult);
-                    commands.Execute(kernel, null, new long[] { length }, null, eventList);
-                    commands.ReadFromBuffer(result, ref r, false, eventList);
-                    resultArray = r;
-                    result.Dispose();
-                }
-                else if (dType == DType.Double)
-                {
-                    ComputeBuffer<double> result = null;
-                    double[] r = new double[length];
-                    result = BuildDoubleKernelArguments(inputs, kernel, length, returnResult);
-                    commands.Execute(kernel, null, new long[] { length }, null, eventList);
-                    if (!returnResult.HasValue)
-                    {
-                        commands.ReadFromBuffer(result, ref r, false, eventList);
-                        resultArray = r;
-                        result.Dispose();
-                    }
-                }
+                ComputeBuffer<TSource> result = null;
+                TSource[] r = new TSource[length];
+                result = BuildKernelArguments<TSource>(inputs, kernel, length, returnResult);
+                commands.Execute(kernel, null, new long[] { length }, null, null);
+                commands.ReadFromBuffer(result, ref r, true, null);
+                commands.Finish();
+                resultArray = r;
+                r = null;
+                result.Dispose();
 
                 return resultArray;
             }
@@ -300,28 +290,21 @@ namespace System.ArrayExtension.Accelerated
             }
             finally
             {
-                commands.Finish();
                 commands.Dispose();
-                foreach (ComputeEventBase eventBase in eventList)
-                {
-                    eventBase.Dispose();
-                }
-
-                eventList.Clear();
             }
         }
 
-        private static ComputeBuffer<float> BuildFloatKernelArguments(object[] inputs, ComputeKernel kernel, long length, int? returnResult = null)
+        private static ComputeBuffer<TSource> BuildKernelArguments<TSource>(object[] inputs, ComputeKernel kernel, long length, int? returnResult = null) where TSource : struct
         {
             int i = 0;
-            var result = new ComputeBuffer<float>(_context, ComputeMemoryFlags.WriteOnly, length);
+            var result = new ComputeBuffer<TSource>(_context, ComputeMemoryFlags.WriteOnly, length);
 
             foreach (var item in inputs)
             {
                 if (item.GetType() == typeof(NDArray))
                     if (returnResult.HasValue && returnResult.Value == i)
                     {
-                        result = new ComputeBuffer<float>(_context, ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<float>());
+                        result = new ComputeBuffer<TSource>(_context, ComputeMemoryFlags.ReadWrite | ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<TSource>());
                         kernel.SetMemoryArgument(i, result);
                     }
                     else
@@ -331,98 +314,9 @@ namespace System.ArrayExtension.Accelerated
 
                 i++;
             }
-            
-            if (!returnResult.HasValue)
-                kernel.SetMemoryArgument(i++, result);
-
-            return result;
-        }
-
-        private static ComputeBuffer<double> BuildDoubleKernelArguments(object[] inputs, ComputeKernel kernel, long length, int? returnResult = null)
-        {
-            int i = 0;
-            var result = new ComputeBuffer<double>(_context, ComputeMemoryFlags.WriteOnly, length);
-
-            foreach (var item in inputs)
-            {
-                if (item.GetType() == typeof(NDArray))
-                {
-                    if(returnResult.HasValue && returnResult.Value == i)
-                    {
-                        result = new ComputeBuffer<double>(_context, ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<double>());
-                        kernel.SetMemoryArgument(i, result);
-                    }
-                    else
-                        kernel.SetMemoryArgument(i, new ComputeBuffer<double>(_context, ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<double>()));
-                }
-                else if (item.GetType().IsPrimitive)
-                    kernel.SetValueArgument(i, (double)item);
-
-                i++;
-            }
 
             if (!returnResult.HasValue)
                 kernel.SetMemoryArgument(i++, result);
-
-            return result;
-        }
-
-        private static ComputeBuffer<int> BuildInt32KernelArguments(object[] inputs, ComputeKernel kernel, long length)
-        {
-            int i = 0;
-
-            foreach (var item in inputs)
-            {
-                if (item.GetType() == typeof(NDArray))
-                    kernel.SetMemoryArgument(i, new ComputeBuffer<int>(_context, ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<int>()));
-                else if (item.GetType().IsPrimitive)
-                    kernel.SetValueArgument(i, (int)item);
-
-                i++;
-            }
-
-            var result = new ComputeBuffer<int>(_context, ComputeMemoryFlags.WriteOnly, length);
-            kernel.SetMemoryArgument(i++, result);
-
-            return result;
-        }
-
-        private static ComputeBuffer<long> BuildLongKernelArguments(object[] inputs, ComputeKernel kernel, long length)
-        {
-            int i = 0;
-
-            foreach (var item in inputs)
-            {
-                if (item.GetType() == typeof(NDArray))
-                    kernel.SetMemoryArgument(i, new ComputeBuffer<long>(_context, ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<long>()));
-                else if (item.GetType().IsPrimitive)
-                    kernel.SetValueArgument(i, (long)item);
-
-                i++;
-            }
-
-            var result = new ComputeBuffer<long>(_context, ComputeMemoryFlags.WriteOnly, length);
-            kernel.SetMemoryArgument(i++, result);
-
-            return result;
-        }
-
-        private static ComputeBuffer<byte> BuildByteKernelArguments(object[] inputs, ComputeKernel kernel, long length)
-        {
-            int i = 0;
-
-            foreach (var item in inputs)
-            {
-                if (item.GetType() == typeof(NDArray))
-                    kernel.SetMemoryArgument(i, new ComputeBuffer<byte>(_context, ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<byte>()));
-                else if (item.GetType().IsPrimitive)
-                    kernel.SetValueArgument(i, (byte)item);
-
-                i++;
-            }
-
-            var result = new ComputeBuffer<byte>(_context, ComputeMemoryFlags.WriteOnly, length);
-            kernel.SetMemoryArgument(i++, result);
 
             return result;
         }

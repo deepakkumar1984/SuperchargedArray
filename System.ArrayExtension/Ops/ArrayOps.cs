@@ -19,7 +19,7 @@ namespace System.ArrayExtension
         /// <param name="value">The value.</param>
         public virtual void Fill(NDArray x, float value)
         {
-            Parallel.For(0, x.Elements, (i) => { x[i] = value; });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { x[i] = value; });
         }
 
         /// <summary>
@@ -41,11 +41,11 @@ namespace System.ArrayExtension
             long n = a.Shape[1];
             NDArray r = new NDArray(m, q);
 
-            Parallel.For(0, m, i =>
+            Parallel.For(0, m, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, i =>
             {
-                Parallel.For(0, q, j =>
+                Parallel.For(0, q, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, j =>
                 {
-                    Parallel.For(0, n, k =>
+                    Parallel.For(0, n, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, k =>
                     {
                         r[i, j] += a[i, k] * b[k, j];
                     });
@@ -65,7 +65,7 @@ namespace System.ArrayExtension
         public virtual NDArray Abs(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = Math.Abs(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = Math.Abs(x[i]); });
 
             return result;
         }
@@ -81,7 +81,7 @@ namespace System.ArrayExtension
         public virtual NDArray Neg( NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] =-x[i]; });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] =-x[i]; });
             return result;
         }
 
@@ -95,7 +95,7 @@ namespace System.ArrayExtension
         public virtual NDArray Sign(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = Math.Sign(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = Math.Sign(x[i]); });
             return result;
         }
 
@@ -109,7 +109,7 @@ namespace System.ArrayExtension
         public virtual NDArray Sqrt(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Sqrt(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Sqrt(x[i]); });
 
             return result;
         }
@@ -123,7 +123,7 @@ namespace System.ArrayExtension
         public virtual NDArray Exp( NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Exp(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Exp(x[i]); });
 
             return result;
         }
@@ -137,7 +137,7 @@ namespace System.ArrayExtension
         public virtual NDArray Log( NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Log(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Log(x[i]); });
 
             return result;
         }
@@ -151,7 +151,7 @@ namespace System.ArrayExtension
         public virtual NDArray Log10( NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Log10(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Log10(x[i]); });
 
             return result;
         }
@@ -165,7 +165,7 @@ namespace System.ArrayExtension
         public virtual NDArray Floor( NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Floor(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Floor(x[i]); });
 
             return result;
         }
@@ -179,7 +179,7 @@ namespace System.ArrayExtension
         public virtual NDArray Ceil( NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Ceiling(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Ceiling(x[i]); });
 
             return result;
         }
@@ -196,9 +196,9 @@ namespace System.ArrayExtension
         {
             NDArray result = new NDArray(x.Shape);
             if (decimals > 0)
-                Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Round(x[i], decimals); });
+                Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Round(x[i], decimals); });
             else
-                Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Round(x[i]); });
+                Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Round(x[i]); });
 
             return result;
         }
@@ -212,7 +212,7 @@ namespace System.ArrayExtension
         /// </returns>
         public virtual NDArray Trunc(NDArray x) {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Truncate(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Truncate(x[i]); });
 
             return result;
         }
@@ -227,7 +227,7 @@ namespace System.ArrayExtension
         public virtual NDArray Frac(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = x[i] - (float)Math.Truncate(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = x[i] - (float)Math.Truncate(x[i]); });
 
             return result;
         }
@@ -242,7 +242,7 @@ namespace System.ArrayExtension
         public virtual NDArray Sin(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Sin(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Sin(x[i]); });
 
             return result;
         }
@@ -257,7 +257,7 @@ namespace System.ArrayExtension
         public virtual NDArray Cos( NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Cos(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Cos(x[i]); });
 
             return result;
         }
@@ -272,7 +272,7 @@ namespace System.ArrayExtension
         public virtual NDArray Tan(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Tan(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Tan(x[i]); });
 
             return result;
         }
@@ -286,7 +286,7 @@ namespace System.ArrayExtension
         public virtual NDArray Asin(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Asin(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Asin(x[i]); });
 
             return result;
         }
@@ -301,7 +301,7 @@ namespace System.ArrayExtension
         public virtual NDArray Acos( NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Acos(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Acos(x[i]); });
 
             return result;
         }
@@ -316,7 +316,7 @@ namespace System.ArrayExtension
         public virtual NDArray Atan(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Atan(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Atan(x[i]); });
 
             return result;
         }
@@ -330,7 +330,7 @@ namespace System.ArrayExtension
         /// </returns>
         public virtual NDArray Sinh(NDArray x) {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Sinh(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Sinh(x[i]); });
 
             return result;
         }
@@ -345,7 +345,7 @@ namespace System.ArrayExtension
         public virtual NDArray Cosh(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Cosh(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Cosh(x[i]); });
 
             return result;
         }
@@ -360,7 +360,7 @@ namespace System.ArrayExtension
         public virtual NDArray Tanh(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => { result[i] = (float)Math.Tanh(x[i]); });
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Tanh(x[i]); });
 
             return result;
         }
@@ -374,7 +374,7 @@ namespace System.ArrayExtension
         public virtual NDArray Sigmoid(NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) => 
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => 
             {
                 var exp = (float)Math.Exp(x[i]);
 
@@ -396,7 +396,7 @@ namespace System.ArrayExtension
         public virtual NDArray Atan2(NDArray y,NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = (float)Math.Atan2(y[i], x[i]);
             });
@@ -415,7 +415,7 @@ namespace System.ArrayExtension
         public virtual NDArray Pow(NDArray x, float value)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = (float)Math.Pow(x[i], value);
             });
@@ -446,7 +446,7 @@ namespace System.ArrayExtension
         public virtual NDArray TPow(float value, NDArray x)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = (float)Math.Pow(value, x[i]);
             });
@@ -467,7 +467,7 @@ namespace System.ArrayExtension
         public virtual NDArray Lerp(NDArray x0, NDArray x1, float weight)
         {
             NDArray result = new NDArray(x0.Shape);
-            Parallel.For(0, x0.Elements, (i) =>
+            Parallel.For(0, x0.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = x0[i] + weight * (x1[i] - x0[i]);
             });
@@ -487,7 +487,7 @@ namespace System.ArrayExtension
         public virtual NDArray Clip(NDArray x, float min, float max)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = (x[i] < min) ? min : (x[i] > max) ? max : x[i];
             });
@@ -506,7 +506,7 @@ namespace System.ArrayExtension
         public virtual NDArray Add(NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] + rhs[i];
             });
@@ -525,7 +525,7 @@ namespace System.ArrayExtension
         public virtual NDArray Add(NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] + rhs;
             });
@@ -544,7 +544,7 @@ namespace System.ArrayExtension
         public virtual NDArray Add(float lhs, NDArray rhs)
         {
             NDArray result = new NDArray(rhs.Shape);
-            Parallel.For(0, rhs.Elements, (i) =>
+            Parallel.For(0, rhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs + rhs[i];
             });
@@ -561,7 +561,7 @@ namespace System.ArrayExtension
         public virtual NDArray Sub(NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] - rhs[i];
             });
@@ -578,7 +578,7 @@ namespace System.ArrayExtension
         public virtual NDArray Sub(NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] - rhs;
             });
@@ -595,7 +595,7 @@ namespace System.ArrayExtension
         public virtual NDArray Sub(float lhs, NDArray rhs)
         {
             NDArray result = new NDArray(rhs.Shape);
-            Parallel.For(0, rhs.Elements, (i) =>
+            Parallel.For(0, rhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs - rhs[i];
             });
@@ -612,7 +612,7 @@ namespace System.ArrayExtension
         public virtual NDArray Mul(NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] * rhs[i];
             });
@@ -629,7 +629,7 @@ namespace System.ArrayExtension
         public virtual NDArray Mul(NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] * rhs;
             });
@@ -646,7 +646,7 @@ namespace System.ArrayExtension
         public virtual NDArray Mul(float lhs, NDArray rhs)
         {
             NDArray result = new NDArray(rhs.Shape);
-            Parallel.For(0, rhs.Elements, (i) =>
+            Parallel.For(0, rhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs * rhs[i];
             });
@@ -663,7 +663,7 @@ namespace System.ArrayExtension
         public virtual NDArray Div(NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] / rhs[i];
             });
@@ -680,7 +680,7 @@ namespace System.ArrayExtension
         public virtual NDArray Div(NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] / rhs;
             });
@@ -697,7 +697,7 @@ namespace System.ArrayExtension
         public virtual NDArray Div(float lhs, NDArray rhs)
         {
             NDArray result = new NDArray(rhs.Shape);
-            Parallel.For(0, rhs.Elements, (i) =>
+            Parallel.For(0, rhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs / rhs[i];
             });
@@ -716,7 +716,7 @@ namespace System.ArrayExtension
         public virtual NDArray Mod(NDArray x, float scalar)
         {
             NDArray result = new NDArray(x.Shape);
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = x[i] % scalar;
             });
@@ -735,7 +735,7 @@ namespace System.ArrayExtension
         public virtual NDArray Mod(NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] % rhs[i];
             });
@@ -753,7 +753,7 @@ namespace System.ArrayExtension
         public virtual NDArray GreaterThan( NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] > rhs ? 1 : 0;
             });
@@ -771,7 +771,7 @@ namespace System.ArrayExtension
         public virtual NDArray LessThan( NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] < rhs ? 1 : 0;
             });
@@ -789,7 +789,7 @@ namespace System.ArrayExtension
         public virtual NDArray GreaterOrEqual( NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] >= rhs ? 1 : 0;
             });
@@ -807,7 +807,7 @@ namespace System.ArrayExtension
         public virtual NDArray LessOrEqual( NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] <= rhs ? 1 : 0;
             });
@@ -825,7 +825,7 @@ namespace System.ArrayExtension
         public virtual NDArray EqualTo( NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] == rhs ? 1 : 0;
             });
@@ -843,7 +843,7 @@ namespace System.ArrayExtension
         public virtual NDArray NotEqual( NDArray lhs, float rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] != rhs ? 1 : 0;
             });
@@ -861,7 +861,7 @@ namespace System.ArrayExtension
         public virtual NDArray GreaterThan( NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] > rhs[i] ? 1 : 0;
             });
@@ -879,7 +879,7 @@ namespace System.ArrayExtension
         public virtual NDArray LessThan( NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] < rhs[i] ? 1 : 0;
             });
@@ -897,7 +897,7 @@ namespace System.ArrayExtension
         public virtual NDArray GreaterOrEqual( NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] >= rhs[i] ? 1 : 0;
             });
@@ -915,7 +915,7 @@ namespace System.ArrayExtension
         public virtual NDArray LessOrEqual( NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] <= rhs[i] ? 1 : 0;
             });
@@ -933,7 +933,7 @@ namespace System.ArrayExtension
         public virtual NDArray EqualTo( NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] == rhs[i] ? 1 : 0;
             });
@@ -951,7 +951,7 @@ namespace System.ArrayExtension
         public virtual NDArray NotEqual( NDArray lhs, NDArray rhs)
         {
             NDArray result = new NDArray(lhs.Shape);
-            Parallel.For(0, lhs.Elements, (i) =>
+            Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] != rhs[i] ? 1 : 0;
             });
@@ -970,7 +970,7 @@ namespace System.ArrayExtension
         public float Sum(NDArray x)
         {
             float result = 0;
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result += x[i];
             });
@@ -1010,7 +1010,7 @@ namespace System.ArrayExtension
         public float Minus(NDArray x)
         {
             float result = 0;
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result -= x[i];
             });
@@ -1050,7 +1050,7 @@ namespace System.ArrayExtension
         public float Prod(NDArray x)
         {
             float result = 1;
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result *= x[i];
             });
@@ -1282,7 +1282,7 @@ namespace System.ArrayExtension
             NDArray result = new NDArray(x.Elements, x.Elements);
             result.Fill(0);
 
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i, i] = x[i];
             });
@@ -1305,7 +1305,7 @@ namespace System.ArrayExtension
 
             rnd = new Random();
 
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 x[i] = (float)rnd.NextDouble() * (max - min) + min;
             });
@@ -1326,7 +1326,7 @@ namespace System.ArrayExtension
 
             rnd = new Random();
 
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 var normal_x = rnd.NextDouble();
                 var normal_y = rnd.NextDouble();
@@ -1356,7 +1356,7 @@ namespace System.ArrayExtension
 
             rnd = new Random();
 
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 x[i] = (float)(-1.0 / lambda * Math.Log(1.0 - rnd.NextDouble()));
             });
@@ -1377,7 +1377,7 @@ namespace System.ArrayExtension
 
             rnd = new Random();
 
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 x[i] = (float)(median + sigma * Math.Tan(Math.PI * (rnd.NextDouble() - 0.5)));
             });
@@ -1397,7 +1397,7 @@ namespace System.ArrayExtension
 
             rnd = new Random();
 
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 x[i] = (float)(Math.Log(1 - rnd.NextDouble()) / Math.Log(p) + 1);
             });
@@ -1423,7 +1423,7 @@ namespace System.ArrayExtension
 
             rnd = new Random();
 
-            Parallel.For(0, x.Elements, (i) =>
+            Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 x[i] = rnd.NextDouble() <= p ? 0 : 1;
             });

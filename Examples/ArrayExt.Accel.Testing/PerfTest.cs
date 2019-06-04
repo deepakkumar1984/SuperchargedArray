@@ -12,7 +12,7 @@ namespace ArrayExt.Accel.Testing
     {
         public void Run()
         {
-            int count = 10000000;
+            int count = 100000000;
             Random rnd = new Random();
 
             //Create variable A with random values
@@ -27,60 +27,73 @@ namespace ArrayExt.Accel.Testing
                 b[i] = 0.5f;
             });
 
-            RunStandard(count, a, b);
+            RunStandardLoop(count, a, b);
             Console.WriteLine();
-            RunArrayNonAccelerated(count, a, b);
+
+            var devices = Accelerator.Devices;
+            foreach (var item in devices)
+            {
+                RunArrayAccelerated(count, a, b, item.ID);
+                Console.WriteLine();
+            }
+
+            RunArrayDefault(count, a, b, 33);
+            RunArrayDefault(count, a, b, 66);
+            RunArrayDefault(count, a, b, 100);
             Console.WriteLine();
-            //RunArrayAccelerated(count, a, b, 0);
-            Console.WriteLine();
-            RunArrayAccelerated(count, a, b, 1);
-            Console.WriteLine();
-            RunArrayAccelerated(count, a, b, 2);
         }
 
-        public void RunStandard(int count, Array a, Array b)
+        public void RunStandardLoop(int count, Array a, Array b)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            //Execute math operation Sqrt(Sin(a) + Cos(b) * Exp(a)) and store the result to R
+            //Execute math operation Truncate(a * Sin(b) + Cos(a) * Exp(b)) and store the result to R
             Array r = new float[count];
             for (int i = 0; i < count; i++)
             {
-                var rv = MathF.Sqrt(MathF.Sin((float)a.GetValue(i)) + MathF.Cos((float)b.GetValue(i)) * MathF.Exp((float)a.GetValue(i)));
-
+                var rv = MathF.Truncate((float)a.GetValue(i) * MathF.Sin((float)b.GetValue(i)) + MathF.Cos((float)a.GetValue(i)) * MathF.Exp((float)b.GetValue(i)));
                 r.SetValue(rv, i);
             }
 
             sw.Stop();
-            Console.WriteLine("RunStandard Time (in ms): " + sw.ElapsedMilliseconds);
+            Console.WriteLine(".NET For Loop Time (in ms): " + sw.ElapsedMilliseconds);
         }
 
-        public void RunArrayNonAccelerated(int count, Array a, Array b)
+        public void RunArrayDefault(int count, NDArray a, NDArray b, int cpu)
         {
+            System.ArrayExtension.Global.UseDefault(cpu);
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var K = Global.OP;
+            var K = System.ArrayExtension.Global.OP;
 
-            var r = K.Sqrt(K.Sin(a) + K.Cos(b) * K.Exp(a));
+            var r = K.Trunc(a * K.Sin(b) + K.Cos(a) * K.Exp(b));
             sw.Stop();
-            Console.WriteLine("RunArrayNonAccelerated Time (in ms): " + sw.ElapsedMilliseconds);
-            
+
+            Console.WriteLine("With Parallel Thread Time (in ms): {1}", cpu, sw.ElapsedMilliseconds);
         }
 
-        public void RunArrayAccelerated(int count, Array a, Array b, int deviceid)
+        public void RunArrayAccelerated(int count, NDArray a, NDArray b, int deviceid)
         {
-            Accelerator.UseDevice(deviceid);
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            
-            var K = Global.OP;
+            try
+            {
+                Accelerator.UseDevice(deviceid);
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
 
-            var r = K.Sqrt(K.Sin(a) + K.Cos(b) * K.Exp(a));
-            sw.Stop();
-            Console.WriteLine("RunArrayAccelerated Time (in ms): " + sw.ElapsedMilliseconds);
-            Accelerator.Dispose();
+                var K = System.ArrayExtension.Accelerated.Global.OP;
+
+                var r = K.Trunc(a * K.Sin(b) + K.Cos(a) * K.Exp(b));
+                sw.Stop();
+
+                Console.WriteLine("With Accelerator (in ms): " + sw.ElapsedMilliseconds);
+                Accelerator.Dispose();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
     }
 }
