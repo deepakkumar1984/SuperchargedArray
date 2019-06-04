@@ -3,6 +3,16 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <Platforms>AnyCPU;x64</Platforms>
+        <Version>0.2.0</Version>
+        <Authors>Deepak Battini</Authors>
+        <Company>Tech-QuantumDeepak Battini</Company>
+        <Description>An extended version of the Array with accelerated speed to execute operations on almost any hardware supporting OpenCL like Intel CPU, NVIDIA, AMD, Intel GPU, FPGA etc.</Description>
+        <PackageProjectUrl>https://github.com/tech-quantum/System.ArrayExtension</PackageProjectUrl>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageIconUrl>https://raw.githubusercontent.com/tech-quantum/Arithmetica/master/icon128.png</PackageIconUrl>
+        <RepositoryUrl>https://github.com/tech-quantum/System.ArrayExtension</RepositoryUrl>
+        <PackageTags>array-manipulations, array, fast array, ndarray, multi dimension array, tensor</PackageTags>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -37,6 +47,10 @@
       <None Remove="Kernels\General.c" />
       <None Remove="Kernels\LogExpPow.c" />
       <None Remove="Kernels\Rounding.c" />
+      <None Include="..\LICENSE">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
     </ItemGroup>
     <ItemGroup>
       <None Update="System.ArrayExtension.Accelerated.dll.config">

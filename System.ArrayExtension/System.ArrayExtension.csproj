@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
+    <Version>0.2.0</Version>
+    <Authors>Deepak Batini</Authors>
+    <Company>Tech-Quantum</Company>
+    <Description>An extended version of the Array to accelerate operation, easy to use, multi dimensional</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/tech-quantum/System.ArrayExtension</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tech-quantum/System.ArrayExtension</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>array-manipulations, array, fast array, ndarray, multi dimension array, tensor</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/tech-quantum/Arithmetica/master/icon128.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,6 +33,13 @@
 
   <ItemGroup>
     <Compile Remove="MemoryCopier.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
