@@ -12,7 +12,7 @@ namespace ArrayExt.Accel.Testing
     {
         public void Run()
         {
-            int count = 10000000;
+            int count = 30000000;
             Random rnd = new Random();
 
             //Create variable A with random values
@@ -60,7 +60,7 @@ namespace ArrayExt.Accel.Testing
             Console.WriteLine(".NET For Loop Time (in ms): " + sw.ElapsedMilliseconds);
         }
 
-        public void RunArrayDefault(int count, NDArray a, NDArray b, int cpu)
+        public void RunArrayDefault(int count, SuperArray a, SuperArray b, int cpu)
         {
             Global.UseDefault(cpu);
             Stopwatch sw = new Stopwatch();
@@ -74,7 +74,7 @@ namespace ArrayExt.Accel.Testing
             Console.WriteLine("With Parallel Thread Time (in ms): {1}", cpu, sw.ElapsedMilliseconds);
         }
 
-        public void RunArrayAccelerated(int count, NDArray a, NDArray b, int deviceid)
+        public void RunArrayAccelerated(int count, SuperArray a, SuperArray b, int deviceid)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace ArrayExt.Accel.Testing
             }
             catch(Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Error: " + ex.Message);
             }
         }
     }

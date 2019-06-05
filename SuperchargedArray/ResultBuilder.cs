@@ -1,9 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+MIT License
 
+Copyright (c) 2019 Tech Quantum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ 
+*/
 namespace SuperchargedArray
 {
+    using System;
+
     /// <summary>
     /// Class TensorResultBuilder.
     /// </summary>
@@ -18,7 +40,7 @@ namespace SuperchargedArray
         /// <param name="requireContiguous">if set to <c>true</c> [require contiguous].</param>
         /// <param name="requiredSizes">The required sizes.</param>
         /// <returns>NDArray.</returns>
-        public static NDArray GetWriteTarget(NDArray maybeResult, NDArray newTemplate, bool requireContiguous, params long[] requiredSizes)
+        public static SuperArray GetWriteTarget(SuperArray maybeResult, SuperArray newTemplate, bool requireContiguous, params long[] requiredSizes)
         {
             return GetWriteTarget(maybeResult, newTemplate.ElementType, requireContiguous, requiredSizes);
         }
@@ -32,7 +54,7 @@ namespace SuperchargedArray
         /// <param name="requiredSizes">The required sizes.</param>
         /// <returns>NDArray.</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public static NDArray GetWriteTarget(NDArray maybeResult, DType elementTypeForNew, bool requireContiguous, params long[] requiredSizes)
+        public static SuperArray GetWriteTarget(SuperArray maybeResult, DType elementTypeForNew, bool requireContiguous, params long[] requiredSizes)
         {
             if (maybeResult != null)
             {
@@ -48,7 +70,7 @@ namespace SuperchargedArray
             }
             else
             {
-                return new NDArray(requiredSizes, elementTypeForNew);
+                return new SuperArray(requiredSizes, elementTypeForNew);
             }
         }
 
@@ -59,7 +81,7 @@ namespace SuperchargedArray
         /// <param name="requireContiguous">if set to <c>true</c> [require contiguous].</param>
         /// <param name="requiredSizes">The required sizes.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        private static bool MatchesRequirements(NDArray array, bool requireContiguous, params long[] requiredSizes)
+        private static bool MatchesRequirements(SuperArray array, bool requireContiguous, params long[] requiredSizes)
         {
             if (requireContiguous && !array.IsContiguous())
             {

@@ -1,11 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿/*
+MIT License
 
+Copyright (c) 2019 Tech Quantum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ 
+*/
 namespace SuperchargedArray
 {
+    using System;
+    using System.IO;
+    using System.Runtime.InteropServices;
+
     /// <summary>
     /// Class TensorSerialization.
     /// </summary>
@@ -16,7 +38,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="stream">The stream.</param>
-        public static void Serialize(NDArray array, Stream stream)
+        public static void Serialize(SuperArray array, Stream stream)
         {
             using (var src = Helper.AsContiguous(array))
             {
@@ -45,7 +67,7 @@ namespace SuperchargedArray
         /// <param name="allocator">The allocator.</param>
         /// <param name="stream">The stream.</param>
         /// <returns>NDArray.</returns>
-        public static NDArray Deserialize(Stream stream)
+        public static SuperArray Deserialize(Stream stream)
         {
             // Note: don't dispose reader - it does not own the stream's lifetime
             var reader = new BinaryReader(stream);
@@ -59,7 +81,7 @@ namespace SuperchargedArray
             }
 
             var byteCount = reader.ReadInt64();
-            var result = new NDArray(sizes, elementType);
+            var result = new SuperArray(sizes, elementType);
 
             ReadBytes(reader, result.Storage, result.StorageOffset, byteCount);
 

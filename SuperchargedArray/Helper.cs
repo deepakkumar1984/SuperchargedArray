@@ -1,10 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+MIT License
 
+Copyright (c) 2019 Tech Quantum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ 
+*/
 namespace SuperchargedArray
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Class TensorDimensionHelpers.
     /// </summary>
@@ -68,9 +89,9 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public static NDArray NewContiguous(NDArray src)
+        public static SuperArray NewContiguous(SuperArray src)
         {
-            var result = new NDArray((long[])src.Shape.Clone(), src.ElementType);
+            var result = new SuperArray((long[])src.Shape.Clone(), src.ElementType);
             Copy(result, src);
             return result;
         }
@@ -80,7 +101,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public static NDArray AsContiguous(NDArray src)
+        public static SuperArray AsContiguous(SuperArray src)
         {
             if (src.IsContiguous())
                 return src.CopyRef();
@@ -93,7 +114,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        public static void Copy(NDArray result, NDArray src)
+        public static void Copy(SuperArray result, SuperArray src)
         {
             var r = src.ToArray();
             if (src.DimensionCount == 2)
@@ -130,6 +151,25 @@ namespace SuperchargedArray
                             Parallel.For(0, src.Shape[3], (l) =>
                             {
                                 result[i, j, k, l] = src[i, j, k, l];
+                            });
+                        });
+                    });
+                });
+            }
+            else if (src.DimensionCount == 5)
+            {
+                Parallel.For(0, src.Shape[0], (i) =>
+                {
+                    Parallel.For(0, src.Shape[1], (j) =>
+                    {
+                        Parallel.For(0, src.Shape[2], (k) =>
+                        {
+                            Parallel.For(0, src.Shape[3], (l) =>
+                            {
+                                Parallel.For(0, src.Shape[4], (m) =>
+                                {
+                                    result[i, j, k, l, m] = src[i, j, k, l, m];
+                                });
                             });
                         });
                     });

@@ -1,13 +1,35 @@
-using SuperchargedArray.Accelerated.OpenCL;
-using SuperchargedArray.Accelerated.OpenCL.Bindings;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+/*
+MIT License
 
+Copyright (c) 2019 Tech Quantum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ 
+*/
 namespace SuperchargedArray.Accelerated
 {
+    using SuperchargedArray.Accelerated.OpenCL;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
     /// <summary>
     /// Accelerator is a high level API for building and executing built-in or your own kernels. 
     /// </summary>
@@ -165,12 +187,12 @@ namespace SuperchargedArray.Accelerated
         /// <param name="inputs">The inputs.</param>
         /// <param name="outputShape">The output shape.</param>
         /// <returns></returns>
-        public static NDArray Execute(string functionName, object[] inputs, long[] outputShape = null, int? returnResult = null)
+        public static SuperArray Execute(string functionName, object[] inputs, long[] outputShape = null, int? returnResult = null)
         {
             DType dType = DType.Single;
             if (outputShape == null)
             {
-                var ndobject = (NDArray)inputs.FirstOrDefault(x => (x.GetType() == typeof(NDArray)));
+                var ndobject = (SuperArray)inputs.FirstOrDefault(x => (x.GetType() == typeof(SuperArray)));
                 if (ndobject == null)
                 {
                     outputShape = new long[] { 1 };
@@ -189,16 +211,16 @@ namespace SuperchargedArray.Accelerated
             else if (dType == DType.Double)
                 resultArray = ExecuteInternalArray<double>(functionName, inputs, dType, returnResult);
 
-            NDArray result = null;
+            SuperArray result = null;
 
             if (!returnResult.HasValue)
             {
-                result = new NDArray(outputShape, dType);
+                result = new SuperArray(outputShape, dType);
                 result.LoadFrom(resultArray);
             }
             else
             {
-                result = (NDArray)inputs[returnResult.Value];
+                result = (SuperArray)inputs[returnResult.Value];
                 result.LoadFrom(resultArray);
             }
 
@@ -269,7 +291,7 @@ namespace SuperchargedArray.Accelerated
 
             try
             {
-                var ndobject = (NDArray)inputs.FirstOrDefault(x => (x.GetType() == typeof(NDArray)));
+                var ndobject = (SuperArray)inputs.FirstOrDefault(x => (x.GetType() == typeof(SuperArray)));
 
                 long length = ndobject != null ? ndobject.Elements : 1;
                 Array resultArray = null;
@@ -304,14 +326,14 @@ namespace SuperchargedArray.Accelerated
 
             foreach (var item in inputs)
             {
-                if (item.GetType() == typeof(NDArray))
+                if (item.GetType() == typeof(SuperArray))
                     if (returnResult.HasValue && returnResult.Value == i)
                     {
-                        result = new ComputeBuffer<TSource>(_context, ComputeMemoryFlags.ReadWrite | ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<TSource>());
+                        result = new ComputeBuffer<TSource>(_context, ComputeMemoryFlags.ReadWrite | ComputeMemoryFlags.CopyHostPointer, ((SuperArray)item).Data<TSource>());
                         kernel.SetMemoryArgument(i, result);
                     }
                     else
-                        kernel.SetMemoryArgument(i, new ComputeBuffer<TSource>(_context, ComputeMemoryFlags.ReadWrite | ComputeMemoryFlags.CopyHostPointer, ((NDArray)item).Data<TSource>()));
+                        kernel.SetMemoryArgument(i, new ComputeBuffer<TSource>(_context, ComputeMemoryFlags.ReadWrite | ComputeMemoryFlags.CopyHostPointer, ((SuperArray)item).Data<TSource>()));
                 else if (item.GetType().IsPrimitive)
                     kernel.SetValueArgument(i, (float)item);
 

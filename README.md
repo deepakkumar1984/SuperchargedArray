@@ -1,4 +1,4 @@
-# System.ArrayExtension
+# SuperchargedArray
 
 The .NET default built-in System.Array is very limited in terms of processing and usability. Here is the extended version of the Array with accelerated speed to execute operations on almost any hardware supporting OpenCL like Intel CPU, NVIDIA, AMD, Intel GPU, FPGA etc.
 
@@ -48,15 +48,15 @@ for (int i = 0; i < r.GetLength(0); i++)
 }
 ```
 
-A super simplified version with System.ArrayExtension
+A super simplified version with SuperchargedArray
 ```csharp
 var K = Global.OP;
 //Create an array with values
-NDArray a = new float[,] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
+SuperArray a = new float[,] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
 
 //Create a array with constant value 2
-NDArray b = new float[3, 2];
-//NDArray b = new NDArray(3, 2);
+SuperArray b = new float[3, 2];
+//SuperArray b = new SuperArray(3, 2);
 b.Fill(2);
 
 //Perform Math operation on the array: 2A + Log(B) + Exp(A)
@@ -68,7 +68,7 @@ r.Print();
 
 
 ## Accelerated Version
-System.ArrayExtension is not all about simplicity, it is well defined to execute the code on special hardwares like Intel GPU, NVIDIA, AMD cards. Below is the simple performance test done to process 100 million executions. And see the result:
+SuperchargedArray is not all about simplicity, it is well defined to execute the code on special hardwares like Intel GPU, NVIDIA, AMD cards. Below is the simple performance test done to process 100 million executions. And see the result:
 
 ```csharp
 public void Run()
@@ -121,13 +121,13 @@ public void RunStandardLoop(int count, Array a, Array b)
     Console.WriteLine(".NET For Loop Time (in ms): " + sw.ElapsedMilliseconds);
 }
 
-public void RunArrayDefault(int count, NDArray a, NDArray b, int cpu)
+public void RunArrayDefault(int count, SuperArray a, SuperArray b, int cpu)
 {
-    System.ArrayExtension.Accelerated.Global.UseDefault(cpu);
+    SuperchargedArray.Accelerated.Global.UseDefault(cpu);
     Stopwatch sw = new Stopwatch();
     sw.Start();
 
-    var K = System.ArrayExtension.Global.OP;
+    var K = SuperchargedArray.Global.OP;
 
     var r = K.Trunc(a * K.Sin(b) + K.Cos(a) * K.Exp(b));
     sw.Stop();
@@ -135,7 +135,7 @@ public void RunArrayDefault(int count, NDArray a, NDArray b, int cpu)
     Console.WriteLine("With Parallel Thread Time (in ms): {1}", cpu, sw.ElapsedMilliseconds);
 }
 
-public void RunArrayAccelerated(int count, NDArray a, NDArray b, int deviceid)
+public void RunArrayAccelerated(int count, SuperArray a, SuperArray b, int deviceid)
 {
     try
     {
@@ -143,7 +143,7 @@ public void RunArrayAccelerated(int count, NDArray a, NDArray b, int deviceid)
         Stopwatch sw = new Stopwatch();
         sw.Start();
 
-        var K = System.ArrayExtension.Accelerated.Global.OP;
+        var K = SuperchargedArray.Accelerated.Global.OP;
 
         var r = K.Trunc(a * K.Sin(b) + K.Cos(a) * K.Exp(b));
         sw.Stop();
@@ -160,19 +160,21 @@ public void RunArrayAccelerated(int count, NDArray a, NDArray b, int deviceid)
 
 ### Execution Result:
 
+Test result to execute math ops y = trunc(a * Sin(b) + cos(a) * exp(b)) for 100 million elements
+
 .NET For Loop Time (in ms): 22317
 
-Selected device: GeForce GTX 1080 Ti, With Accelerator (in ms): 8741
+GeForce GTX 1080 Ti                    : 8741 ms
 
-Selected device: Intel(R) UHD Graphics 630, With Accelerator (in ms): 6723
+Intel(R) UHD Graphics 630              : 6723 ms
 
-Selected device: Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, With Accelerator (in ms): 7380
+Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz: 7380 ms
 
-Selecting 33% of CPU processing, With Parallel Thread Time (in ms): 14332
+33% of CPU parallel processing                  : 14332 ms
 
-Selecting 66% of CPU processing, With Parallel Thread Time (in ms): 7716
+66% of CPU parallel processing                  : 7716 ms
 
-Selecting 100% of CPU processing, With Parallel Thread Time (in ms): 6420
+100% of CPU parallel processing:				: 6420 ms
 
 The .NET standard loop takes about 22 seconds, whereas with 100% CPU parallel approach using ArrayExtension it finishes off in 6 sec which is one-fourth of time taken. But for long running process using full CPU is not ideal. With ArrayExtension.Accelerated, which internally uses SIMD (Single Instruction Multiple Data), you can achive greater speed without using 100% of the hardware. But you can always fine-tune to use 100% of the hardware and achieve ultimate speed.
 

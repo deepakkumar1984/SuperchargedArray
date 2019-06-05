@@ -1,12 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿/*
+MIT License
 
+Copyright (c) 2019 Tech Quantum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ 
+*/
 namespace SuperchargedArray
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Class TOps.
     /// </summary>
@@ -17,7 +38,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="src">The source array.</param>
         /// <param name="value">The value.</param>
-        public virtual void Fill(NDArray x, float value)
+        public virtual void Fill(SuperArray x, float value)
         {
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { x[i] = value; });
         }
@@ -29,7 +50,7 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Dot(NDArray a, NDArray b)
+        public virtual SuperArray Dot(SuperArray a, SuperArray b)
         {
             if (a.Shape[1] != b.Shape[0])
             {
@@ -39,7 +60,7 @@ namespace SuperchargedArray
             long m = a.Shape[0];
             long q = b.Shape[1];
             long n = a.Shape[1];
-            NDArray r = new NDArray(m, q);
+            SuperArray r = new SuperArray(m, q);
 
             Parallel.For(0, m, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, i =>
             {
@@ -62,9 +83,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Abs(NDArray x)
+        public virtual SuperArray Abs(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = Math.Abs(x[i]); });
 
             return result;
@@ -78,9 +99,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Neg( NDArray x)
+        public virtual SuperArray Neg( SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] =-x[i]; });
             return result;
         }
@@ -92,9 +113,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Sign(NDArray x)
+        public virtual SuperArray Sign(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = Math.Sign(x[i]); });
             return result;
         }
@@ -106,9 +127,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Sqrt(NDArray x)
+        public virtual SuperArray Sqrt(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Sqrt(x[i]); });
 
             return result;
@@ -120,9 +141,9 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Exp( NDArray x)
+        public virtual SuperArray Exp( SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Exp(x[i]); });
 
             return result;
@@ -134,9 +155,9 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Log( NDArray x)
+        public virtual SuperArray Log( SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Log(x[i]); });
 
             return result;
@@ -148,9 +169,9 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Log10( NDArray x)
+        public virtual SuperArray Log10( SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Log10(x[i]); });
 
             return result;
@@ -162,9 +183,9 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Floor( NDArray x)
+        public virtual SuperArray Floor( SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Floor(x[i]); });
 
             return result;
@@ -176,9 +197,9 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Ceil( NDArray x)
+        public virtual SuperArray Ceil( SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Ceiling(x[i]); });
 
             return result;
@@ -192,9 +213,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Round( NDArray x, int decimals = 0)
+        public virtual SuperArray Round( SuperArray x, int decimals = 0)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             if (decimals > 0)
                 Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Round(x[i], decimals); });
             else
@@ -210,8 +231,8 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Trunc(NDArray x) {
-            NDArray result = new NDArray(x.Shape);
+        public virtual SuperArray Trunc(SuperArray x) {
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Truncate(x[i]); });
 
             return result;
@@ -224,9 +245,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Frac(NDArray x)
+        public virtual SuperArray Frac(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = x[i] - (float)Math.Truncate(x[i]); });
 
             return result;
@@ -239,9 +260,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Sin(NDArray x)
+        public virtual SuperArray Sin(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Sin(x[i]); });
 
             return result;
@@ -254,9 +275,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Cos( NDArray x)
+        public virtual SuperArray Cos( SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Cos(x[i]); });
 
             return result;
@@ -269,9 +290,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Tan(NDArray x)
+        public virtual SuperArray Tan(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Tan(x[i]); });
 
             return result;
@@ -283,9 +304,9 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Asin(NDArray x)
+        public virtual SuperArray Asin(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Asin(x[i]); });
 
             return result;
@@ -298,9 +319,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Acos( NDArray x)
+        public virtual SuperArray Acos( SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Acos(x[i]); });
 
             return result;
@@ -313,9 +334,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Atan(NDArray x)
+        public virtual SuperArray Atan(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Atan(x[i]); });
 
             return result;
@@ -328,8 +349,8 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Sinh(NDArray x) {
-            NDArray result = new NDArray(x.Shape);
+        public virtual SuperArray Sinh(SuperArray x) {
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Sinh(x[i]); });
 
             return result;
@@ -342,9 +363,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Cosh(NDArray x)
+        public virtual SuperArray Cosh(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Cosh(x[i]); });
 
             return result;
@@ -357,9 +378,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Tanh(NDArray x)
+        public virtual SuperArray Tanh(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => { result[i] = (float)Math.Tanh(x[i]); });
 
             return result;
@@ -371,9 +392,9 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Sigmoid(NDArray x)
+        public virtual SuperArray Sigmoid(SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) => 
             {
                 var exp = (float)Math.Exp(x[i]);
@@ -393,9 +414,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Atan2(NDArray y,NDArray x)
+        public virtual SuperArray Atan2(SuperArray y,SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = (float)Math.Atan2(y[i], x[i]);
@@ -412,9 +433,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Pow(NDArray x, float value)
+        public virtual SuperArray Pow(SuperArray x, float value)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = (float)Math.Pow(x[i], value);
@@ -430,7 +451,7 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Square(NDArray x)
+        public virtual SuperArray Square(SuperArray x)
         {
             return Pow(x, 2);
         }
@@ -443,9 +464,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray TPow(float value, NDArray x)
+        public virtual SuperArray TPow(float value, SuperArray x)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = (float)Math.Pow(value, x[i]);
@@ -464,9 +485,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Lerp(NDArray x0, NDArray x1, float weight)
+        public virtual SuperArray Lerp(SuperArray x0, SuperArray x1, float weight)
         {
-            NDArray result = new NDArray(x0.Shape);
+            SuperArray result = new SuperArray(x0.Shape);
             Parallel.For(0, x0.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = x0[i] + weight * (x1[i] - x0[i]);
@@ -484,9 +505,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Clip(NDArray x, float min, float max)
+        public virtual SuperArray Clip(SuperArray x, float min, float max)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = (x[i] < min) ? min : (x[i] > max) ? max : x[i];
@@ -503,9 +524,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Add(NDArray lhs, NDArray rhs)
+        public virtual SuperArray Add(SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] + rhs[i];
@@ -522,9 +543,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Add(NDArray lhs, float rhs)
+        public virtual SuperArray Add(SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] + rhs;
@@ -541,9 +562,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Add(float lhs, NDArray rhs)
+        public virtual SuperArray Add(float lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(rhs.Shape);
+            SuperArray result = new SuperArray(rhs.Shape);
             Parallel.For(0, rhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs + rhs[i];
@@ -558,9 +579,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Sub(NDArray lhs, NDArray rhs)
+        public virtual SuperArray Sub(SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] - rhs[i];
@@ -575,9 +596,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Sub(NDArray lhs, float rhs)
+        public virtual SuperArray Sub(SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] - rhs;
@@ -592,9 +613,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Sub(float lhs, NDArray rhs)
+        public virtual SuperArray Sub(float lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(rhs.Shape);
+            SuperArray result = new SuperArray(rhs.Shape);
             Parallel.For(0, rhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs - rhs[i];
@@ -609,9 +630,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Mul(NDArray lhs, NDArray rhs)
+        public virtual SuperArray Mul(SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] * rhs[i];
@@ -626,9 +647,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Mul(NDArray lhs, float rhs)
+        public virtual SuperArray Mul(SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] * rhs;
@@ -643,9 +664,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Mul(float lhs, NDArray rhs)
+        public virtual SuperArray Mul(float lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(rhs.Shape);
+            SuperArray result = new SuperArray(rhs.Shape);
             Parallel.For(0, rhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs * rhs[i];
@@ -660,9 +681,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Div(NDArray lhs, NDArray rhs)
+        public virtual SuperArray Div(SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] / rhs[i];
@@ -677,9 +698,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Div(NDArray lhs, float rhs)
+        public virtual SuperArray Div(SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] / rhs;
@@ -694,9 +715,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public virtual NDArray Div(float lhs, NDArray rhs)
+        public virtual SuperArray Div(float lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(rhs.Shape);
+            SuperArray result = new SuperArray(rhs.Shape);
             Parallel.For(0, rhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs / rhs[i];
@@ -713,9 +734,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Mod(NDArray x, float scalar)
+        public virtual SuperArray Mod(SuperArray x, float scalar)
         {
-            NDArray result = new NDArray(x.Shape);
+            SuperArray result = new SuperArray(x.Shape);
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = x[i] % scalar;
@@ -732,9 +753,9 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Mod(NDArray lhs, NDArray rhs)
+        public virtual SuperArray Mod(SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] % rhs[i];
@@ -750,9 +771,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray GreaterThan( NDArray lhs, float rhs)
+        public virtual SuperArray GreaterThan( SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] > rhs ? 1 : 0;
@@ -768,9 +789,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray LessThan( NDArray lhs, float rhs)
+        public virtual SuperArray LessThan( SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] < rhs ? 1 : 0;
@@ -786,9 +807,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray GreaterOrEqual( NDArray lhs, float rhs)
+        public virtual SuperArray GreaterOrEqual( SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] >= rhs ? 1 : 0;
@@ -804,9 +825,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray LessOrEqual( NDArray lhs, float rhs)
+        public virtual SuperArray LessOrEqual( SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] <= rhs ? 1 : 0;
@@ -822,9 +843,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray EqualTo( NDArray lhs, float rhs)
+        public virtual SuperArray EqualTo( SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] == rhs ? 1 : 0;
@@ -840,9 +861,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray NotEqual( NDArray lhs, float rhs)
+        public virtual SuperArray NotEqual( SuperArray lhs, float rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] != rhs ? 1 : 0;
@@ -858,9 +879,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray GreaterThan( NDArray lhs, NDArray rhs)
+        public virtual SuperArray GreaterThan( SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] > rhs[i] ? 1 : 0;
@@ -876,9 +897,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray LessThan( NDArray lhs, NDArray rhs)
+        public virtual SuperArray LessThan( SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] < rhs[i] ? 1 : 0;
@@ -894,9 +915,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray GreaterOrEqual( NDArray lhs, NDArray rhs)
+        public virtual SuperArray GreaterOrEqual( SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] >= rhs[i] ? 1 : 0;
@@ -912,9 +933,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray LessOrEqual( NDArray lhs, NDArray rhs)
+        public virtual SuperArray LessOrEqual( SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] <= rhs[i] ? 1 : 0;
@@ -930,9 +951,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray EqualTo( NDArray lhs, NDArray rhs)
+        public virtual SuperArray EqualTo( SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] == rhs[i] ? 1 : 0;
@@ -948,9 +969,9 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray NotEqual( NDArray lhs, NDArray rhs)
+        public virtual SuperArray NotEqual( SuperArray lhs, SuperArray rhs)
         {
-            NDArray result = new NDArray(lhs.Shape);
+            SuperArray result = new SuperArray(lhs.Shape);
             Parallel.For(0, lhs.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
             {
                 result[i] = lhs[i] != rhs[i] ? 1 : 0;
@@ -967,7 +988,7 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public float Sum(NDArray x)
+        public float Sum(SuperArray x)
         {
             float result = 0;
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
@@ -986,10 +1007,10 @@ namespace SuperchargedArray
         /// <returns>
         /// NDArray.
         /// </returns>
-        public virtual NDArray Sum(NDArray x, int dimension)
+        public virtual SuperArray Sum(SuperArray x, int dimension)
         {
             dimension = dimension < 0 ? x.DimensionCount + dimension : dimension;
-            NDArray result = new NDArray(x.Shape[0]);
+            SuperArray result = new SuperArray(x.Shape[0]);
             result.Fill(0);
             if (dimension > 0)
                 x = x.Transpose();
@@ -1007,7 +1028,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns></returns>
-        public float Minus(NDArray x)
+        public float Minus(SuperArray x)
         {
             float result = 0;
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
@@ -1024,9 +1045,9 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns></returns>
-        public virtual NDArray Minus(NDArray x, int dimension)
+        public virtual SuperArray Minus(SuperArray x, int dimension)
         {
-            NDArray result = new NDArray(x.Shape[0]);
+            SuperArray result = new SuperArray(x.Shape[0]);
             result.Fill(0);
 
             dimension = dimension < 0 ? x.DimensionCount + dimension : dimension;
@@ -1047,7 +1068,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns></returns>
-        public float Prod(NDArray x)
+        public float Prod(SuperArray x)
         {
             float result = 1;
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
@@ -1064,9 +1085,9 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns></returns>
-        public virtual NDArray Prod(NDArray x, int dimension)
+        public virtual SuperArray Prod(SuperArray x, int dimension)
         {
-            NDArray result = new NDArray(x.Shape[0]);
+            SuperArray result = new SuperArray(x.Shape[0]);
             result.Fill(1);
 
             dimension = dimension < 0 ? x.DimensionCount + dimension : dimension;
@@ -1087,7 +1108,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns></returns>
-        public float Min(NDArray x)
+        public float Min(SuperArray x)
         {
             return x.DataFloat.Min();
         }
@@ -1098,9 +1119,9 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns></returns>
-        public virtual NDArray Min(NDArray x, int dimension)
+        public virtual SuperArray Min(SuperArray x, int dimension)
         {
-            NDArray result = new NDArray(x.Shape[0]);
+            SuperArray result = new SuperArray(x.Shape[0]);
             result.Fill(0);
 
             dimension = dimension < 0 ? x.DimensionCount + dimension : dimension;
@@ -1120,7 +1141,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns></returns>
-        public float Max(NDArray x)
+        public float Max(SuperArray x)
         {
             return x.DataFloat.Max();
         }
@@ -1131,9 +1152,9 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns></returns>
-        public virtual NDArray Max(NDArray x, int dimension)
+        public virtual SuperArray Max(SuperArray x, int dimension)
         {
-            NDArray result = new NDArray(x.Shape[0]);
+            SuperArray result = new SuperArray(x.Shape[0]);
             result.Fill(0);
 
             dimension = dimension < 0 ? x.DimensionCount + dimension : dimension;
@@ -1155,9 +1176,9 @@ namespace SuperchargedArray
         /// <param name="src">The source.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Argmin(NDArray x, int dimension)
+        public virtual SuperArray Argmin(SuperArray x, int dimension)
         {
-            NDArray result = new NDArray(x.Shape[0]);
+            SuperArray result = new SuperArray(x.Shape[0]);
             result.Fill(0);
 
             dimension = dimension < 0 ? x.DimensionCount + dimension : dimension;
@@ -1180,9 +1201,9 @@ namespace SuperchargedArray
         /// <param name="src">The source.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns>NDArray.</returns>
-        public virtual NDArray Argmax(NDArray x, int dimension)
+        public virtual SuperArray Argmax(SuperArray x, int dimension)
         {
-            NDArray result = new NDArray(x.Shape[0]);
+            SuperArray result = new SuperArray(x.Shape[0]);
             result.Fill(0);
 
             dimension = dimension < 0 ? x.DimensionCount + dimension : dimension;
@@ -1204,7 +1225,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns></returns>
-        public float Mean(NDArray x)
+        public float Mean(SuperArray x)
         {
             return x.DataFloat.Average();
         }
@@ -1215,9 +1236,9 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns></returns>
-        public virtual NDArray Mean(NDArray x, int dimension)
+        public virtual SuperArray Mean(SuperArray x, int dimension)
         {
-            NDArray result = new NDArray(x.Shape[0]);
+            SuperArray result = new SuperArray(x.Shape[0]);
             result.Fill(0);
 
             dimension = dimension < 0 ? x.DimensionCount + dimension : dimension;
@@ -1238,7 +1259,7 @@ namespace SuperchargedArray
         /// <param name="a">a.</param>
         /// <param name="b">The b.</param>
         /// <returns></returns>
-        public virtual NDArray Maximum(NDArray a, NDArray b)
+        public virtual SuperArray Maximum(SuperArray a, SuperArray b)
         {
             var t1 = (a >= b);
             var t2 = (a > b);
@@ -1252,9 +1273,9 @@ namespace SuperchargedArray
         /// <param name="a">a.</param>
         /// <param name="b">The b.</param>
         /// <returns></returns>
-        public virtual NDArray Maximum(NDArray a, float b)
+        public virtual SuperArray Maximum(SuperArray a, float b)
         {
-            var b_t = new NDArray(a.Shape, a.ElementType);
+            var b_t = new SuperArray(a.Shape, a.ElementType);
             b_t.Fill(b);
             return Maximum(a, b_t);
         }
@@ -1265,9 +1286,9 @@ namespace SuperchargedArray
         /// <param name="a">a.</param>
         /// <param name="b">The b.</param>
         /// <returns></returns>
-        public virtual NDArray Maximum(float a, NDArray b)
+        public virtual SuperArray Maximum(float a, SuperArray b)
         {
-            var a_t = new NDArray(b.Shape, b.ElementType);
+            var a_t = new SuperArray(b.Shape, b.ElementType);
             a_t.Fill( a);
             return Maximum(a_t, b);
         }
@@ -1277,9 +1298,9 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns></returns>
-        public virtual NDArray Diag(NDArray x)
+        public virtual SuperArray Diag(SuperArray x)
         {
-            NDArray result = new NDArray(x.Elements, x.Elements);
+            SuperArray result = new SuperArray(x.Elements, x.Elements);
             result.Fill(0);
 
             Parallel.For(0, x.Elements, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, (i) =>
@@ -1297,7 +1318,7 @@ namespace SuperchargedArray
         /// <param name="seedSource">The seed source.</param>
         /// <param name="min">The minimum.</param>
         /// <param name="max">The maximum.</param>
-        public void RandomUniform(NDArray x, float min, float max, int? seed = null)
+        public void RandomUniform(SuperArray x, float min, float max, int? seed = null)
         {
             Random rnd = null;
             if (seed.HasValue)
@@ -1318,7 +1339,7 @@ namespace SuperchargedArray
         /// <param name="mean">The mean.</param>
         /// <param name="stdv">The STDV.</param>
         /// <param name="seed">The seed.</param>
-        public void RandomNormal(NDArray x, float mean, float stdv, int? seed = null)
+        public void RandomNormal(SuperArray x, float mean, float stdv, int? seed = null)
         {
             Random rnd = null;
             if (seed.HasValue)
@@ -1348,7 +1369,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="lambda">The lambda.</param>
         /// <param name="seed">The seed.</param>
-        public void RandomExponential(NDArray x, float lambda, int? seed = null)
+        public void RandomExponential(SuperArray x, float lambda, int? seed = null)
         {
             Random rnd = null;
             if (seed.HasValue)
@@ -1369,7 +1390,7 @@ namespace SuperchargedArray
         /// <param name="median">The median.</param>
         /// <param name="sigma">The sigma.</param>
         /// <param name="seed">The seed.</param>
-        public void RandomCauchy(NDArray x, float median, float sigma, int? seed = null)
+        public void RandomCauchy(SuperArray x, float median, float sigma, int? seed = null)
         {
             Random rnd = null;
             if (seed.HasValue)
@@ -1389,7 +1410,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="p">The p.</param>
         /// <param name="seed">The seed.</param>
-        public void RandomGeometric(NDArray x, float p, int? seed = null)
+        public void RandomGeometric(SuperArray x, float p, int? seed = null)
         {
             Random rnd = null;
             if (seed.HasValue)
@@ -1410,7 +1431,7 @@ namespace SuperchargedArray
         /// <param name="p">The p.</param>
         /// <param name="seed">The seed.</param>
         /// <exception cref="System.ArgumentException">p should be between 0 and 1</exception>
-        public void RandomBernoulli(NDArray x, float p, int? seed = null)
+        public void RandomBernoulli(SuperArray x, float p, int? seed = null)
         {
             if (p <= 0 || p > 1)
             {
@@ -1436,7 +1457,7 @@ namespace SuperchargedArray
         /// <param name="mean">The mean.</param>
         /// <param name="stdv">The STDV.</param>
         /// <param name="seed">The seed.</param>
-        public void RandomLogNormal(NDArray x, float mean, float stdv, int? seed = null)
+        public void RandomLogNormal(SuperArray x, float mean, float stdv, int? seed = null)
         {
             double zm = mean * mean;
             double zs = stdv * stdv;

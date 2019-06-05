@@ -1,9 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+MIT License
 
+Copyright (c) 2019 Tech Quantum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ 
+*/
 namespace SuperchargedArray
 {
+    using System;
+
     public class BaseOps
     {
         [NonSerialized]
@@ -24,7 +46,7 @@ namespace SuperchargedArray
         /// or
         /// label at index " + i + " is out of range 0 <= x < labelCount
         /// </exception>
-        public void FillOneHot(NDArray src, int labelCount, int[] labels)
+        public void FillOneHot(SuperArray src, int labelCount, int[] labels)
         {
             if (src.DimensionCount != 2) throw new InvalidOperationException("result must be a 2D array");
             if (src.Shape[0] != labels.Length) throw new InvalidOperationException("first dimension of result must equal the number of samples");
@@ -39,16 +61,6 @@ namespace SuperchargedArray
             }
         }
 
-        /// <summary>
-        /// Gets the seed.
-        /// </summary>
-        /// <param name="src">The source.</param>
-        /// <returns>System.Nullable<System.Int32&gt;.</returns>
-        private int? GetSeed(SeedSource src)
-        {
-            return src == null ? (int?)null : src.NextSeed();
-        }
-
 
         /// <summary>
         /// Tiles the specified tensor.
@@ -56,7 +68,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="repetitions">The repetitions.</param>
         /// <returns></returns>
-        public NDArray Tile(NDArray x, long repetitions)
+        public SuperArray Tile(SuperArray x, long repetitions)
         {
             long[] shape = new long[x.DimensionCount];
             for (int i = 0; i < shape.Length; i++)
@@ -75,7 +87,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="reps">The reps.</param>
         /// <returns></returns>
-        public NDArray Repeat(NDArray x, int reps)
+        public SuperArray Repeat(SuperArray x, int reps)
         {
             x = x.View(x.ElementCount(), 1).Tile(reps);
             return x.View(1, x.ElementCount());
@@ -85,7 +97,7 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public ValueTuple<NDArray, NDArray> BroadcastTensor(NDArray lhs, NDArray rhs)
+        public ValueTuple<SuperArray, SuperArray> BroadcastTensor(SuperArray lhs, SuperArray rhs)
         {
             if (!lhs.IsSameSizeAs(rhs))
             {

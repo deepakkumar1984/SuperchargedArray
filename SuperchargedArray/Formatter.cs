@@ -1,10 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿/*
+MIT License
 
+Copyright (c) 2019 Tech Quantum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ 
+*/
 namespace SuperchargedArray
 {
+    using System;
+    using System.Linq;
+    using System.Text;
+
     /// <summary>
     /// Class TensorFormatting.
     /// </summary>
@@ -69,7 +92,7 @@ namespace SuperchargedArray
         /// <param name="storage">The storage.</param>
         /// <param name="array">The array.</param>
         /// <returns><c>true</c> if [is int only] [the specified storage]; otherwise, <c>false</c>.</returns>
-        private static bool IsIntOnly(Storage storage, NDArray array)
+        private static bool IsIntOnly(Storage storage, SuperArray array)
         {
             // HACK this is a hacky way of iterating over the elements of the array.
             // if the array has holes, this will incorrectly include those elements
@@ -94,7 +117,7 @@ namespace SuperchargedArray
         /// <param name="storage">The storage.</param>
         /// <param name="array">The array.</param>
         /// <returns>Tuple<System.Double, System.Double&gt;.</returns>
-        private static Tuple<double, double> AbsMinMax(Storage storage, NDArray array)
+        private static Tuple<double, double> AbsMinMax(Storage storage, SuperArray array)
         {
             if (storage.ElementCount == 0)
                 return Tuple.Create(0.0, 0.0);
@@ -208,7 +231,7 @@ namespace SuperchargedArray
         /// <param name="storage">The storage.</param>
         /// <param name="array">The array.</param>
         /// <returns>Tuple<System.String, System.Double, System.Int32&gt;.</returns>
-        private static Tuple<string, double, int> GetStorageFormat(Storage storage, NDArray array)
+        private static Tuple<string, double, int> GetStorageFormat(Storage storage, SuperArray array)
         {
             if (storage.ElementCount == 0)
                 return Tuple.Create("", 1.0, 0);
@@ -227,7 +250,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="array">The array.</param>
         /// <returns>System.String.</returns>
-        public static string FormatTensorTypeAndSize(NDArray array)
+        public static string FormatTensorTypeAndSize(SuperArray array)
         {
             var result = new StringBuilder();
             result
@@ -259,7 +282,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <param name="array">The array.</param>
-        private static void FormatVector(StringBuilder builder, NDArray array)
+        private static void FormatVector(StringBuilder builder, SuperArray array)
         {
             var storageFormat = GetStorageFormat(array.Storage, array);
             var format = storageFormat.Item1;
@@ -290,7 +313,7 @@ namespace SuperchargedArray
         /// <param name="builder">The builder.</param>
         /// <param name="array">The array.</param>
         /// <param name="indent">The indent.</param>
-        private static void FormatMatrix(StringBuilder builder, NDArray array, string indent)
+        private static void FormatMatrix(StringBuilder builder, SuperArray array, string indent)
         {
             var storageFormat = GetStorageFormat(array.Storage, array);
             var format = storageFormat.Item1;
@@ -359,7 +382,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <param name="array">The array.</param>
-        private static void FormatTensor(StringBuilder builder, NDArray array)
+        private static void FormatTensor(StringBuilder builder, SuperArray array)
         {
             var storageFormat = GetStorageFormat(array.Storage, array);
             var format = storageFormat.Item1;
@@ -420,7 +443,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="array">The array.</param>
         /// <returns>System.String.</returns>
-        public static string Format(NDArray array)
+        public static string Format(SuperArray array)
         {
             var result = new StringBuilder();
             if (array.DimensionCount == 0)

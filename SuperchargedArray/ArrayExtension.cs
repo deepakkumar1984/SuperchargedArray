@@ -1,4 +1,4 @@
-/*
+﻿/*
 MIT License
 
 Copyright (c) 2019 Tech Quantum
@@ -22,28 +22,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  
 */
-namespace SuperchargedArray.Accelerated
+namespace SuperchargedArray
 {
     using System;
-    using System.Runtime.Serialization;
 
-    public class CompileException : Exception
+    /// <summary>
+    /// Extension methods for the .NET array
+    /// </summary>
+    public static class ArrayExtension
     {
-        public CompileException()
+        /// <summary>
+        /// Gets the shape of the .NET array.
+        /// </summary>
+        /// <param name="x">The array.</param>
+        /// <returns></returns>
+        public static long[] GetShape(this Array x)
         {
+            long[] shape = new long[x.Rank];
+            for (int i = 0; i < shape.Length; i++)
+                shape[i] = x.GetLength(i);
+
+            return shape;
         }
 
-        public CompileException(string message) : base(message)
+        /// <summary>
+        /// Gets the datatype of the .NET array
+        /// </summary>
+        /// <param name="x">The array.</param>
+        /// <returns></returns>
+        public static DType GetDType(this Array x)
         {
-            
-        }
+            DType result = DType.Single;
+            if(x.GetType().Name.StartsWith("Single"))
+            {
+                result = DType.Single;
+            }
+            else if (x.GetType().Name.StartsWith("Double"))
+            {
+                result = DType.Double;
+            }
 
-        public CompileException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected CompileException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
+            return result;
         }
     }
 }

@@ -52,10 +52,10 @@ namespace ArrayExt.Accel.Testing
         {
             var K = Global.OP;
             //Create an array with values
-            NDArray a = new float[,] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
+            SuperArray a = new float[,] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
 
             //Create a array with constant value 2
-            NDArray b = new float[3, 2];
+            SuperArray b = new float[3, 2];
             //NDArray b = new NDArray(3, 2);
             b.Fill(2);
 

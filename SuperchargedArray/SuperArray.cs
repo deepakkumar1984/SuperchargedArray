@@ -1,20 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+﻿/*
+MIT License
 
+Copyright (c) 2019 Tech Quantum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ 
+*/
 namespace SuperchargedArray
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+
     /// <summary>
-    /// Arith Array is a base tensor for the Arithmetica. 
-    /// It's a multi dimensional array with implementation with basic arithmetics, trignometric, hyperbolic, rounding, 
+    /// An enhanced version of .NET array which is scalable, easy to use, capable of running on various hardware CPU, GPU, FPGA
     /// Implements the <see cref="System.IDisposable" />
     /// </summary>
     /// <seealso cref="System.IDisposable" />
-    public partial class NDArray : IDisposable
+    public partial class SuperArray : IDisposable
     {
         /// <summary>
         /// The sizes
@@ -39,10 +59,10 @@ namespace SuperchargedArray
         private bool isDisposed = false;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NDArray"/> class.
+        /// Initializes a new instance of the <see cref="SuperArray"/> class.
         /// </summary>
         /// <param name="shape">The shape.</param>
-        public NDArray(params long[] shape)
+        public SuperArray(params long[] shape)
             : this(shape, DType.Single)
         {
 
@@ -56,24 +76,24 @@ namespace SuperchargedArray
         /// <param name="elementType"></param>
         /// <param name="shape"></param>
         /// <summary>
-        /// Initializes a new instance of the <see cref="NDArray"/> class.
+        /// Initializes a new instance of the <see cref="SuperArray"/> class.
         /// </summary>
         /// <param name="allocator">The allocator.</param>
         /// <param name="elementType">Type of the element.</param>
         /// <param name="sizes">The sizes.</param>
-        public NDArray(long[] shape, DType elementType)
+        public SuperArray(long[] shape, DType elementType)
             : this(shape, Helper.GetContiguousStride(shape), elementType)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NDArray"/> class.
+        /// Initializes a new instance of the <see cref="SuperArray"/> class.
         /// </summary>
         /// <param name="allocator">The allocator.</param>
         /// <param name="elementType">Type of the element.</param>
         /// <param name="sizes">The sizes.</param>
         /// <param name="strides">The strides.</param>
-        public NDArray(long[] sizes, long[] strides, DType elementType)
+        public SuperArray(long[] sizes, long[] strides, DType elementType)
         {
             this.shape = sizes;
             this.strides = strides;
@@ -82,13 +102,13 @@ namespace SuperchargedArray
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NDArray"/> class.
+        /// Initializes a new instance of the <see cref="SuperArray"/> class.
         /// </summary>
         /// <param name="sizes">The sizes.</param>
         /// <param name="strides">The strides.</param>
         /// <param name="storage">The storage.</param>
         /// <param name="storageOffset">The storage offset.</param>
-        private NDArray(long[] sizes, long[] strides, Storage storage, long storageOffset)
+        private SuperArray(long[] sizes, long[] strides, Storage storage, long storageOffset)
         {
             this.shape = sizes;
             this.strides = strides;
@@ -130,7 +150,7 @@ namespace SuperchargedArray
         /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
-            var o = obj as NDArray;
+            var o = obj as SuperArray;
             if (o == null) return false;
 
             return
@@ -222,9 +242,9 @@ namespace SuperchargedArray
         /// incrementing the refcount of the storage object.
         /// </summary>
         /// <returns>ArithArray.</returns>
-        public NDArray CopyRef()
+        public SuperArray CopyRef()
         {
-            return new NDArray(shape, strides, storage, storageOffset);
+            return new SuperArray(shape, strides, storage, storageOffset);
         }
 
         /// <summary>
@@ -279,7 +299,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="other">The other.</param>
         /// <returns><c>true</c> if [is same size as] [the specified other]; otherwise, <c>false</c>.</returns>
-        public bool IsSameSizeAs(NDArray other)
+        public bool IsSameSizeAs(SuperArray other)
         {
             return ArrayResultBuilder.ArrayEqual(this.shape, other.shape);
         }
@@ -390,7 +410,7 @@ namespace SuperchargedArray
         /// or
         /// Output array must have the same number of elements as the input
         /// </exception>
-        internal NDArray View(params long[] sizes)
+        internal SuperArray View(params long[] sizes)
         {
             if (!this.IsContiguous()) throw new InvalidOperationException("Cannot use View on a non-contiguous array");
 
@@ -399,7 +419,7 @@ namespace SuperchargedArray
                 throw new InvalidOperationException("Output array must have the same number of elements as the input");
             }
 
-            return new NDArray(sizes, Helper.GetContiguousStride(sizes), this.storage, this.storageOffset);
+            return new SuperArray(sizes, Helper.GetContiguousStride(sizes), this.storage, this.storageOffset);
         }
 
         /// <summary>
@@ -407,7 +427,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="sizes">The sizes.</param>
         /// <returns></returns>
-        public NDArray Reshape(params long[] sizes)
+        public SuperArray Reshape(params long[] sizes)
         {
             long prod = -1 * sizes.Aggregate(1L, (a, b) => a * b);
             for (int i = 0; i < sizes.Length; i++)
@@ -426,7 +446,7 @@ namespace SuperchargedArray
         /// Flattens the array
         /// </summary>
         /// <returns></returns>
-        public NDArray Ravel()
+        public SuperArray Ravel()
         {
             return View(ElementCount());
         }
@@ -445,7 +465,7 @@ namespace SuperchargedArray
         /// or
         /// size
         /// </exception>
-        public NDArray Narrow(int dimension, long startIndex, long size)
+        public SuperArray Narrow(int dimension, long startIndex, long size)
         {
             if (dimension < 0 || dimension >= DimensionCount) throw new ArgumentOutOfRangeException("dimension");
             if (startIndex < 0 || startIndex >= shape[dimension]) throw new ArgumentOutOfRangeException("startIndex");
@@ -457,7 +477,7 @@ namespace SuperchargedArray
             var newStrides = Helper.GetContiguousStride(newSizes);
             
 
-            return new NDArray(newSizes, strides, storage, newOffset);
+            return new SuperArray(newSizes, strides, storage, newOffset);
         }
 
         /// <summary>
@@ -472,7 +492,7 @@ namespace SuperchargedArray
         /// or
         /// index
         /// </exception>
-        public NDArray Select(int dimension, long index)
+        public SuperArray Select(int dimension, long index)
         {
             if (DimensionCount == 1) throw new InvalidOperationException("Select requires 2 or more dimensions");
             if (dimension < 0 || dimension >= DimensionCount) throw new ArgumentOutOfRangeException("dimension");
@@ -485,7 +505,7 @@ namespace SuperchargedArray
             return result;
         }
 
-        public NDArray Transpose()
+        public SuperArray Transpose()
         {
             if (DimensionCount != 2) throw new InvalidOperationException("Parameterless Transpose is only valid on 2d tensors");
             return Transpose(0, 1, true);
@@ -496,7 +516,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <returns>ArithArray.</returns>
         /// <exception cref="InvalidOperationException">Parameterless Transpose is only valid on 2d tensors</exception>
-        internal NDArray IntTranspose()
+        internal SuperArray IntTranspose()
         {
             if (DimensionCount != 2) throw new InvalidOperationException("Parameterless Transpose is only valid on 2d tensors");
 
@@ -514,7 +534,7 @@ namespace SuperchargedArray
         /// or
         /// dimension2
         /// </exception>
-        private NDArray Transpose(int dimension1, int dimension2, bool NewContiguous = false)
+        private SuperArray Transpose(int dimension1, int dimension2, bool NewContiguous = false)
         {
             if (dimension1 < 0 || dimension1 >= DimensionCount) throw new ArgumentOutOfRangeException("dimension1");
             if (dimension2 < 0 || dimension2 >= DimensionCount) throw new ArgumentOutOfRangeException("dimension2");
@@ -531,9 +551,9 @@ namespace SuperchargedArray
             ArraySwap(newStrides, dimension1, dimension2);
 
             if (NewContiguous)
-                return Helper.NewContiguous(new NDArray(newSizes, newStrides, storage, storageOffset)).Reshape(newSizes);
+                return Helper.NewContiguous(new SuperArray(newSizes, newStrides, storage, storageOffset)).Reshape(newSizes);
 
-            return new NDArray(newSizes, newStrides, storage, storageOffset);
+            return new SuperArray(newSizes, newStrides, storage, storageOffset);
         }
 
         /// <summary>
@@ -542,7 +562,7 @@ namespace SuperchargedArray
         /// <param name="dims">The dims.</param>
         /// <returns>ArithArray.</returns>
         /// <exception cref="InvalidOperationException">The number of permutation indices must equal the number of array dimensions</exception>
-        public NDArray Transpose(params int[] dims)
+        public SuperArray Transpose(params int[] dims)
         {
             if (dims.Length != this.DimensionCount)
                 throw new InvalidOperationException("The number of permutation indices must equal the number of array dimensions");
@@ -568,7 +588,7 @@ namespace SuperchargedArray
         /// or
         /// Can only expand singleton dimensions (dimensions of size 1)
         /// </exception>
-        public NDArray Expand(params long[] newSizes)
+        public SuperArray Expand(params long[] newSizes)
         {
             if (newSizes.Length != DimensionCount)
                 throw new InvalidOperationException("number of elements of newSizes must match the dimension count of array");
@@ -585,7 +605,7 @@ namespace SuperchargedArray
                 }
             }
 
-            return new NDArray(newSizes, newStrides, this.storage, this.storageOffset);
+            return new SuperArray(newSizes, newStrides, this.storage, this.storageOffset);
         }
 
 
@@ -593,7 +613,7 @@ namespace SuperchargedArray
         /// Return a new array where **all** singleton dimensions have been removed
         /// </summary>
         /// <returns>ArithArray.</returns>
-        public NDArray Squeeze()
+        public SuperArray Squeeze()
         {
             var newSizeStrides = shape.Zip(strides, Tuple.Create)
                 .Where(x => x.Item1 != 1)
@@ -602,7 +622,7 @@ namespace SuperchargedArray
             var newSizes = newSizeStrides.Select(x => x.Item1).ToArray();
             var newStrides = newSizeStrides.Select(x => x.Item2).ToArray();
 
-            return new NDArray(newSizes, newStrides, storage, storageOffset);
+            return new SuperArray(newSizes, newStrides, storage, storageOffset);
         }
 
 
@@ -613,7 +633,7 @@ namespace SuperchargedArray
         /// <returns>ArithArray.</returns>
         /// <exception cref="InvalidOperationException">Squeeze requires 2 or more dimensions</exception>
         /// <exception cref="ArgumentOutOfRangeException">dimension</exception>
-        public NDArray Squeeze(int dimension)
+        public SuperArray Squeeze(int dimension)
         {
             if (DimensionCount == 1) throw new InvalidOperationException("Squeeze requires 2 or more dimensions");
             if (dimension < 0 || dimension >= DimensionCount) throw new ArgumentOutOfRangeException("dimension");
@@ -621,7 +641,7 @@ namespace SuperchargedArray
             var newSizes = ArrayRemove(shape, dimension);
             var newStrides = ArrayRemove(strides, dimension);
 
-            return new NDArray(newSizes, newStrides, storage, storageOffset);
+            return new SuperArray(newSizes, newStrides, storage, storageOffset);
         }
 
         /// <summary>
@@ -640,7 +660,7 @@ namespace SuperchargedArray
         /// or
         /// step must be at least 1 - step
         /// </exception>
-        public NDArray Unfold(int dimension, long size, long step)
+        public SuperArray Unfold(int dimension, long size, long step)
         {
             if (DimensionCount == 0) throw new InvalidOperationException("Cannot unfold an empty array");
             if (dimension < 0 || dimension >= DimensionCount) throw new ArgumentOutOfRangeException("dimension is out of range", "dimension");
@@ -658,7 +678,7 @@ namespace SuperchargedArray
             newSize[dimension] = (this.shape[dimension] - size) / step + 1;
             newStrides[dimension] = step * this.strides[dimension];
 
-            return new NDArray(newSize, newStrides, this.Storage, this.StorageOffset);
+            return new SuperArray(newSize, newStrides, this.Storage, this.StorageOffset);
         }
 
 
@@ -690,14 +710,14 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="newDimCount">The new dim count.</param>
         /// <returns>ArithArray.</returns>
-        private NDArray PadToDimCount(int newDimCount)
+        private SuperArray PadToDimCount(int newDimCount)
         {
             var newSizes = Pad1Prepend(this.shape, newDimCount);
 
             var newStrides = Helper.GetContiguousStride(newSizes);
             Array.Copy(this.strides, 0, newStrides, newStrides.Length - this.strides.Length, this.strides.Length);
 
-            return new NDArray(newSizes, newStrides, this.storage, this.storageOffset);
+            return new SuperArray(newSizes, newStrides, this.storage, this.storageOffset);
         }
 
         /// <summary>
@@ -710,7 +730,7 @@ namespace SuperchargedArray
         /// or
         /// All dimensions must be repeated at least once
         /// </exception>
-        public NDArray RepeatTensor(params long[] repetitions)
+        public SuperArray RepeatTensor(params long[] repetitions)
         {
             if (repetitions.Length < this.DimensionCount)
                 throw new InvalidOperationException("repetitions must be at least the same length as the number of array dimensions");
@@ -719,7 +739,7 @@ namespace SuperchargedArray
             var paddedSrc = this.PadToDimCount(repetitions.Length);
             var resultSize = paddedSrc.Shape.Zip(repetitions, (s, r) => s * r).ToArray();
 
-            var result = new NDArray(resultSize, this.ElementType);
+            var result = new SuperArray(resultSize, this.ElementType);
 
             var urTensor = result.CopyRef();
             for (int i = 0; i < paddedSrc.DimensionCount; ++i)
@@ -736,12 +756,12 @@ namespace SuperchargedArray
             return result;
         }
 
-        public NDArray Tile(long repetitions)
+        public SuperArray Tile(long repetitions)
         {
             return Global.OP.Tile(this, repetitions);
         }
 
-        public NDArray GetRegion(long[] dimensionStarts, long[] dimensionSizes)
+        public SuperArray GetRegion(long[] dimensionStarts, long[] dimensionSizes)
         {
             var result = this.CopyRef();
             for (int i = 0; i < dimensionStarts.Length; ++i)
@@ -790,7 +810,7 @@ namespace SuperchargedArray
         /// <param name="allocator">The allocator.</param>
         /// <param name="array">The array.</param>
         /// <returns>ArithArray.</returns>
-        public static NDArray FromArray(Array array)
+        public static SuperArray FromArray(Array array)
         {
             // From the CLI spec(section 8.9.1):
             // Array elements shall be laid out within the array object in row - major order
@@ -808,7 +828,7 @@ namespace SuperchargedArray
                 .Select(x => (long)array.GetLength(x))
                 .ToArray();
 
-            var result = new NDArray(dimSizes, elementType);
+            var result = new SuperArray(dimSizes, elementType);
             result.LoadFrom(array);
             return result;
         }
@@ -905,7 +925,7 @@ namespace SuperchargedArray
         /// <param name="allocator">The allocator.</param>
         /// <param name="stream">The stream.</param>
         /// <returns>ArithArray.</returns>
-        public static NDArray Deserialize(System.IO.Stream stream)
+        public static SuperArray Deserialize(System.IO.Stream stream)
         {
             return Serializer.Deserialize(stream);
         }
@@ -963,16 +983,16 @@ namespace SuperchargedArray
             Global.OP.Fill(this, value);
         }
 
-        public static NDArray Constant(float value, DType dtype, params long[] sizes)
+        public static SuperArray Constant(float value, DType dtype, params long[] sizes)
         {
-            NDArray array = new NDArray(sizes, dtype);
+            SuperArray array = new SuperArray(sizes, dtype);
             Global.OP.Fill(array, value);
             return array;
         }
 
-        public static NDArray Arange(float start, float stop, int step = 1)
+        public static SuperArray Arange(float start, float stop, int step = 1)
         {
-            NDArray result = null;
+            SuperArray result = null;
             List<float> data = new List<float>();
             while (start < stop)
             {
@@ -980,84 +1000,84 @@ namespace SuperchargedArray
                 start += step;
             }
 
-            result = new NDArray(1, data.Count);
+            result = new SuperArray(1, data.Count);
             result.LoadFrom(data.ToArray());
             return result;
         }
 
         #region Operators
 
-        public static NDArray operator +(NDArray lhs, NDArray rhs)
+        public static SuperArray operator +(SuperArray lhs, SuperArray rhs)
         {
             return Global.OP.Add(lhs, rhs);
         }
 
-        public static NDArray operator +(NDArray lhs, float rhs) { return Global.OP.Add(lhs, rhs); }
+        public static SuperArray operator +(SuperArray lhs, float rhs) { return Global.OP.Add(lhs, rhs); }
 
-        public static NDArray operator +(float lhs, NDArray rhs) { return Global.OP.Add(rhs, lhs); }
+        public static SuperArray operator +(float lhs, SuperArray rhs) { return Global.OP.Add(rhs, lhs); }
 
-        public static NDArray operator -(NDArray lhs, NDArray rhs)
+        public static SuperArray operator -(SuperArray lhs, SuperArray rhs)
         {
             return Global.OP.Sub(lhs, rhs);
         }
 
-        public static NDArray operator -(NDArray lhs, float rhs) { return Global.OP.Sub(lhs, rhs); }
+        public static SuperArray operator -(SuperArray lhs, float rhs) { return Global.OP.Sub(lhs, rhs); }
 
-        public static NDArray operator -(float lhs, NDArray rhs) { return Global.OP.Sub(lhs, rhs); }
+        public static SuperArray operator -(float lhs, SuperArray rhs) { return Global.OP.Sub(lhs, rhs); }
 
-        public static NDArray operator *(NDArray lhs, NDArray rhs)
+        public static SuperArray operator *(SuperArray lhs, SuperArray rhs)
         {
             return Global.OP.Mul(lhs, rhs);
         }
 
-        public static NDArray operator *(NDArray lhs, float rhs) { return Global.OP.Mul(lhs, rhs); }
+        public static SuperArray operator *(SuperArray lhs, float rhs) { return Global.OP.Mul(lhs, rhs); }
 
-        public static NDArray operator *(float lhs, NDArray rhs) { return Global.OP.Mul(rhs, lhs); }
+        public static SuperArray operator *(float lhs, SuperArray rhs) { return Global.OP.Mul(rhs, lhs); }
 
-        public static NDArray operator /(NDArray lhs, NDArray rhs)
+        public static SuperArray operator /(SuperArray lhs, SuperArray rhs)
         {
             return Global.OP.Div(lhs, rhs);
         }
 
-        public static NDArray operator /(NDArray lhs, float rhs) { return Global.OP.Div(lhs, rhs); }
+        public static SuperArray operator /(SuperArray lhs, float rhs) { return Global.OP.Div(lhs, rhs); }
 
-        public static NDArray operator /(float lhs, NDArray rhs) { return Global.OP.Div(rhs, lhs); }
+        public static SuperArray operator /(float lhs, SuperArray rhs) { return Global.OP.Div(rhs, lhs); }
 
-        public static NDArray operator >(NDArray lhs, NDArray rhs) { return Global.OP.GreaterThan(lhs, rhs); }
+        public static SuperArray operator >(SuperArray lhs, SuperArray rhs) { return Global.OP.GreaterThan(lhs, rhs); }
 
-        public static NDArray operator >(NDArray lhs, float rhs) { return Global.OP.GreaterThan(lhs, rhs); }
+        public static SuperArray operator >(SuperArray lhs, float rhs) { return Global.OP.GreaterThan(lhs, rhs); }
 
-        public static NDArray operator <(NDArray lhs, NDArray rhs)
+        public static SuperArray operator <(SuperArray lhs, SuperArray rhs)
         {
             return Global.OP.GreaterThan(rhs, lhs);
         }
 
-        public static NDArray operator <(NDArray lhs, float rhs)
+        public static SuperArray operator <(SuperArray lhs, float rhs)
         {
-            NDArray rhs_t = NDArray.Constant(rhs, lhs.ElementType, lhs.shape);
+            SuperArray rhs_t = SuperArray.Constant(rhs, lhs.ElementType, lhs.shape);
             return Global.OP.GreaterThan(rhs_t, lhs);
         }
 
-        public static NDArray operator >=(NDArray lhs, NDArray rhs) { return Global.OP.GreaterOrEqual(lhs, rhs); }
+        public static SuperArray operator >=(SuperArray lhs, SuperArray rhs) { return Global.OP.GreaterOrEqual(lhs, rhs); }
 
-        public static NDArray operator >=(NDArray lhs, float rhs) { return Global.OP.GreaterOrEqual(lhs, rhs); }
+        public static SuperArray operator >=(SuperArray lhs, float rhs) { return Global.OP.GreaterOrEqual(lhs, rhs); }
 
-        public static NDArray operator <=(NDArray lhs, NDArray rhs)
+        public static SuperArray operator <=(SuperArray lhs, SuperArray rhs)
         {
             return Global.OP.GreaterOrEqual(rhs, lhs);
         }
 
-        public static NDArray operator <=(NDArray lhs, float rhs)
+        public static SuperArray operator <=(SuperArray lhs, float rhs)
         {
-            NDArray rhs_t = NDArray.Constant(rhs, lhs.ElementType, lhs.shape);
+            SuperArray rhs_t = SuperArray.Constant(rhs, lhs.ElementType, lhs.shape);
             return Global.OP.GreaterOrEqual(rhs_t, lhs);
         }
         #endregion
 
         #region Implicit Methods
-        public static implicit operator NDArray(Array d)
+        public static implicit operator SuperArray(Array d)
         {
-            NDArray result = new NDArray(d.GetShape(), d.GetDType());
+            SuperArray result = new SuperArray(d.GetShape(), d.GetDType());
             result.LoadFrom(d);
             return result;
         }
