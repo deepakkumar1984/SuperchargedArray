@@ -12,7 +12,7 @@ namespace ArrayExt.Accel.Testing
     {
         public void Run()
         {
-            int count = 30000000;
+            int count = 10000000;
             Random rnd = new Random();
 
             //Create variable A with random values
@@ -88,12 +88,13 @@ namespace ArrayExt.Accel.Testing
                 sw.Stop();
 
                 Console.WriteLine("With Accelerator (in ms): " + sw.ElapsedMilliseconds);
-                Accelerator.Dispose();
             }
             catch(Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+
+            Accelerator.Dispose();
         }
     }
 }

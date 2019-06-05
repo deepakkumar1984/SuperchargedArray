@@ -97,7 +97,7 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public ValueTuple<SuperArray, SuperArray> BroadcastTensor(SuperArray lhs, SuperArray rhs)
+        public Tuple<SuperArray, SuperArray> BroadcastTensor(SuperArray lhs, SuperArray rhs)
         {
             if (!lhs.IsSameSizeAs(rhs))
             {
@@ -154,7 +154,7 @@ namespace SuperchargedArray
                 }
             }
 
-            return (lhs, rhs);
+            return new Tuple<SuperArray, SuperArray>(lhs, rhs);
         }
     }
 }
