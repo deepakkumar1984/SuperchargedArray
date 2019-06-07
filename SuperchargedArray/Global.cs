@@ -1,7 +1,9 @@
 ﻿namespace SuperchargedArray
 {
     using System;
+    using Amplifier;
     using SuperchargedArray.Accelerated;
+    using SuperchargedArray.Amplified.Kernels;
 
     /// <summary>
     /// Global setting for the SuperArray
@@ -25,12 +27,24 @@
         public static ArrayOps OP { get; set; } = new ArrayOps();
 
         /// <summary>
+        /// Gets or sets the compiler OpenCL or CUDA.
+        /// </summary>
+        /// <value>
+        /// The compiler.
+        /// </value>
+        public static BaseCompiler Compiler { get; } = new OpenCLCompiler();
+
+        /// <summary>
         /// Uses the accelerated device.
         /// </summary>
         /// <param name="deviceId">The device identifier.</param>
-        public static void UseAccelerator(int deviceId = 0)
+        public static void UseAmplifier(int deviceId = 0)
         {
-            Accelerator.UseDevice(deviceId);
+            Compiler.UseDevice(deviceId);
+            Compiler.CompileKernel(typeof(InternalFloatKernels));
+            
+            Compiler.CompileKernel(typeof(InternalDoubleKernels));
+            OP = new Amplified.ArrayOps();
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace ArrayExt.Accel.Testing
             RunStandardLoop(count, a, b);
             Console.WriteLine();
 
-            var devices = Accelerator.Devices;
+            var devices = Global.Compiler.Devices;
             foreach (var item in devices)
             {
                 RunArrayAccelerated(count, a, b, item.ID);
@@ -78,7 +78,7 @@ namespace ArrayExt.Accel.Testing
         {
             try
             {
-                Accelerator.UseDevice(deviceid);
+                Global.UseAmplifier(deviceid);
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
 
@@ -94,7 +94,7 @@ namespace ArrayExt.Accel.Testing
                 Console.WriteLine("Error: " + ex.Message);
             }
 
-            Accelerator.Dispose();
+            Global.Compiler.Dispose();
         }
     }
 }

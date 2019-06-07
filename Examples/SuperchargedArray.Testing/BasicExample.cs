@@ -59,6 +59,7 @@ namespace ArrayExt.Accel.Testing
             //NDArray b = new NDArray(3, 2);
             b.Fill(2);
 
+            var sum = a + b;
             //Perform Math operation on the array: 2A + Log(B) + Exp(A)
             var r = 2 * a - K.Log(b) + K.Exp(a);
 
