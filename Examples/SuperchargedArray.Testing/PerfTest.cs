@@ -1,5 +1,4 @@
 ﻿using SuperchargedArray;
-using SuperchargedArray.Accelerated;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -2,7 +2,6 @@
 {
     using System;
     using Amplifier;
-    using SuperchargedArray.Accelerated;
     using SuperchargedArray.Amplified.Kernels;
 
     /// <summary>
