@@ -59,7 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Amplifier.NET\Amplifier.Net\Amplifier.csproj" />
+    <ProjectReference Include="..\..\Amplifier.NET\src\Amplifier.Net\Amplifier.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -75,12 +75,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="SuperchargedArray.dll.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
