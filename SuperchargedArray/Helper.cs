@@ -29,7 +29,7 @@ namespace SuperchargedArray
     /// <summary>
     /// Class TensorDimensionHelpers.
     /// </summary>
-    internal static class Helper
+    public static class Helper
     {
         /// <summary>
         /// Elements the count.

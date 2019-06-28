@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
-    <Version>0.4.3</Version>
+    <Version>0.4.4</Version>
     <Authors>Deepak Batini</Authors>
     <Company>Tech-Quantum</Company>
     <Description>An extended version of the Array to accelerate operation, easy to use, multi dimensional. With SuperchargedArray.Accelerated namespace you will unlock SIMD potential to run the Array operation on any hardware like Intel CPU/GPU, NVIDIA, AMD etc.</Description>
@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/tech-quantum/SuperchargedArray</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>array-manipulations, array, fast array, ndarray, multi dimension array, tensor</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/tech-quantum/SuperchargedArray/master/icon_32.png</PackageIconUrl>
+    <PackageIconUrl>https://i.ibb.co/r4fNPQ5/tqlogo.png</PackageIconUrl>
     <Title>SuperchargedArray</Title>
     <PackageLicenseUrl></PackageLicenseUrl>
     <Product>Supercharged Array</Product>
