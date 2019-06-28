@@ -39,8 +39,8 @@ namespace SuperchargedArray.Amplified
             return name;
         }
 
-        private dynamic floatExec = Global.Compiler.GetExec<float>();
-        private dynamic doubleExec = Global.Compiler.GetExec<double>();
+        private dynamic floatExec = Global.Compiler.GetExec();
+        private dynamic doubleExec = Global.Compiler.GetExec();
 
         private SuperArray ExecuteReturn(string name, SuperArray x)
         {
@@ -48,12 +48,12 @@ namespace SuperchargedArray.Amplified
             if (x.ElementType == DType.Single)
             {
                 r = new float[x.Elements];
-                Global.Compiler.Execute<float>(name, x.Data<float>(), r);
+                Global.Compiler.Execute(name, x.Data<float>(), r);
             }
             else
             {
                 r = new double[x.Elements];
-                Global.Compiler.Execute<double>(name, x.Data<double>(), r);
+                Global.Compiler.Execute(name, x.Data<double>(), r);
             }
 
             SuperArray result = new SuperArray(x.Shape);
@@ -68,12 +68,12 @@ namespace SuperchargedArray.Amplified
             if (x.ElementType == DType.Single)
             {
                 r = new float[x.Elements];
-                Global.Compiler.Execute<float>(name, x.Data<float>(), y.Data<float>(), r);
+                Global.Compiler.Execute(name, x.Data<float>(), y.Data<float>(), r);
             }
             else
             {
                 r = new double[x.Elements];
-                Global.Compiler.Execute<double>(name, x.Data<double>(), y.Data<double>(), r);
+                Global.Compiler.Execute(name, x.Data<double>(), y.Data<double>(), r);
             }
 
             SuperArray result = new SuperArray(x.Shape);
