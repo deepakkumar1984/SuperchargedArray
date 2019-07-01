@@ -29,7 +29,7 @@ namespace SuperchargedArray
     using System.Text;
 
     /// <summary>
-    /// Class TensorFormatting.
+    /// Class SuperArrayFormatting.
     /// </summary>
     internal static class Formatter
     {
@@ -250,7 +250,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="array">The array.</param>
         /// <returns>System.String.</returns>
-        public static string FormatTensorTypeAndSize(SuperArray array)
+        public static string FormatSuperArrayTypeAndSize(SuperArray array)
         {
             var result = new StringBuilder();
             result
@@ -382,7 +382,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <param name="array">The array.</param>
-        private static void FormatTensor(StringBuilder builder, SuperArray array)
+        private static void FormatSuperArray(StringBuilder builder, SuperArray array)
         {
             var storageFormat = GetStorageFormat(array.Storage, array);
             var format = storageFormat.Item1;
@@ -422,19 +422,19 @@ namespace SuperchargedArray
                 }
 
                 builder.Append('(');
-                var tensorCopy = array.CopyRef();
+                var SuperArrayCopy = array.CopyRef();
                 for (int i = 0; i < array.DimensionCount - 2; ++i)
                 {
-                    var newCopy = tensorCopy.Select(0, counter[i]);
-                    tensorCopy.Dispose();
-                    tensorCopy = newCopy;
+                    var newCopy = SuperArrayCopy.Select(0, counter[i]);
+                    SuperArrayCopy.Dispose();
+                    SuperArrayCopy = newCopy;
                     builder.Append(counter[i]).Append(',');
                 }
 
                 builder.AppendLine(".,.) = ");
-                FormatMatrix(builder, tensorCopy, " ");
+                FormatMatrix(builder, SuperArrayCopy, " ");
 
-                tensorCopy.Dispose();
+                SuperArrayCopy.Dispose();
             }
         }
 
@@ -459,10 +459,10 @@ namespace SuperchargedArray
             }
             else
             {
-                FormatTensor(result, array);
+                FormatSuperArray(result, array);
             }
 
-            result.AppendLine(FormatTensorTypeAndSize(array));
+            result.AppendLine(FormatSuperArrayTypeAndSize(array));
             return result.ToString();
         }
     }

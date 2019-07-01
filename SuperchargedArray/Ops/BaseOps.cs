@@ -61,9 +61,8 @@ namespace SuperchargedArray
             }
         }
 
-
         /// <summary>
-        /// Tiles the specified tensor.
+        /// Tiles the specified SuperArray.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="repetitions">The repetitions.</param>
@@ -78,11 +77,11 @@ namespace SuperchargedArray
 
             shape[shape.Length - 1] = repetitions;
 
-            return x.RepeatTensor(shape);
+            return x.RepeatSuperArray(shape);
         }
 
         /// <summary>
-        /// Repeats the specified tensor.
+        /// Repeats the specified SuperArray.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="reps">The reps.</param>
@@ -93,11 +92,11 @@ namespace SuperchargedArray
             return x.View(1, x.ElementCount());
         }
 
-        /// <summary>Broadcasts the tensor.</summary>
+        /// <summary>Broadcasts the SuperArray.</summary>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns></returns>
-        public Tuple<SuperArray, SuperArray> BroadcastTensor(SuperArray lhs, SuperArray rhs)
+        public Tuple<SuperArray, SuperArray> BroadcastSuperArray(SuperArray lhs, SuperArray rhs)
         {
             if (!lhs.IsSameSizeAs(rhs))
             {
@@ -105,12 +104,12 @@ namespace SuperchargedArray
                 {
                     if (lhs.Shape[1] == 1)
                     {
-                        lhs = lhs.RepeatTensor(1, rhs.Shape[1]);
+                        lhs = lhs.RepeatSuperArray(1, rhs.Shape[1]);
                     }
 
                     if (rhs.Shape[1] == 1)
                     {
-                        rhs = rhs.RepeatTensor(1, lhs.Shape[1]);
+                        rhs = rhs.RepeatSuperArray(1, lhs.Shape[1]);
                     }
                 }
 
@@ -118,12 +117,12 @@ namespace SuperchargedArray
                 {
                     if (lhs.Shape[0] == 1)
                     {
-                        lhs = lhs.RepeatTensor(rhs.Shape[0], 1);
+                        lhs = lhs.RepeatSuperArray(rhs.Shape[0], 1);
                     }
 
                     if (rhs.Shape[0] == 1)
                     {
-                        rhs = rhs.RepeatTensor(lhs.Shape[0], 1);
+                        rhs = rhs.RepeatSuperArray(lhs.Shape[0], 1);
                     }
                 }
 
@@ -131,12 +130,12 @@ namespace SuperchargedArray
                 {
                     if (lhs.Shape[1] == 1)
                     {
-                        lhs = lhs.RepeatTensor(1, rhs.Shape[1]);
+                        lhs = lhs.RepeatSuperArray(1, rhs.Shape[1]);
                     }
 
                     if (rhs.Shape[0] == 1)
                     {
-                        rhs = rhs.RepeatTensor(lhs.Shape[0], 1);
+                        rhs = rhs.RepeatSuperArray(lhs.Shape[0], 1);
                     }
                 }
 
@@ -144,12 +143,12 @@ namespace SuperchargedArray
                 {
                     if (lhs.Shape[0] == 1)
                     {
-                        lhs = lhs.RepeatTensor(rhs.Shape[0], 1);
+                        lhs = lhs.RepeatSuperArray(rhs.Shape[0], 1);
                     }
 
                     if (rhs.Shape[1] == 1)
                     {
-                        rhs = rhs.RepeatTensor(1, lhs.Shape[1]);
+                        rhs = rhs.RepeatSuperArray(1, lhs.Shape[1]);
                     }
                 }
             }

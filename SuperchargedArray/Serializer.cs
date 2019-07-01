@@ -29,7 +29,7 @@ namespace SuperchargedArray
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// Class TensorSerialization.
+    /// Class SuperArraySerialization.
     /// </summary>
     internal static class Serializer
     {
@@ -66,7 +66,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="allocator">The allocator.</param>
         /// <param name="stream">The stream.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public static SuperArray Deserialize(Stream stream)
         {
             // Note: don't dispose reader - it does not own the stream's lifetime

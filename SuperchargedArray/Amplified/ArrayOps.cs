@@ -99,6 +99,18 @@ namespace SuperchargedArray.Amplified
             x.LoadFrom(data);
         }
 
+        /// <summary>
+        /// Create constant array with the specified value.
+        /// </summary>
+        /// <param name="src">The source array.</param>
+        /// <param name="value">The value.</param>
+        public override SuperArray Constant(float value, long[] shape)
+        {
+            SuperArray x = new SuperArray(shape);
+            Fill(x, value);
+            return x;
+        }
+
         public override SuperArray Abs(SuperArray x)
         {
             return ExecuteReturn(GetFuncName("ndarr_abs", x.ElementType), x);

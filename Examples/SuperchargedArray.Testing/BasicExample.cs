@@ -56,7 +56,7 @@ namespace ArrayExt.Accel.Testing
 
             //Create a array with constant value 2
             SuperArray b = new float[3, 2];
-            //NDArray b = new NDArray(3, 2);
+            //SuperArray b = new SuperArray(3, 2);
             b.Fill(2);
 
             var sum = a + b;

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29001.49
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{D6D26AE3-3049-476D-8014-2256876294B8}"
 EndProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{C707FDE0-1468-
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amplifier", "..\Amplifier.NET\src\Amplifier.Net\Amplifier.csproj", "{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperNeuro", "SuperNeuro\SuperNeuro.csproj", "{ADD35A26-1313-485E-A91E-D9C2445D9908}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +42,14 @@ Global
 		{B87AA65D-77BF-47A8-B3F9-AC4ED142B89B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B87AA65D-77BF-47A8-B3F9-AC4ED142B89B}.Release|x64.ActiveCfg = Release|x64
 		{B87AA65D-77BF-47A8-B3F9-AC4ED142B89B}.Release|x64.Build.0 = Release|x64
-		{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}.Debug|x64.Build.0 = Debug|Any CPU
-		{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}.Release|x64.ActiveCfg = Release|Any CPU
-		{B9A95EB9-2A3C-498B-8C48-D0B3B1013D52}.Release|x64.Build.0 = Release|Any CPU
+		{ADD35A26-1313-485E-A91E-D9C2445D9908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADD35A26-1313-485E-A91E-D9C2445D9908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADD35A26-1313-485E-A91E-D9C2445D9908}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ADD35A26-1313-485E-A91E-D9C2445D9908}.Debug|x64.Build.0 = Debug|Any CPU
+		{ADD35A26-1313-485E-A91E-D9C2445D9908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADD35A26-1313-485E-A91E-D9C2445D9908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADD35A26-1313-485E-A91E-D9C2445D9908}.Release|x64.ActiveCfg = Release|Any CPU
+		{ADD35A26-1313-485E-A91E-D9C2445D9908}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -27,7 +27,7 @@ namespace SuperchargedArray
     using System;
 
     /// <summary>
-    /// Class TensorResultBuilder.
+    /// Class SuperArrayResultBuilder.
     /// </summary>
     internal static class ArrayResultBuilder
     {
@@ -39,7 +39,7 @@ namespace SuperchargedArray
         /// <param name="newTemplate">The new template.</param>
         /// <param name="requireContiguous">if set to <c>true</c> [require contiguous].</param>
         /// <param name="requiredSizes">The required sizes.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public static SuperArray GetWriteTarget(SuperArray maybeResult, SuperArray newTemplate, bool requireContiguous, params long[] requiredSizes)
         {
             return GetWriteTarget(maybeResult, newTemplate.ElementType, requireContiguous, requiredSizes);
@@ -52,7 +52,7 @@ namespace SuperchargedArray
         /// <param name="elementTypeForNew">The element type for new.</param>
         /// <param name="requireContiguous">if set to <c>true</c> [require contiguous].</param>
         /// <param name="requiredSizes">The required sizes.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException"></exception>
         public static SuperArray GetWriteTarget(SuperArray maybeResult, DType elementTypeForNew, bool requireContiguous, params long[] requiredSizes)
         {
@@ -60,7 +60,7 @@ namespace SuperchargedArray
             {
                 if (!MatchesRequirements(maybeResult, requireContiguous, requiredSizes))
                 {
-                    var message = string.Format("output array does not match requirements. NDArray must have sizes {0}{1}",
+                    var message = string.Format("output array does not match requirements. SuperArray must have sizes {0}{1}",
                         string.Join(", ", requiredSizes),
                         requireContiguous ? "; and must be contiguous" : "");
 

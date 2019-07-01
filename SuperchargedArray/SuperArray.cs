@@ -123,7 +123,7 @@ namespace SuperchargedArray
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return Formatter.FormatTensorTypeAndSize(this);
+            return Formatter.FormatSuperArrayTypeAndSize(this);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace SuperchargedArray
         /// <param name="sizes">The sizes.</param>
         /// <returns>ArithArray.</returns>
         /// <exception cref="InvalidOperationException">
-        /// Cannot use View on a non-contiguous tensor000
+        /// Cannot use View on a non-contiguous SuperArray000
         /// or
         /// Output array must have the same number of elements as the input
         /// </exception>
@@ -507,7 +507,7 @@ namespace SuperchargedArray
 
         public SuperArray Transpose()
         {
-            if (DimensionCount != 2) throw new InvalidOperationException("Parameterless Transpose is only valid on 2d tensors");
+            if (DimensionCount != 2) throw new InvalidOperationException("Parameterless Transpose is only valid on 2d SuperArrays");
             return Transpose(0, 1, true);
         }
 
@@ -515,10 +515,10 @@ namespace SuperchargedArray
         /// Transposes this instance without NewContiguous.
         /// </summary>
         /// <returns>ArithArray.</returns>
-        /// <exception cref="InvalidOperationException">Parameterless Transpose is only valid on 2d tensors</exception>
+        /// <exception cref="InvalidOperationException">Parameterless Transpose is only valid on 2d SuperArrays</exception>
         internal SuperArray IntTranspose()
         {
-            if (DimensionCount != 2) throw new InvalidOperationException("Parameterless Transpose is only valid on 2d tensors");
+            if (DimensionCount != 2) throw new InvalidOperationException("Parameterless Transpose is only valid on 2d SuperArrays");
 
             return Transpose(0, 1);
         }
@@ -730,7 +730,7 @@ namespace SuperchargedArray
         /// or
         /// All dimensions must be repeated at least once
         /// </exception>
-        public SuperArray RepeatTensor(params long[] repetitions)
+        public SuperArray RepeatSuperArray(params long[] repetitions)
         {
             if (repetitions.Length < this.DimensionCount)
                 throw new InvalidOperationException("repetitions must be at least the same length as the number of array dimensions");
@@ -741,17 +741,17 @@ namespace SuperchargedArray
 
             var result = new SuperArray(resultSize, this.ElementType);
 
-            var urTensor = result.CopyRef();
+            var urSuperArray = result.CopyRef();
             for (int i = 0; i < paddedSrc.DimensionCount; ++i)
             {
-                var oldUrTensor = urTensor;
-                urTensor = urTensor.Unfold(i, paddedSrc.Shape[i], paddedSrc.Shape[i]);
-                oldUrTensor.Dispose();
+                var oldUrSuperArray = urSuperArray;
+                urSuperArray = urSuperArray.Unfold(i, paddedSrc.Shape[i], paddedSrc.Shape[i]);
+                oldUrSuperArray.Dispose();
             }
 
-            paddedSrc = paddedSrc.PadToDimCount(urTensor.DimensionCount);
-            var expandedSrc = paddedSrc.Expand(urTensor.Shape);
-            Helper.Copy(urTensor, expandedSrc);
+            paddedSrc = paddedSrc.PadToDimCount(urSuperArray.DimensionCount);
+            var expandedSrc = paddedSrc.Expand(urSuperArray.Shape);
+            Helper.Copy(urSuperArray, expandedSrc);
 
             return result;
         }
@@ -1080,6 +1080,20 @@ namespace SuperchargedArray
             SuperArray result = new SuperArray(d.GetShape(), d.GetDType());
             result.LoadFrom(d);
             return result;
+        }
+
+        public static implicit operator SuperArray(float d)
+        {
+            SuperArray array = new SuperArray(1);
+            array.LoadFrom(new float[] { d });
+            return array;
+        }
+
+        public static implicit operator SuperArray(double d)
+        {
+            SuperArray array = new SuperArray(new long[] { 1 }, DType.Double);
+            array.LoadFrom(new double[] { d });
+            return array;
         }
         #endregion
     }

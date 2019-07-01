@@ -1,0 +1,137 @@
+﻿namespace SuperNeuro
+{
+    using SuperNeuro.Constraints;
+    using SuperNeuro.Regularizers;
+    using SuperNeuro.Engine;
+    using SuperchargedArray;
+
+    /// <summary>
+    /// Placeholder variable for holding weight and bias for the neural network. Attached with constraints and regularizer to easy apply them during optimizer update operations
+    /// </summary>
+    public class Parameter
+    {
+        /// <summary>
+        /// The constraint
+        /// </summary>
+        private BaseConstraint constraint;
+
+        /// <summary>
+        /// The regularizer
+        /// </summary>
+        private BaseRegularizer regularizer;
+
+        public SuperArray Data { get; set; }
+
+        public SuperArray Grad { get; set; }
+
+        public string Name { get; set; }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Parameter"/> class.
+        /// </summary>
+        /// <param name="name">The name of the parameter.</param>
+        /// <param name="shape">The shape of the weight/bias parameter.</param>
+        public Parameter(string name, long[] shape)
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Parameter"/> class.
+        /// </summary>
+        /// <param name="name">The name of the parameter.</param>
+        /// <param name="dataType">Data type</param>
+        /// <param name="shape">The shape of weight/bias parameter.</param>
+        public Parameter(string name, DType dataType, long[] shape)
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// Create an instance of parameter with SuperArray data.
+        /// </summary>
+        /// <param name="data">The SuperArray data to build the parameter.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <returns></returns>
+        public static Parameter Create(SuperArray data, string name = "")
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                name = "v";
+
+            Parameter x = new Parameter(name, data.ElementType, data.Shape);
+            x.Data = data;
+
+            return x;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the parameter have regularizer function attached.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [have regularizer]; otherwise, <c>false</c>.
+        /// </value>
+        public bool HaveRegularizer
+        {
+            get
+            {
+                return regularizer != null;
+            }
+        }
+
+        /// <summary>
+        /// Sets the constraint function.
+        /// </summary>
+        /// <param name="fn">The function.</param>
+        public void SetConstraint(BaseConstraint fn)
+        {
+            constraint = fn;
+        }
+
+        /// <summary>
+        /// Sets the regularizer function.
+        /// </summary>
+        /// <param name="fn">The function.</param>
+        public void SetRegularizer(BaseRegularizer fn)
+        {
+            regularizer = fn;
+        }
+
+        /// <summary>
+        /// Applies the constraint function to weight/bias during training.
+        /// </summary>
+        public void ApplyConstraint()
+        {
+            if (constraint != null)
+            {
+                Data = constraint.Call(Data);
+            }
+        }
+
+        /// <summary>
+        /// Applies the regularizer function to weight/bias during training.
+        /// </summary>
+        /// <returns></returns>
+        public float ApplyRegularizer()
+        {
+            float r = 0;
+            if (regularizer != null)
+            {
+                r = regularizer.Call(Data);
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Applies the gradient of regularizer function during back propagation.
+        /// </summary>
+        public void ApplyDeltaRegularizer()
+        {
+            if (regularizer != null)
+            {
+                Grad += regularizer.CalcGrad(Data);
+            }
+        }
+    }
+}

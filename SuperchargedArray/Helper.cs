@@ -27,7 +27,7 @@ namespace SuperchargedArray
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Class TensorDimensionHelpers.
+    /// Class SuperArrayDimensionHelpers.
     /// </summary>
     public static class Helper
     {
@@ -88,7 +88,7 @@ namespace SuperchargedArray
         /// Creates new contiguous.
         /// </summary>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public static SuperArray NewContiguous(SuperArray src)
         {
             var result = new SuperArray((long[])src.Shape.Clone(), src.ElementType);
@@ -100,7 +100,7 @@ namespace SuperchargedArray
         /// Ases the contiguous.
         /// </summary>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public static SuperArray AsContiguous(SuperArray src)
         {
             if (src.IsContiguous())

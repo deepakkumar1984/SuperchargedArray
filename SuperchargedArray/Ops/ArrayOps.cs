@@ -44,12 +44,24 @@ namespace SuperchargedArray
         }
 
         /// <summary>
+        /// Create constant array with the specified value.
+        /// </summary>
+        /// <param name="src">The source array.</param>
+        /// <param name="value">The value.</param>
+        public virtual SuperArray Constant(float value, long[] shape)
+        {
+            SuperArray x = new SuperArray(shape);
+            Fill(x, value);
+            return x;
+        }
+
+        /// <summary>
         /// Dots the specified result.
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Dot(SuperArray a, SuperArray b)
         {
             if (a.Shape[1] != b.Shape[0])
@@ -81,7 +93,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Abs(SuperArray x)
         {
@@ -91,13 +103,12 @@ namespace SuperchargedArray
             return result;
         }
 
-
         /// <summary>
         /// Negs the specified result.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Neg( SuperArray x)
         {
@@ -111,7 +122,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Sign(SuperArray x)
         {
@@ -125,7 +136,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="src">The source.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Sqrt(SuperArray x)
         {
@@ -140,7 +151,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Exp( SuperArray x)
         {
             SuperArray result = new SuperArray(x.Shape);
@@ -154,7 +165,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Log( SuperArray x)
         {
             SuperArray result = new SuperArray(x.Shape);
@@ -168,7 +179,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Log10( SuperArray x)
         {
             SuperArray result = new SuperArray(x.Shape);
@@ -182,7 +193,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Floor( SuperArray x)
         {
             SuperArray result = new SuperArray(x.Shape);
@@ -196,7 +207,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Ceil( SuperArray x)
         {
             SuperArray result = new SuperArray(x.Shape);
@@ -211,7 +222,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="decimals">The decimals.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Round( SuperArray x, int decimals = 0)
         {
@@ -229,7 +240,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Trunc(SuperArray x) {
             SuperArray result = new SuperArray(x.Shape);
@@ -243,7 +254,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Frac(SuperArray x)
         {
@@ -258,7 +269,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Sin(SuperArray x)
         {
@@ -273,7 +284,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Cos( SuperArray x)
         {
@@ -288,7 +299,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Tan(SuperArray x)
         {
@@ -303,7 +314,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Asin(SuperArray x)
         {
             SuperArray result = new SuperArray(x.Shape);
@@ -317,7 +328,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Acos( SuperArray x)
         {
@@ -332,7 +343,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Atan(SuperArray x)
         {
@@ -347,7 +358,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Sinh(SuperArray x) {
             SuperArray result = new SuperArray(x.Shape);
@@ -361,7 +372,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Cosh(SuperArray x)
         {
@@ -376,7 +387,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Tanh(SuperArray x)
         {
@@ -391,7 +402,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Sigmoid(SuperArray x)
         {
             SuperArray result = new SuperArray(x.Shape);
@@ -405,14 +416,13 @@ namespace SuperchargedArray
             return result;
         }
 
-
         /// <summary>
         /// Atan2s the specified result.
         /// </summary>
         /// <param name="y">The y.</param>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Atan2(SuperArray y,SuperArray x)
         {
@@ -431,7 +441,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="value">The value.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Pow(SuperArray x, float value)
         {
@@ -449,7 +459,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Square(SuperArray x)
         {
@@ -462,7 +472,7 @@ namespace SuperchargedArray
         /// <param name="value">The value.</param>
         /// <param name="x">The x.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray TPow(float value, SuperArray x)
         {
@@ -475,7 +485,6 @@ namespace SuperchargedArray
             return result;
         }
 
-
         /// <summary>
         /// Lerps the specified result.
         /// </summary>
@@ -483,7 +492,7 @@ namespace SuperchargedArray
         /// <param name="x1">The x1.</param>
         /// <param name="weight">The weight.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Lerp(SuperArray x0, SuperArray x1, float weight)
         {
@@ -503,7 +512,7 @@ namespace SuperchargedArray
         /// <param name="min">The minimum.</param>
         /// <param name="max">The maximum.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Clip(SuperArray x, float min, float max)
         {
@@ -522,7 +531,7 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Add(SuperArray lhs, SuperArray rhs)
         {
@@ -541,7 +550,7 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Add(SuperArray lhs, float rhs)
         {
@@ -560,7 +569,7 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Add(float lhs, SuperArray rhs)
         {
@@ -732,7 +741,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="scalar">The scalar.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Mod(SuperArray x, float scalar)
         {
@@ -751,7 +760,7 @@ namespace SuperchargedArray
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Mod(SuperArray lhs, SuperArray rhs)
         {
@@ -770,7 +779,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray GreaterThan( SuperArray lhs, float rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -788,7 +797,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray LessThan( SuperArray lhs, float rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -806,7 +815,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray GreaterOrEqual( SuperArray lhs, float rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -824,7 +833,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray LessOrEqual( SuperArray lhs, float rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -842,7 +851,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray EqualTo( SuperArray lhs, float rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -860,7 +869,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray NotEqual( SuperArray lhs, float rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -878,7 +887,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray GreaterThan( SuperArray lhs, SuperArray rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -896,7 +905,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray LessThan( SuperArray lhs, SuperArray rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -914,7 +923,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray GreaterOrEqual( SuperArray lhs, SuperArray rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -932,7 +941,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray LessOrEqual( SuperArray lhs, SuperArray rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -950,7 +959,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray EqualTo( SuperArray lhs, SuperArray rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -968,7 +977,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="lhs">The LHS.</param>
         /// <param name="rhs">The RHS.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray NotEqual( SuperArray lhs, SuperArray rhs)
         {
             SuperArray result = new SuperArray(lhs.Shape);
@@ -986,7 +995,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public float Sum(SuperArray x)
         {
@@ -1005,7 +1014,7 @@ namespace SuperchargedArray
         /// <param name="x">The x.</param>
         /// <param name="dimension">The dimension.</param>
         /// <returns>
-        /// NDArray.
+        /// SuperArray.
         /// </returns>
         public virtual SuperArray Sum(SuperArray x, int dimension)
         {
@@ -1175,7 +1184,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <param name="dimension">The dimension.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Argmin(SuperArray x, int dimension)
         {
             SuperArray result = new SuperArray(x.Shape[0]);
@@ -1200,7 +1209,7 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <param name="dimension">The dimension.</param>
-        /// <returns>NDArray.</returns>
+        /// <returns>SuperArray.</returns>
         public virtual SuperArray Argmax(SuperArray x, int dimension)
         {
             SuperArray result = new SuperArray(x.Shape[0]);
@@ -1218,7 +1227,6 @@ namespace SuperchargedArray
 
             return result;
         }
-
 
         /// <summary>
         /// Means the specified x.
@@ -1477,8 +1485,8 @@ namespace SuperchargedArray
         /// <param name="src">The source.</param>
         /// <param name="dimension">The dimension.</param>
         /// <param name="value">The value.</param>
-        /// <returns>NDArray.</returns>
-        public virtual NDArray Norm(NDArray x, int dimension, float value) { dimension = dimension < 0 ? src.DimensionCount + dimension : dimension; return (NDArray)OpRegistry.Invoke("norm", null, src, dimension, value); }
+        /// <returns>SuperArray.</returns>
+        public virtual SuperArray Norm(SuperArray x, int dimension, float value) { dimension = dimension < 0 ? src.DimensionCount + dimension : dimension; return (SuperArray)OpRegistry.Invoke("norm", null, src, dimension, value); }
 
         /// <summary>
         /// Standards the specified result.
@@ -1487,8 +1495,8 @@ namespace SuperchargedArray
         /// <param name="src">The source.</param>
         /// <param name="dimension">The dimension.</param>
         /// <param name="normByN">if set to <c>true</c> [norm by n].</param>
-        /// <returns>NDArray.</returns>
-        public virtual NDArray Std(NDArray x, int dimension, bool normByN) { dimension = dimension < 0 ? src.DimensionCount + dimension : dimension; return (NDArray)OpRegistry.Invoke("std", null, src, dimension, normByN); }
+        /// <returns>SuperArray.</returns>
+        public virtual SuperArray Std(SuperArray x, int dimension, bool normByN) { dimension = dimension < 0 ? src.DimensionCount + dimension : dimension; return (SuperArray)OpRegistry.Invoke("std", null, src, dimension, normByN); }
         /// <summary>
         /// Variables the specified result.
         /// </summary>
@@ -1496,8 +1504,8 @@ namespace SuperchargedArray
         /// <param name="src">The source.</param>
         /// <param name="dimension">The dimension.</param>
         /// <param name="normByN">if set to <c>true</c> [norm by n].</param>
-        /// <returns>NDArray.</returns>
-        public virtual NDArray Var(NDArray x, int dimension, bool normByN) { dimension = dimension < 0 ? src.DimensionCount + dimension : dimension; return (NDArray)OpRegistry.Invoke("var", null, src, dimension, normByN); }
+        /// <returns>SuperArray.</returns>
+        public virtual SuperArray Var(SuperArray x, int dimension, bool normByN) { dimension = dimension < 0 ? src.DimensionCount + dimension : dimension; return (SuperArray)OpRegistry.Invoke("var", null, src, dimension, normByN); }
 
         /// <summary>
         /// Norms all.
@@ -1505,22 +1513,22 @@ namespace SuperchargedArray
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
         /// <param name="value">The value.</param>
-        /// <returns>NDArray.</returns>
-        public virtual NDArray Norm(NDArray x, float value) { return (NDArray)OpRegistry.Invoke("normall", null, src, value); }
+        /// <returns>SuperArray.</returns>
+        public virtual SuperArray Norm(SuperArray x, float value) { return (SuperArray)OpRegistry.Invoke("normall", null, src, value); }
         /// <summary>
         /// Standards all.
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
-        public virtual NDArray Std(NDArray x) { return (NDArray)OpRegistry.Invoke("stdall", null, src); }
+        /// <returns>SuperArray.</returns>
+        public virtual SuperArray Std(SuperArray x) { return (SuperArray)OpRegistry.Invoke("stdall", null, src); }
         /// <summary>
         /// Variables all.
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="src">The source.</param>
-        /// <returns>NDArray.</returns>
-        public virtual NDArray Var(NDArray x) { return (NDArray)OpRegistry.Invoke("varall", null, src); }
+        /// <returns>SuperArray.</returns>
+        public virtual SuperArray Var(SuperArray x) { return (SuperArray)OpRegistry.Invoke("varall", null, src); }
         */
     }
 }
