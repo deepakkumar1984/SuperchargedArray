@@ -76,6 +76,15 @@ namespace SuperchargedArray
 
             Parallel.For(0, m, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, i =>
             {
+                for (int j = 0; j < q; j++)
+                {
+                    for (int k = 0; k < n; k++)
+                    {
+                        r[i, j] += a[i, k] * b[k, j];
+                    }
+                }
+
+                /*
                 Parallel.For(0, q, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, j =>
                 {
                     Parallel.For(0, n, new ParallelOptions() { MaxDegreeOfParallelism = Global.ParallelThread }, k =>
@@ -83,6 +92,7 @@ namespace SuperchargedArray
                         r[i, j] += a[i, k] * b[k, j];
                     });
                 });
+                */
             });
 
             return r;
@@ -1033,6 +1043,22 @@ namespace SuperchargedArray
         }
 
         /// <summary>
+        /// Sums the specified x.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        /// <returns></returns>
+        public virtual SuperArray Sum(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Sum(x, dim);
+            }
+
+            return x;
+        }
+
+        /// <summary>
         /// Minuses the specified x.
         /// </summary>
         /// <param name="x">The x.</param>
@@ -1070,6 +1096,22 @@ namespace SuperchargedArray
             });
 
             return result;
+        }
+
+        /// <summary>
+        /// Minuses the specified x.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        /// <returns></returns>
+        public virtual SuperArray Minus(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Minus(x, dim);
+            }
+
+            return x;
         }
 
         /// <summary>
@@ -1113,6 +1155,22 @@ namespace SuperchargedArray
         }
 
         /// <summary>
+        /// Products the specified x.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        /// <returns></returns>
+        public virtual SuperArray Prod(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Prod(x, dim);
+            }
+
+            return x;
+        }
+
+        /// <summary>
         /// Determines the minimum of the parameters.
         /// </summary>
         /// <param name="x">The x.</param>
@@ -1146,6 +1204,22 @@ namespace SuperchargedArray
         }
 
         /// <summary>
+        /// Determines the minimum of the parameters.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        /// <returns></returns>
+        public virtual SuperArray Min(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Min(x, dim);
+            }
+
+            return x;
+        }
+
+        /// <summary>
         /// Determines the maximum of the parameters.
         /// </summary>
         /// <param name="x">The x.</param>
@@ -1176,6 +1250,22 @@ namespace SuperchargedArray
             });
 
             return result;
+        }
+
+        /// <summary>
+        /// Determines the maximum of the parameters.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        /// <returns></returns>
+        public virtual SuperArray Max(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Max(x, dim);
+            }
+
+            return x;
         }
 
         /// <summary>
@@ -1259,6 +1349,22 @@ namespace SuperchargedArray
             });
             
             return result;
+        }
+
+        /// <summary>
+        /// Means the specified x.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="dimensions">The dimensions.</param>
+        /// <returns></returns>
+        public virtual SuperArray Mean(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Mean(x, dim);
+            }
+
+            return x;
         }
 
         /// <summary>

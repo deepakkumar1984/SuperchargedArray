@@ -129,7 +129,7 @@ namespace SuperchargedArray
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <exception cref="ObjectDisposedException">ArithArray</exception>
+        /// <exception cref="ObjectDisposedException">SuperArray</exception>
         public void Dispose()
         {
             if (!isDisposed)
@@ -139,7 +139,7 @@ namespace SuperchargedArray
             }
             else
             {
-                throw new ObjectDisposedException("ArithArray");
+                throw new ObjectDisposedException("SuperArray");
             }
         }
 
@@ -238,10 +238,10 @@ namespace SuperchargedArray
         }
 
         /// <summary>
-        /// Returns a new ArithArray object which points to the same storage as this,
+        /// Returns a new SuperArray object which points to the same storage as this,
         /// incrementing the refcount of the storage object.
         /// </summary>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         public SuperArray CopyRef()
         {
             return new SuperArray(shape, strides, storage, storageOffset);
@@ -404,7 +404,7 @@ namespace SuperchargedArray
         /// Views the specified sizes.
         /// </summary>
         /// <param name="sizes">The sizes.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException">
         /// Cannot use View on a non-contiguous SuperArray000
         /// or
@@ -457,7 +457,7 @@ namespace SuperchargedArray
         /// <param name="dimension">The dimension.</param>
         /// <param name="startIndex">The start index.</param>
         /// <param name="size">The size.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// dimension
         /// or
@@ -475,7 +475,7 @@ namespace SuperchargedArray
             var newSizes = (long[])shape.Clone();
             newSizes[dimension] = size;
             var newStrides = Helper.GetContiguousStride(newSizes);
-            
+
 
             return new SuperArray(newSizes, strides, storage, newOffset);
         }
@@ -485,7 +485,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="dimension">The dimension.</param>
         /// <param name="index">The index.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException">Select requires 2 or more dimensions</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// dimension
@@ -514,7 +514,7 @@ namespace SuperchargedArray
         /// <summary>
         /// Transposes this instance without NewContiguous.
         /// </summary>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException">Parameterless Transpose is only valid on 2d SuperArrays</exception>
         internal SuperArray IntTranspose()
         {
@@ -528,7 +528,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="dimension1">The dimension1.</param>
         /// <param name="dimension2">The dimension2.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// dimension1
         /// or
@@ -560,7 +560,7 @@ namespace SuperchargedArray
         /// Permutes the specified dims.
         /// </summary>
         /// <param name="dims">The dims.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException">The number of permutation indices must equal the number of array dimensions</exception>
         public SuperArray Transpose(params int[] dims)
         {
@@ -582,7 +582,7 @@ namespace SuperchargedArray
         /// Expand one or more singleton dimensions (dimensions with size 1) by using a stride of 0
         /// </summary>
         /// <param name="newSizes">The new sizes.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException">
         /// number of elements of newSizes must match the dimension count of array
         /// or
@@ -612,7 +612,7 @@ namespace SuperchargedArray
         /// <summary>
         /// Return a new array where **all** singleton dimensions have been removed
         /// </summary>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         public SuperArray Squeeze()
         {
             var newSizeStrides = shape.Zip(strides, Tuple.Create)
@@ -630,7 +630,7 @@ namespace SuperchargedArray
         /// Return a new array where the given singleton dimension has been removed
         /// </summary>
         /// <param name="dimension">The dimension.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException">Squeeze requires 2 or more dimensions</exception>
         /// <exception cref="ArgumentOutOfRangeException">dimension</exception>
         public SuperArray Squeeze(int dimension)
@@ -651,7 +651,7 @@ namespace SuperchargedArray
         /// <param name="dimension">The dimension.</param>
         /// <param name="size">The size.</param>
         /// <param name="step">The step.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException">Cannot unfold an empty array</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// dimension is out of range - dimension
@@ -709,7 +709,7 @@ namespace SuperchargedArray
         /// Prepend singleton dimensions until DimensionCount equals newDimCount. Pads to dim count.
         /// </summary>
         /// <param name="newDimCount">The new dim count.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         private SuperArray PadToDimCount(int newDimCount)
         {
             var newSizes = Pad1Prepend(this.shape, newDimCount);
@@ -724,7 +724,7 @@ namespace SuperchargedArray
         /// Repeats the array along the dimension.
         /// </summary>
         /// <param name="repetitions">The repetitions.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         /// <exception cref="InvalidOperationException">
         /// repetitions must be at least the same length as the number of array dimensions
         /// or
@@ -777,19 +777,19 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="array">The array.</param>
         /// <exception cref="InvalidOperationException">
-        /// ArithArray must be contiguous to copy from CLR array
+        /// SuperArray must be contiguous to copy from CLR array
         /// or
-        /// ArithArray and array must have the same number of elements
+        /// SuperArray and array must have the same number of elements
         /// or
-        /// ArithArray and array must have the same element types
+        /// SuperArray and array must have the same element types
         /// </exception>
         public void LoadFrom(Array array)
         {
             var elementType = DTypeBuilder.FromCLRType(array.GetType().GetElementType());
 
-            if (!this.IsContiguous()) throw new InvalidOperationException("ArithArray must be contiguous to copy from CLR array");
-            if (this.ElementCount() != array.LongLength) throw new InvalidOperationException("ArithArray and array must have the same number of elements");
-            if (this.ElementType != elementType) throw new InvalidOperationException("ArithArray and array must have the same element types");
+            if (!this.IsContiguous()) throw new InvalidOperationException("SuperArray must be contiguous to copy from CLR array");
+            if (this.ElementCount() != array.LongLength) throw new InvalidOperationException("SuperArray and array must have the same number of elements");
+            if (this.ElementType != elementType) throw new InvalidOperationException("SuperArray and array must have the same element types");
 
             var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
             try
@@ -809,7 +809,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="allocator">The allocator.</param>
         /// <param name="array">The array.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         public static SuperArray FromArray(Array array)
         {
             // From the CLI spec(section 8.9.1):
@@ -924,7 +924,7 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="allocator">The allocator.</param>
         /// <param name="stream">The stream.</param>
-        /// <returns>ArithArray.</returns>
+        /// <returns>SuperArray.</returns>
         public static SuperArray Deserialize(System.IO.Stream stream)
         {
             return Serializer.Deserialize(stream);

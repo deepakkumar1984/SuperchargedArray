@@ -26,9 +26,7 @@
         public override void Forward(SuperArray x)
         {
             base.Forward(x);
-            var e = K.Exp(x - K.Max(x, 0));
-            var s = K.Sum(e, 0);
-            Output = e / s;
+            Output = Utils.Softmax(x);
         }
 
         /// <summary>

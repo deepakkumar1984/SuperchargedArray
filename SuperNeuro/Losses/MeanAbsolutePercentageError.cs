@@ -28,7 +28,7 @@
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
             var diff = K.Abs(preds - labels) / K.Clip(K.Abs(labels), K.EPSILON, float.MaxValue);
-            return 100 * K.Reshape(K.Mean(diff, 1), 1, -1);
+            return 100 * K.Mean(diff, 1).Reshape(1, -1);
         }
 
         /// <summary>

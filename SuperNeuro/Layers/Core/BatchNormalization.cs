@@ -187,7 +187,7 @@
             norm = (x - mu.Data) / K.Sqrt((mv.Data + K.EPSILON));
             
             var @out = gamma.Data * norm + beta.Data;
-            Output = K.Reshape(@out, x.Shape);
+            Output = @out.Reshape(x.Shape);
         }
 
         /// <summary>

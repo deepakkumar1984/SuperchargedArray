@@ -399,6 +399,16 @@ namespace SuperchargedArray.Amplified
             return base.Max(x, dimension);
         }
 
+        public override SuperArray Max(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Max(x, dim);
+            }
+
+            return x;
+        }
+
         public override SuperArray Maximum(float a, SuperArray b)
         {
             //ToDo: Need to implement with OpenCL
@@ -423,16 +433,46 @@ namespace SuperchargedArray.Amplified
             return base.Mean(x, dimension);
         }
 
+        public override SuperArray Mean(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Mean(x, dim);
+            }
+
+            return x;
+        }
+
         public override SuperArray Min(SuperArray x, int dimension)
         {
             //ToDo: Need to implement with OpenCL
             return base.Min(x, dimension);
         }
 
+        public override SuperArray Min(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Min(x, dim);
+            }
+
+            return x;
+        }
+
         public override SuperArray Minus(SuperArray x, int dimension)
         {
             //ToDo: Need to implement with OpenCL
             return base.Minus(x, dimension);
+        }
+
+        public override SuperArray Minus(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Minus(x, dim);
+            }
+
+            return x;
         }
 
         public override SuperArray Mod(SuperArray lhs, SuperArray rhs)
@@ -463,6 +503,16 @@ namespace SuperchargedArray.Amplified
             return base.Prod(x, dimension);
         }
 
+        public override SuperArray Prod(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Prod(x, dim);
+            }
+
+            return x;
+        }
+
         public override SuperArray Round(SuperArray x, int decimals = 0)
         {
             return ExecuteReturn(GetFuncName("ndarr_round", x.ElementType), x);
@@ -491,8 +541,17 @@ namespace SuperchargedArray.Amplified
 
         public override SuperArray Sum(SuperArray x, int dimension)
         {
-            //ToDo: Need to implement with OpenCL
             return base.Sum(x, dimension);
+        }
+
+        public override SuperArray Sum(SuperArray x, params int[] dimensions)
+        {
+            foreach (var dim in dimensions)
+            {
+                x = Sum(x, dim);
+            }
+
+            return x;
         }
 
         public override SuperArray TPow(float value, SuperArray x)

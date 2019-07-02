@@ -41,7 +41,7 @@
         /// <returns></returns>
         private SuperArray _logcosh(SuperArray x)
         {
-            return x + K.Softplus(-2 * x) - (float)Math.Log(2);
+            return x + Utils.Softplus(-2 * x) - (float)Math.Log(2);
         }
 
         /// <summary>

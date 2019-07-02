@@ -85,7 +85,7 @@ namespace SuperNeuro.Layers
             var h_out = (h - KernalSize.Item2 + 2 * pad) / Strides + 1;
             var w_out = (w - KernalSize.Item3 + 2 * pad) / Strides + 1;
 
-            //xCols = K.Im2Col(x, KernalSize, pad, Strides);
+            //xCols = ImUtil.Im2Col(x, KernalSize, pad, Strides);
             var wRows = weight.Data.Reshape(Filters, -1);
 
             Output = K.Dot(wRows,xCols);

@@ -44,7 +44,7 @@ namespace SuperNeuro.Layers
             var w_out = (w - PoolSize.Item3) / Strides + 1;
 
             var x_reshaped = x.Reshape(n * c, 1, d, h, w);
-            //xCols = K.Im2Col(x_reshaped, PoolSize, pad, Strides);
+            //xCols = ImUtil.Im2Col(x_reshaped, PoolSize, pad, Strides);
             Output = K.Mean(xCols, 0);
             Output = Output.Reshape(d_out, h_out, w_out, n, c).Transpose(2, 3, 4, 0, 1);
         }

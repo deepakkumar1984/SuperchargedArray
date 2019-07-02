@@ -42,7 +42,7 @@ namespace SuperNeuro.Layers
             var s_out = (s - PoolSize) / Strides + 1;
 
             var x_reshaped = x.Reshape(n * c, 1, s);
-            xCols = K.Im2Col(x_reshaped, Tuple.Create(PoolSize, PoolSize), pad, Strides);
+            xCols = ImUtil.Im2Col(x_reshaped, Tuple.Create(PoolSize, PoolSize), pad, Strides);
             Output = K.Argmax(xCols, 0);
             Output = Output.Reshape(s_out, n, c).Transpose(2, 0, 1);
         }
@@ -63,7 +63,7 @@ namespace SuperNeuro.Layers
             }
 
             var dout_flat = outputgrad.Transpose(2, 0, 1).Reshape(1, -1);
-            var dX = K.Col2Im(dout_flat, Input.Data.Shape, Tuple.Create(PoolSize, PoolSize), pad, Strides);
+            var dX = ImUtil.Col2Im(dout_flat, Input.Data.Shape, Tuple.Create(PoolSize, PoolSize), pad, Strides);
             Input.Grad = dX.Reshape(n, c, s);
         }
     }

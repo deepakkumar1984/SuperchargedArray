@@ -24,7 +24,7 @@
         public override void Forward(SuperArray x)
         {
             base.Forward(x);
-            Output = K.Log(K.Exp(x) + 1);
+            Output = Utils.Softplus(x);
         }
 
         /// <summary>

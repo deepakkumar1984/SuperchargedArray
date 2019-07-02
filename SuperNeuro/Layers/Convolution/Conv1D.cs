@@ -86,7 +86,7 @@ namespace SuperNeuro.Layers
 
             var steps_out = (s - KernalSize + 2 * pad) / Strides + 1;
 
-            xCols = K.Im2Col(x, Tuple.Create(KernalSize, KernalSize), pad, Strides);
+            xCols = ImUtil.Im2Col(x, Tuple.Create(KernalSize, KernalSize), pad, Strides);
             var wRows = weight.Data.Reshape(Filters, -1);
             
             Output = K.Dot(wRows, xCols);
@@ -118,7 +118,7 @@ namespace SuperNeuro.Layers
             var W_flat = Params["w"].Data.Reshape(Filters, -1);
 
             var dX_col = K.Dot(W_flat.Transpose(), dout_flat);
-            Input.Grad = K.Col2Im(dX_col, Input.Data.Shape, Tuple.Create(KernalSize, KernalSize), pad, Strides);
+            Input.Grad = ImUtil.Col2Im(dX_col, Input.Data.Shape, Tuple.Create(KernalSize, KernalSize), pad, Strides);
 
             Params["w"].Grad = dW;
             if (UseBias)

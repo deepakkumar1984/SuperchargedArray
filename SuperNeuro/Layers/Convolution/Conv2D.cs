@@ -89,7 +89,7 @@ namespace SuperNeuro.Layers
             var w_out = (w - dialatedKernel.Item2 + 2 * pad) / Strides + 1;
             
             var wRows = weight.Data.Reshape(Filters, -1);
-            xCols = K.Im2Col(x, dialatedKernel, pad, Strides);
+            xCols = ImUtil.Im2Col(x, dialatedKernel, pad, Strides);
             Output = K.Dot(wRows, xCols);
             
             if(UseBias)

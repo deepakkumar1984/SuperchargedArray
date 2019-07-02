@@ -202,7 +202,7 @@
         {
             List<float> predictions = new List<float>();
 
-            SuperArray output = x.GetSuperArray();
+            SuperArray output = x.variable;
             foreach (var layer in Layers)
             {
                 if (layer.SkipPred)

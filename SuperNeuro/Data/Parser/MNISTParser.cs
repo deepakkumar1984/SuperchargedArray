@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using SuperchargedArray;
+using System.Linq;
 
 namespace SuperNeuro.Data
 {
@@ -48,14 +49,15 @@ namespace SuperNeuro.Data
             var inputs = new SuperArray(images.Length, 1, ImageSize, ImageSize);
             var outputs = new SuperArray(images.Length, 10);
 
+            List<float> data = new List<float>();
             for (int i = 0; i < images.Length; ++i)
             {
                 var target = inputs.Select(0, i);
 
-                Variable.FromArray(images[i].pixels, cpuAllocator)
-                    .AsType(DType.Float32)
-                    .ToDevice(Global.Device)
-                    .Evaluate(target);
+                //Variable.FromArray(images[i].pixels, cpuAllocator)
+                //    .AsType(DType.Float32)
+                //    .ToDevice(Global.Device)
+                //    .Evaluate(target);
 
                 target = target / 255;
             }

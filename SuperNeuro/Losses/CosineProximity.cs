@@ -47,8 +47,8 @@
 
         private SuperArray _cossine_sim(SuperArray preds, SuperArray labels)
         {
-            var y_true = K.L2Normalize(labels, -1);
-            var y_pred = K.L2Normalize(preds, -1);
+            var y_true = Utils.L2Normalize(labels, -1);
+            var y_pred = Utils.L2Normalize(preds, -1);
             return K.Sum(y_true * y_pred, -1);
         }
     }

@@ -26,7 +26,7 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            return K.Reshape(K.Mean(K.Abs(preds - labels), 1), 1, -1);
+            return K.Mean(K.Abs(preds - labels), 1).Reshape(1, -1);
         }
 
         /// <summary>

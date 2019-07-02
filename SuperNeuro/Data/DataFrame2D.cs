@@ -6,6 +6,7 @@
     using CsvHelper;
     using System.Data;
     using SuperNeuro.Engine;
+    using SuperchargedArray;
 
     /// <summary>
     /// 
@@ -27,8 +28,8 @@
 
         public override void Load(params float[] data)
         {
+            variable = new SuperArray(data.Length / features, features);
             base.Load(data);
-            Reshape(data.Length / features, features);
         }
 
 
