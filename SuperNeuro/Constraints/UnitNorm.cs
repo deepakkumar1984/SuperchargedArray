@@ -20,13 +20,13 @@ namespace SuperNeuro.Constraints
         /// <value>
         /// The axis.
         /// </value>
-        public int Axis;
+        public uint Axis;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitNorm"/> class.
         /// </summary>
         /// <param name="axis">Integer, axis along which to calculate weight norms</param>
-        public UnitNorm(int axis = 0)
+        public UnitNorm(uint axis = 0)
         {
             Axis = axis;
         }
@@ -38,7 +38,7 @@ namespace SuperNeuro.Constraints
         /// <returns></returns>
         internal override SuperArray Call(SuperArray w)
         {
-            return w / (K.EPSILON + K.Sqrt(K.Sum(K.Square(w), Axis)));
+            return w / (Ops.EPSILON + Ops.Sqrt(Ops.Sum(Ops.Square(w), Axis)));
         }
     }
 }

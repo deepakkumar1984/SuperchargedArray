@@ -86,9 +86,9 @@
         /// </summary>
         /// <param name="shape">The shape of the SuperArray.</param>
         /// <returns></returns>
-        public override SuperArray Generate(params long[] shape)
+        public override SuperArray Generate(Shape shape)
         {
-            SuperArray x = new SuperArray(shape);
+            SuperArray x = null;
             var hwScale = 1.0f;
             if (shape.Length > 2)
             {
@@ -116,11 +116,11 @@
             {
                 case "uniform":
                     float limit = (float)Math.Sqrt(3f * factor);
-                    K.RandomUniform(x, -limit, limit, Seed);
+                    x = SuperArray.RandomUniform<float>(shape, -limit, limit, Seed);
                     break;
                 case "normal":
                     float stddev = (float)Math.Sqrt(factor) / 0.87962566103423978f;
-                    K.RandomNormal(x, 0, stddev, Seed);
+                    x = SuperArray.RandomNormal<float>(shape, 0, stddev, Seed);
                     break;
             }
 

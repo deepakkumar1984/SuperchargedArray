@@ -34,7 +34,7 @@
         public override void Forward(SuperArray x)
         {
             base.Forward(x);
-            Output = x.Transpose(Dims);
+            Output = x.Transpose(new Shape(Dims));
         }
 
         /// <summary>

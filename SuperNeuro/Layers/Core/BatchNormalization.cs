@@ -178,13 +178,13 @@
         {
             base.Forward(x);
             
-            Parameter beta = BuildParam("beta", x.Shape, x.ElementType, BetaInitializer, BetaConstraint, BetaRegularizer);
-            Parameter gamma = BuildParam("gamma", x.Shape, x.ElementType, GammaInitializer, GammaConstraint, GammaRegularizer);
+            Parameter beta = BuildParam("beta", x.Shape, BetaInitializer, BetaConstraint, BetaRegularizer);
+            Parameter gamma = BuildParam("gamma", x.Shape, GammaInitializer, GammaConstraint, GammaRegularizer);
 
-            mu = BuildParam("mm", x.Shape, x.ElementType, MovingMeanInitializer, null, null, false);
-            mv = BuildParam("mv", x.Shape, x.ElementType, MovingVarianceInitializer, null, null, false);
+            mu = BuildParam("mm", x.Shape, MovingMeanInitializer, null, null, false);
+            mv = BuildParam("mv", x.Shape, MovingVarianceInitializer, null, null, false);
 
-            norm = (x - mu.Data) / K.Sqrt((mv.Data + K.EPSILON));
+            norm = (x - mu.Data) / Ops.Sqrt((mv.Data + Ops.EPSILON));
             
             var @out = gamma.Data * norm + beta.Data;
             Output = @out.Reshape(x.Shape);
@@ -200,14 +200,14 @@
             SuperArray mv = Params["mv"].Data;
 
             var X_mu = Input.Data - mm;
-            var var_inv = 1 / K.Sqrt(mv + K.EPSILON);
+            var var_inv = 1 / Ops.Sqrt(mv + Ops.EPSILON);
 
-            var dbeta = K.Sum(outputgrad, 0);
-            var dgamma = K.Sum(outputgrad * norm, 0);
+            var dbeta = Ops.Sum(outputgrad, 0);
+            var dgamma = Ops.Sum(outputgrad * norm, 0);
 
             var dnorm = outputgrad * Params["gamma"].Data;
-            var dvar = K.Sum(dnorm * mu.Data, 0) * K.Pow(-0.5f * (mv + K.EPSILON), -3 / 2);
-            var dmu = K.Sum(-1 * dnorm * var_inv, 0) + K.Sum(dvar * (-2 * X_mu), 0) / Input.Data.Shape[0];
+            var dvar = Ops.Sum(dnorm * mu.Data, 0) * Ops.Pow(-0.5f * (mv + Ops.EPSILON), -3 / 2);
+            var dmu = Ops.Sum(-1 * dnorm * var_inv, 0) + Ops.Sum(dvar * (-2 * X_mu), 0) / Input.Data.Shape[0];
 
             var dX = dnorm * var_inv + (dmu / Input.Data.Shape[0]) + (dvar * (2 / Input.Data.Shape[0] * X_mu));
 

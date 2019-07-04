@@ -39,17 +39,17 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            var y_true = K.Max(K.Sum(labels, -1), -1) / (K.Abs(preds * K.Abs(labels)));
-            var y_pred = K.Max(K.Sum(preds, -1), -1) / K.Square(K.Abs(preds));
+            var y_true = Ops.Max(Ops.Sum(labels, 1), 1) / (Ops.Abs(preds * Ops.Abs(labels)));
+            var y_pred = Ops.Max(Ops.Sum(preds, 1), 1) / Ops.Square(Ops.Abs(preds));
 
             return y_true + _cossine_sim(preds, labels) * y_pred;
         }
 
         private SuperArray _cossine_sim(SuperArray preds, SuperArray labels)
         {
-            var y_true = Utils.L2Normalize(labels, -1);
-            var y_pred = Utils.L2Normalize(preds, -1);
-            return K.Sum(y_true * y_pred, -1);
+            var y_true = Utils.L2Normalize(labels, 1);
+            var y_pred = Utils.L2Normalize(preds, 1);
+            return Ops.Sum(y_true * y_pred, 1);
         }
     }
 }

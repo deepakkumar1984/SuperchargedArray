@@ -44,7 +44,7 @@
         public override void Forward(SuperArray x)
         {
             base.Forward(x);
-            Output = K.Tile(x, NumTimes);
+            Output = Ops.Tile(x, NumTimes, Axis);
         }
 
         /// <summary>

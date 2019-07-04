@@ -33,7 +33,7 @@
         /// <param name="outputgrad">The calculated output grad from previous layer.</param>
         public override void Backward(SuperArray outputgrad)
         {
-            Input.Grad = outputgrad * (K.Exp(Input.Data) / (K.Exp(Input.Data) + 1));
+            Input.Grad = outputgrad * (Ops.Exp(Input.Data) / (Ops.Exp(Input.Data) + 1));
         }
     }
 }

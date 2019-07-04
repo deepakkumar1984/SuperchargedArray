@@ -75,9 +75,9 @@
         {
             //ToDo: Implement shared axes
             base.Forward(x);
-            long[] paramShape = x.Shape.ToList().Skip(1).ToArray();
+            int[] paramShape = x.Shape.Dims.ToList().Skip(1).ToArray();
 
-            Parameter alpha = BuildParam("a", paramShape, x.ElementType, AlphaInitializer, AlphaConstraint, AlphaRegularizer);
+            Parameter alpha = BuildParam("a", new Shape(paramShape), AlphaInitializer, AlphaConstraint, AlphaRegularizer);
             pos_relu.Forward(x);
             var pos = pos_relu.Output;
 

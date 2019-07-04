@@ -55,12 +55,10 @@
         /// </summary>
         /// <param name="shape">The shape of the SuperArray.</param>
         /// <returns></returns>
-        public override SuperArray Generate(params long[] shape)
+        public override SuperArray Generate(Shape shape)
         {
-            SuperArray x = new SuperArray(shape);
             float stddev = (float)Math.Sqrt(StdDev) / 0.87962566103423978f;
-            K.RandomNormal(x, MeanVal, stddev, Seed);
-            return x;
+            return SuperArray.RandomNormal<float>(shape, MeanVal, stddev, Seed);
         }
 
     }

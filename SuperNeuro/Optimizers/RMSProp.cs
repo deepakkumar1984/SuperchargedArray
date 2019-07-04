@@ -66,12 +66,12 @@
                 var param = item.Value;
                 if (!accumulators.ContainsKey(param.Name))
                 {
-                    accumulators[param.Name] = K.Constant(0, param.Data.Shape);
+                    accumulators[param.Name] = Ops.Constant(0, param.Data.Shape);
                 }
 
-                accumulators[param.Name] = Rho * accumulators[param.Name] + (1 - Rho) * K.Square(param.Grad);
+                accumulators[param.Name] = Rho * accumulators[param.Name] + (1 - Rho) * Ops.Square(param.Grad);
 
-                param.Data = param.Data - (LearningRate * param.Grad / (K.Sqrt(accumulators[param.Name]) + Epsilon));
+                param.Data = param.Data - (LearningRate * param.Grad / (Ops.Sqrt(accumulators[param.Name]) + Epsilon));
 
                 param.ApplyConstraint();
             }

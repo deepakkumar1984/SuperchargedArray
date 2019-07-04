@@ -86,33 +86,33 @@
             {
                 var param = p.Value;
                 if (!ms.ContainsKey(param.Name))
-                    ms[param.Name] = K.Constant(0, param.Data.Shape);
+                    ms[param.Name] = Ops.Constant(0, param.Data.Shape);
 
                 if (!vs.ContainsKey(param.Name))
-                    vs[param.Name] = K.Constant(0, param.Data.Shape);
+                    vs[param.Name] = Ops.Constant(0, param.Data.Shape);
 
                 if (!vhats.ContainsKey(param.Name))
                 {
                     if (AmsGrad)
-                        vhats[param.Name] = K.Constant(0, param.Data.Shape);
+                        vhats[param.Name] = Ops.Constant(0, param.Data.Shape);
                 }
 
                 ms[param.Name] = (Beta1 * ms[param.Name]) + (1 - Beta1) * param.Grad;
-                vs[param.Name] = (Beta2 * vs[param.Name]) + (1 - Beta2) * K.Square(param.Grad);
+                vs[param.Name] = (Beta2 * vs[param.Name]) + (1 - Beta2) * Ops.Square(param.Grad);
                 
                 var m_cap = ms[param.Name] / (1f - (float)Math.Pow(Beta1, iteration));
                 var v_cap = vs[param.Name] / (1f - (float)Math.Pow(Beta2, iteration));
                 //m_cap.Print();
                 if (AmsGrad)
                 {
-                    SuperArray vhat_t = K.Maximum(vhats[param.Name], v_cap);
+                    SuperArray vhat_t = Ops.Maximum(vhats[param.Name], v_cap);
 
-                    param.Data = param.Data - (LearningRate * m_cap / (K.Sqrt(vhat_t) + Epsilon));
+                    param.Data = param.Data - (LearningRate * m_cap / (Ops.Sqrt(vhat_t) + Epsilon));
                     vhats[param.Name] = vhat_t;
                 }
                 else
                 {
-                    param.Data = param.Data - (LearningRate * m_cap / (K.Sqrt(v_cap) + Epsilon));
+                    param.Data = param.Data - (LearningRate * m_cap / (Ops.Sqrt(v_cap) + Epsilon));
                 }
 
                 //param.Data.Print();

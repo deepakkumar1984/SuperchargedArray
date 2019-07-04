@@ -49,8 +49,8 @@
         public BatchEndEventArgs(
             int epoch,
             long batch,
-            float loss,
-            float metric)
+            double loss,
+            double metric)
         {
             Epoch = epoch;
             Batch = batch;
@@ -80,7 +80,7 @@
         /// <value>
         /// The loss.
         /// </value>
-        public float Loss { get; }
+        public double Loss { get; }
 
         /// <summary>
         /// Gets the metric value for this batch.
@@ -88,7 +88,7 @@
         /// <value>
         /// The metric.
         /// </value>
-        public float Metric { get; }
+        public double Metric { get; }
     }
 
     /// <summary>
@@ -134,10 +134,10 @@
         public EpochEndEventArgs(
             int epoch,
             long samplesSeen,
-            float loss,
-            float validationLoss,
-            float metric,
-            float validationMetric,
+            double loss,
+            double validationLoss,
+            double metric,
+            double validationMetric,
             long duration)
         {
             Epoch = epoch;
@@ -163,7 +163,7 @@
         /// <value>
         /// The loss.
         /// </value>
-        public float Loss { get; }
+        public double Loss { get; }
 
         /// <summary>
         /// Gets the metric value for the current epoch.
@@ -171,7 +171,7 @@
         /// <value>
         /// The metric.
         /// </value>
-        public float Metric { get; }
+        public double Metric { get; }
 
         /// <summary>
         /// Gets the nymber of samples seen during epoch training.
@@ -187,7 +187,7 @@
         /// <value>
         /// The validation loss.
         /// </value>
-        public float ValidationLoss { get; }
+        public double ValidationLoss { get; }
 
         /// <summary>
         /// Gets the validation metric value for the current epoch.
@@ -195,7 +195,7 @@
         /// <value>
         /// The validation metric.
         /// </value>
-        public float ValidationMetric { get; }
+        public double ValidationMetric { get; }
 
         /// <summary>
         /// Gets the time taken to complete the epoch. In milliseconds.

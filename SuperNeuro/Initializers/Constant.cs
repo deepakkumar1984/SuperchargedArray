@@ -43,10 +43,9 @@
         /// </summary>
         /// <param name="shape">The shape of the SuperArray.</param>
         /// <returns></returns>
-        public override SuperArray Generate(params long[] shape)
+        public override SuperArray Generate(Shape shape)
         {
-            SuperArray SuperArray = K.Constant(Value, shape);
-            return SuperArray;
+            return Ops.Constant(Value, shape);
         }
     }
 }

@@ -27,8 +27,8 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            var diff = K.Abs(preds - labels) / K.Clip(K.Abs(labels), K.EPSILON, float.MaxValue);
-            return 100 * K.Mean(diff, 1).Reshape(1, -1);
+            var diff = Ops.Abs(preds - labels) / Ops.Clip(Ops.Abs(labels), Ops.EPSILON, float.MaxValue);
+            return 100 * Ops.Mean(diff, 1).Reshape(1, -1);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            var diff = (preds - labels) / K.Clip(K.Abs(labels) * K.Abs(labels - preds), K.EPSILON, float.MaxValue);
+            var diff = (preds - labels) / Ops.Clip(Ops.Abs(labels) * Ops.Abs(labels - preds), Ops.EPSILON, float.MaxValue);
             return 100 * diff / preds.Shape[0];
         }
     }

@@ -4,15 +4,13 @@
     using SuperNeuro.Engine;
     using System.Linq;
     using SuperchargedArray;
-
+    using K = SuperchargedArray.Ops;
     /// <summary>
     /// Data frame to load data like CSV, images and text in binary format. The instance is then send to Train or Predict method
     /// </summary>
     public class DataFrame
     {
         internal SuperArray variable;
-
-        private ArrayOps K = Global.OP;
 
         public DataFrame()
         {
@@ -30,7 +28,7 @@
         /// <value>
         /// The shape.
         /// </value>
-        public long[] Shape
+        public Shape Shape
         {
             get
             {
@@ -42,26 +40,36 @@
         /// Reshapes the data frame to specified new shape.
         /// </summary>
         /// <param name="newShape">The new shape.</param>
-        public void Reshape(params long[] newShape)
+        public void Reshape(params int[] newShape)
         {
-            variable = variable.Reshape(newShape);
+            variable = variable.Reshape(new Shape(newShape));
         }
 
-        public virtual void Load(params float[] data)
+        public virtual void Load(float[] data)
         {
-            variable.LoadFrom(data);
+            variable = SuperArray.Create(data);
         }
 
-        public void Load(float[] data, long[] shape)
+        public virtual void Load(float[,] data)
         {
-            variable.Reshape(shape);
+            variable = SuperArray.Create(data);
         }
 
-        public Array DataArray
+        public virtual void Load(float[,,] data)
+        {
+            variable = SuperArray.Create(data);
+        }
+
+        public virtual void Load(float[,,,] data)
+        {
+            variable = SuperArray.Create(data);
+        }
+
+        public Array Data
         {
             get
             {
-                return variable.Data<float>();
+                return variable.GetData<float>();
             }
         }
 
@@ -86,7 +94,7 @@
 
                 var count = end - start + 1;
                 if (count > 0)
-                    return variable[start, count];
+                    return new DataFrame(variable[start, count]);
 
                 return null;
             }
@@ -104,7 +112,7 @@
         {
             get
             {
-                var result = variable.Narrow(0, 1, 1);
+                var result = variable.Rows(index, 1);
                 return new DataFrame(result);
             }
         }
@@ -122,7 +130,7 @@
             
             if (start + size <= Shape[0])
             {
-                return variable.Narrow(0, start, start + size - 1);
+                return variable.Rows(start, start + size - 1);
                 //data = UnderlayingVariable[new SuperArray(Enumerable.Range(start, size).ToArray())];
             }
             else
@@ -130,10 +138,10 @@
                 //int count = (int)Shape[0] - start;
                 //data = UnderlayingVariable[new SuperArray(Enumerable.Range(start, count).ToArray())];
 
-                return variable.Narrow(0, start, Shape[0] - 1);
+                return variable.Rows(start, Shape[0] - 1);
             }
 
-            //return K.CreateVariable(data.Data<float>(), BackendUtil.Int2Long(data.shape));
+            //return Ops.CreateVariable(data.Data<float>(), BackendUtil.Int2Long(data.shape));
         }
 
         /// <summary>
@@ -153,7 +161,7 @@
                 Console.WriteLine("-----------------{0}----------------", title);
             }
 
-            Console.WriteLine(variable.Narrow(0, 0, count).ToString());
+            Console.WriteLine(variable.Rows(0, count).ToString());
         }
 
         /// <summary>
@@ -163,35 +171,9 @@
         {
         }
 
-        public void Max(int? dim = null)
-        {
-            if (dim.HasValue)
-                variable = K.Max(variable, dim.Value);
-            else
-                variable = K.Max(variable);
-        }
-
-        public void Min(int? dim = null)
-        {
-            if (dim.HasValue)
-                variable = K.Min(variable, dim.Value);
-            else
-                variable = K.Min(variable);
-        }
-
         public void Argmax()
         {
-            variable = K.Argmax(variable, 0);
-        }
-
-        public static implicit operator DataFrame(float d)
-        {
-            return new DataFrame(d);
-        }
-
-        public static implicit operator DataFrame(double d)
-        {
-            return new DataFrame(d);
+            variable = Ops.ArgMax(variable);
         }
     }
 }

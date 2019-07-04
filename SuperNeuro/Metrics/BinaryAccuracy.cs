@@ -27,8 +27,8 @@
         /// <returns></returns>
         public override SuperArray Calc(SuperArray preds, SuperArray labels)
         {
-            preds = K.Clip(preds, 0, 1);
-            var r = K.EqualTo(K.Round(preds), labels);
+            preds = Ops.Clip(preds, 0, 1);
+            var r = Ops.EqualTo(Ops.Round(preds), labels);
 
             return r;
         }

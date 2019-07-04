@@ -52,11 +52,11 @@
                 var param = item.Value;
                 if (!accumulators.ContainsKey(param.Name))
                 {
-                    accumulators[param.Name] = K.Constant(0, param.Data.Shape);
+                    accumulators[param.Name] = Ops.Constant(0, param.Data.Shape);
                 }
 
-                accumulators[param.Name] = accumulators[param.Name] + K.Square(param.Grad);
-                param.Data = param.Data - (LearningRate * param.Grad / (K.Sqrt(accumulators[param.Name]) + K.EPSILON));
+                accumulators[param.Name] = accumulators[param.Name] + Ops.Square(param.Grad);
+                param.Data = param.Data - (LearningRate * param.Grad / (Ops.Sqrt(accumulators[param.Name]) + Ops.EPSILON));
 
                 param.ApplyConstraint();
             }

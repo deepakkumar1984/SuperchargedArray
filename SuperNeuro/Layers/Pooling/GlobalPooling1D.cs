@@ -21,11 +21,11 @@ namespace SuperNeuro.Layers
             base.Forward(x);
             if(PoolingType == PoolingPoolType.Max)
             {
-                Output = K.Max(x, 2);
+                Output = Ops.Max(x, 2);
             }
             else
             {
-                Output = K.Mean(x, 2);
+                Output = Ops.Mean(x, 2);
             }
         }
 

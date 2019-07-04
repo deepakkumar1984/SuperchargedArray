@@ -25,7 +25,7 @@
         {
             base.Forward(x);
 
-            Output = x / (K.Abs(x) + 1);
+            Output = x / (Ops.Abs(x) + 1);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@
         /// <param name="outputgrad">The calculated output grad from previous layer.</param>
         public override void Backward(SuperArray outputgrad)
         {
-            Input.Grad = outputgrad / K.Square(K.Abs(Input.Data) + 1);
+            Input.Grad = outputgrad / Ops.Square(Ops.Abs(Input.Data) + 1);
         }
     }
 }

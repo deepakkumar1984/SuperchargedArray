@@ -12,14 +12,14 @@
         /// <summary>
         /// Target new shape. One and only one dim can be 0, in which case it will be inferred from the rest of dims
         /// </summary>
-        public long[] TargetShape { get; set; }
+        public int[] TargetShape { get; set; }
 
         /// <summary>
         /// The target output shape
         /// </summary>
         /// <param name="targetShape"></param>
         /// <param name="reverse"></param>
-        public Reshape(long[] targetShape)
+        public Reshape(int[] targetShape)
             : base("reshape")
         {
             TargetShape = targetShape;

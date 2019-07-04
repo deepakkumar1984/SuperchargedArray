@@ -65,17 +65,17 @@
                 var param = item.Value;
                 if (!accumulators.ContainsKey(param.Name))
                 {
-                    accumulators[param.Name] = K.Constant(0, param.Data.Shape);
-                    delta_accumulators[param.Name] = K.Constant(0, param.Data.Shape);
+                    accumulators[param.Name] = Ops.Constant(0, param.Data.Shape);
+                    delta_accumulators[param.Name] = Ops.Constant(0, param.Data.Shape);
                 }
 
-                accumulators[param.Name] = (Rho * accumulators[param.Name]) + ((1 - Rho) * K.Square(param.Grad));
-                var update = param.Grad * K.Sqrt(delta_accumulators[param.Name] + K.EPSILON) / K.Sqrt(accumulators[param.Name] + K.EPSILON);
+                accumulators[param.Name] = (Rho * accumulators[param.Name]) + ((1 - Rho) * Ops.Square(param.Grad));
+                var update = param.Grad * Ops.Sqrt(delta_accumulators[param.Name] + Ops.EPSILON) / Ops.Sqrt(accumulators[param.Name] + Ops.EPSILON);
                 param.Data = param.Data - (LearningRate * update);
 
                 param.ApplyConstraint();
 
-                delta_accumulators[param.Name] = Rho * delta_accumulators[param.Name] + (1 - Rho) * K.Square(update);
+                delta_accumulators[param.Name] = Rho * delta_accumulators[param.Name] + (1 - Rho) * Ops.Square(update);
             }
         }
     }

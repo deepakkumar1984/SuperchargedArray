@@ -25,7 +25,7 @@
         public override void Forward(SuperArray x)
         {
             base.Forward(x);
-            Output = K.Sigmoid(x);
+            Output = Ops.Sigmoid(x);
         }
 
         /// <summary>

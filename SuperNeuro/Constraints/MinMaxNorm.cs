@@ -70,11 +70,11 @@ namespace SuperNeuro.Constraints
         internal override SuperArray Call(SuperArray w)
         {
             SuperArray norms = null;
-            norms = K.Sqrt(K.Sum(K.Square(w), (int)Axis));
+            norms = Ops.Sqrt(Ops.Sum(Ops.Square(w), Axis));
 
 
-            var desired = Rate * K.Clip(norms, MinValue, MaxValue) + (1 - Rate) * norms;
-            w = w * (desired / (K.EPSILON + norms));
+            var desired = Rate * Ops.Clip(norms, MinValue, MaxValue) + (1 - Rate) * norms;
+            w = w * (desired / (Ops.EPSILON + norms));
             return w;
         }
     }

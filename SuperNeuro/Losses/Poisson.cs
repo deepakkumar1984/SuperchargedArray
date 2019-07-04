@@ -29,7 +29,7 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            return K.Mean(preds - labels * K.Log(preds + K.EPSILON), -1);
+            return Ops.Mean(preds - labels * Ops.Log(preds + Ops.EPSILON), 1);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            return (1 - (labels / (preds + K.EPSILON))) / preds.Shape[0];
+            return (1 - (labels / (preds + Ops.EPSILON))) / preds.Shape[0];
         }
     }
 }

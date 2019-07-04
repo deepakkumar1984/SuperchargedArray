@@ -8,33 +8,29 @@
     using SuperNeuro.Engine;
     using SuperNeuro.Events;
     using SuperchargedArray;
+    using K = SuperchargedArray.Ops;
 
     public partial class Sequential
     {
         /// <summary>
-        /// The current backend
-        /// </summary>
-        internal ArrayOps K = Global.OP;
-
-        /// <summary>
         /// The train losses
         /// </summary>
-        private List<float> train_losses = new List<float>();
+        private List<double> train_losses = new List<double>();
 
         /// <summary>
         /// The train metrics
         /// </summary>
-        private List<float> train_metrics = new List<float>();
+        private List<double> train_metrics = new List<double>();
 
         /// <summary>
         /// The validation losses
         /// </summary>
-        private List<float> val_losses = new List<float>();
+        private List<double> val_losses = new List<double>();
 
         /// <summary>
         /// The validation metrics
         /// </summary>
-        private List<float> val_metrics = new List<float>();
+        private List<double> val_metrics = new List<double>();
 
         /// <summary>
         /// Gets or sets the learning history.
@@ -151,8 +147,8 @@
 
                     var lossVal = LossFn.Forward(pred, y);
                     var metricVal = MetricFn.Calc(pred, y);
-                    val_losses.Add(K.Mean(lossVal));
-                    val_metrics.Add(K.Mean(metricVal));
+                    val_losses.Add(Ops.Mean(lossVal));
+                    val_metrics.Add(Ops.Mean(metricVal));
                     x.Dispose();
                     y.Dispose();
                     lossVal.Dispose();
@@ -173,11 +169,11 @@
         {
             SuperArray pred = Forward(x);
             SuperArray lossVal = LossFn.Forward(pred, y);
-            SuperArray grad = LossFn.Backward(pred, y);
+            SuperArray grad = LossFn.Backward(pred, y).Reshape(-1, 1);
             lossVal = ApplyRegularizer(lossVal);
             var metricVal = MetricFn.Calc(pred, y);
-            train_losses.Add(K.Mean(lossVal));
-            train_metrics.Add(K.Mean(metricVal));
+            train_losses.Add(Ops.Mean(lossVal));
+            train_metrics.Add(Ops.Mean(metricVal));
 
             Backward(grad);
 
@@ -212,7 +208,7 @@
                 output = layer.Output;
             }
 
-            predictions.AddRange(output.ToArray().Cast<float>());
+            predictions.AddRange(output.List<float>());
             DataFrame result = new DataFrame();
             result.Load(predictions.ToArray());
 
@@ -244,7 +240,7 @@
                     output = layer.Output;
                 }
 
-                predictions.AddRange(output.ToArray().Cast<float>());
+                predictions.AddRange(output.List<float>());
             }
 
             DataFrame result = new DataFrame();
@@ -288,10 +284,10 @@
         protected void OnEpochEnd(
             int epoch,
             long samplesSeenPerSec,
-            float loss,
-            float validationLoss,
-            float metric,
-            float validationMetric,
+            double loss,
+            double validationLoss,
+            double metric,
+            double validationMetric,
             long duration)
         {
             EpochEnd?.Invoke(this,

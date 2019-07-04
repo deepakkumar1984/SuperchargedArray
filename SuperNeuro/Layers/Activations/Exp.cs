@@ -24,7 +24,7 @@
         public override void Forward(SuperArray x)
         {
             base.Forward(x);
-            Output = K.Exp(x);
+            Output = Ops.Exp(x);
         }
 
         /// <summary>

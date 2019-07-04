@@ -2,14 +2,13 @@
 {
     using SuperchargedArray;
     using SuperNeuro.Engine;
+    using K = SuperchargedArray.Ops;
 
     /// <summary>
     /// Base class for the initializer. Initializes the SuperArray weights or bias with values based on the type of the initializer selected.
     /// </summary>
     public abstract class BaseInitializer
     {
-        internal ArrayOps K = Global.OP;
-
         /// <summary>
         /// Gets or sets the name of the initializer.
         /// </summary>
@@ -32,6 +31,6 @@
         /// </summary>
         /// <param name="shape">The shape of the SuperArray.</param>
         /// <returns></returns>
-        public abstract SuperArray Generate(params long[] shape);
+        public abstract SuperArray Generate(Shape shape);
     }
 }

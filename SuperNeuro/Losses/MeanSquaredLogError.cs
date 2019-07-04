@@ -27,10 +27,10 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            var first_log = K.Log(K.Clip(preds, K.EPSILON, float.MaxValue) + 1);
-            var second_log = K.Log(K.Clip(labels, K.EPSILON, float.MaxValue) + 1);
+            var first_log = Ops.Log(Ops.Clip(preds, Ops.EPSILON, float.MaxValue) + 1);
+            var second_log = Ops.Log(Ops.Clip(labels, Ops.EPSILON, float.MaxValue) + 1);
 
-            return K.Mean(K.Square(first_log - second_log), -1);
+            return Ops.Mean(Ops.Square(first_log - second_log), 1);
         }
 
         /// <summary>
@@ -42,10 +42,10 @@
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
             float norm = 2f / preds.Shape[0];
-            var first_log = K.Log(K.Clip(preds, K.EPSILON, float.MaxValue) + 1);
-            var second_log = K.Log(K.Clip(labels, K.EPSILON, float.MaxValue) + 1);
+            var first_log = Ops.Log(Ops.Clip(preds, Ops.EPSILON, float.MaxValue) + 1);
+            var second_log = Ops.Log(Ops.Clip(labels, Ops.EPSILON, float.MaxValue) + 1);
 
-            return  norm * (first_log - second_log) / (K.Clip(preds, K.EPSILON, float.MaxValue) + 1);
+            return  norm * (first_log - second_log) / (Ops.Clip(preds, Ops.EPSILON, float.MaxValue) + 1);
         }
     }
 }

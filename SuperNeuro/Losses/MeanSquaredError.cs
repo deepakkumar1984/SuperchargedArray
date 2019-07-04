@@ -26,7 +26,7 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            return K.Mean(K.Square(preds - labels), -1);
+            return Ops.Mean(Ops.Square(preds - labels), 1);
         }
 
         /// <summary>

@@ -121,14 +121,14 @@
         public override void Forward(SuperArray x)
         {
             base.Forward(x);
-            
-            Parameter weight = BuildParam("w", new long[] { x.Shape[1], Dim }, x.ElementType, KernelInitializer, KernelConstraint, KernelRegularizer);
+
+            Parameter weight = BuildParam("w", new Shape(x.Shape[1], Dim), KernelInitializer, KernelConstraint, KernelRegularizer);
             Parameter bias = null;
-            Output = K.Dot(x, weight.Data);
+            Output = Ops.Dot(x, weight.Data);
 
             if (UseBias)
             {
-                bias = BuildParam("b", new long[] { 1, Dim }, x.ElementType, BiasInitializer, BiasConstraint, BiasRegularizer);
+                bias = BuildParam("b", new Shape(1, Dim), BiasInitializer, BiasConstraint, BiasRegularizer);
                 Output = Output + bias.Data;
             }
 
@@ -151,10 +151,10 @@
                 outputgrad = Act.Input.Grad;
             }
 
-            Input.Grad = K.Dot(outputgrad, base["w"].Data.Transpose());
-            this["w"].Grad = K.Dot(Input.Data.Transpose(), outputgrad);
+            Input.Grad = Ops.Dot(outputgrad, base["w"].Data.Transpose());
+            this["w"].Grad = Ops.Dot(Input.Data.Transpose(), outputgrad);
             if (UseBias)
-                this["b"].Grad = K.Sum(outputgrad, 0);
+                this["b"].Grad = Ops.Sum(outputgrad, 0);
         }
     }
 }

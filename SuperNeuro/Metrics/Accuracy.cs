@@ -26,10 +26,10 @@
         /// <returns></returns>
         public override SuperArray Calc(SuperArray preds, SuperArray labels)
         {
-            preds = K.Argmax(preds, 1);
-            labels = K.Argmax(labels, 1);
+            preds = Ops.ArgMax(preds);
+            labels = Ops.ArgMax(labels);
 
-            var r = K.EqualTo(preds, labels);
+            var r = Ops.EqualTo(preds, labels);
 
             return r;
         }

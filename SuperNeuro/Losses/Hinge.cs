@@ -27,7 +27,7 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            return K.Mean(K.Maximum(1 - labels * preds, 0), -1);
+            return Ops.Mean(Ops.Maximum(1f - labels * preds, 0), 1);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            return K.Neg(K.Maximum(labels / preds.Shape[0], 0));
+            return Ops.Neg(Ops.Maximum(labels / preds.Shape[0], 0f));
         }
     }
 }

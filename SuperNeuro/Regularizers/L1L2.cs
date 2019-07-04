@@ -30,12 +30,12 @@
             float result = 0;
             if (L1 > 0)
             {
-                result += K.Sum(L1 * K.Abs(x));
+                result += (float)Ops.Sum(L1 * Ops.Abs(x));
             }
 
             if (L2 > 0)
             {
-                result += K.Sum(L2 * K.Square(x));
+                result += (float)Ops.Sum(L2 * Ops.Square(x));
             }
 
             return result;
@@ -52,7 +52,7 @@
 
             if (L1 > 0)
             {
-                grad = (L1 * x) / (K.Abs(x) + K.EPSILON); 
+                grad = (L1 * x) / (Ops.Abs(x) + Ops.EPSILON); 
             }
 
             if(L2 > 0)

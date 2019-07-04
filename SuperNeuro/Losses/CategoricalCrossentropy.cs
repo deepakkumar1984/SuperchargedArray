@@ -27,10 +27,10 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            preds /= K.Sum(preds, -1);
+            preds /= Ops.Sum(preds, 1);
 
-            preds = K.Clip(preds, K.EPSILON, 1 - K.EPSILON);
-            return K.Sum(-1 * labels * K.Log(preds), -1);
+            preds = Ops.Clip(preds, Ops.EPSILON, 1 - Ops.EPSILON);
+            return Ops.Sum(-1 * labels * Ops.Log(preds), 1);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            preds = K.Clip(preds, K.EPSILON, 1 - K.EPSILON);
+            preds = Ops.Clip(preds, Ops.EPSILON, 1 - Ops.EPSILON);
             return (preds - labels) / preds;
         }
     }

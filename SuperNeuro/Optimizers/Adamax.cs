@@ -71,14 +71,14 @@
 
                 if (!ms.ContainsKey(param.Name))
                 {
-                    ms[param.Name] = K.Constant(0, param.Data.Shape);
-                    us[param.Name] = K.Constant(0, param.Data.Shape);
+                    ms[param.Name] = SuperArray.Constant(0f, param.Data.Shape);
+                    us[param.Name] = SuperArray.Constant(0f, param.Data.Shape);
                 }
 
                 var m_t = (Beta1 * ms[param.Name]) + (1 - Beta1) * param.Grad;
-                var u_t = K.Maximum((Beta2 * us[param.Name]), K.Abs(param.Grad));
+                var u_t = Ops.Maximum((Beta2 * us[param.Name]), Ops.Abs(param.Grad));
 
-                param.Data = param.Data - LearningRate * m_t / (u_t + K.EPSILON);
+                param.Data = param.Data - LearningRate * m_t / (u_t + Ops.EPSILON);
                 ms[param.Name] = m_t;
                 us[param.Name] = u_t;
 

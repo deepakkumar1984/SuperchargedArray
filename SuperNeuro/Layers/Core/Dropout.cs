@@ -42,10 +42,9 @@
             base.Forward(x);
             
             var p = 1 - Rate;
-            noise = new SuperArray(x.Shape);
             if (noise == null)
             {
-                K.RandomBernoulli(noise, p);
+                noise = SuperArray.RandomBernoulli<float>(x.Shape, p);
             }
 
             Output = noise * p;

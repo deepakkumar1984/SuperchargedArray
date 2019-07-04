@@ -1,6 +1,6 @@
 ﻿using SuperchargedArray;
 using SuperNeuro.Engine;
-
+using K = SuperchargedArray.Ops;
 namespace SuperNeuro.Losses
 {
     /// <summary>
@@ -8,11 +8,6 @@ namespace SuperNeuro.Losses
     /// </summary>
     public abstract class BaseLoss
     {
-        /// <summary>
-        /// The backend instance
-        /// </summary>
-        internal ArrayOps K = Global.OP;
-
         /// <summary>
         /// Gets or sets the name of the loss function
         /// </summary>

@@ -2,14 +2,12 @@
 {
     using SuperchargedArray;
     using SuperNeuro.Engine;
-
+    using K = SuperchargedArray.Ops;
     /// <summary>
     /// A metric is a function that is used to judge the performance of your model. Metric functions are to be supplied in the metrics parameter when a model is compiled.
     /// </summary>
     public abstract class BaseMetric
     {
-        internal ArrayOps K = Global.OP;
-
         /// <summary>
         /// Gets or sets the name of the metrics.
         /// </summary>

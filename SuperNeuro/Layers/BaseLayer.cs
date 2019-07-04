@@ -7,18 +7,15 @@
     using SuperNeuro.Regularizers;
     using System;
     using System.Collections.Generic;
+    using K = SuperchargedArray.Ops;
 
     /// <summary>
     /// Base class for the layers
     /// </summary>
     public abstract class BaseLayer
     {
-        /// <summary>
-        /// The current backend
-        /// </summary>
-        internal ArrayOps K = Global.OP;
 
-        private int counter = 0;
+        private static int counter = 0;
 
         /// <summary>
         /// The parameters list used by the layer
@@ -118,13 +115,13 @@
         /// <param name="regularizer">The regularizer function for this parameter.</param>
         /// <param name="trainable">if set to <c>true</c> [trainable].</param>
         /// <returns></returns>
-        public Parameter BuildParam(string name, long[] shape, DType elementType, BaseInitializer initializer, BaseConstraint constraint = null, BaseRegularizer regularizer = null, bool trainable = true)
+        public Parameter BuildParam(string name, Shape shape, BaseInitializer initializer, BaseConstraint constraint = null, BaseRegularizer regularizer = null, bool trainable = true)
         {
             Parameter v = null;
             name = Name + "_" + name;
             if (!Params.ContainsKey(name))
             {
-                v = new Parameter(name, elementType, shape);
+                v = new Parameter(name);
                 v.Data = initializer.Generate(shape);
                 v.SetConstraint(constraint);
                 v.SetRegularizer(regularizer);

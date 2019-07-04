@@ -44,13 +44,13 @@ namespace SuperNeuro.Layers
 
             var x_reshaped = x.Reshape(n * c, 1, h, w);
             xCols = ImUtil.Im2Col(x_reshaped, PoolSize, pad, Strides);
-            Output = K.Mean(xCols, 0);
+            Output = Ops.Mean(xCols, 0);
             Output = Output.Reshape(h_out, w_out, n, c).Transpose(2, 3, 0, 1);
         }
 
         public override void Backward(SuperArray outputgrad)
         {
-            SuperArray dX_col = K.Constant(0, xCols.Shape);
+            SuperArray dX_col = Ops.Constant(0, xCols.Shape);
             var (n, c, h, w) = Input.Data.GetConv2DShape();
             
             int pad = 0;
@@ -64,7 +64,7 @@ namespace SuperNeuro.Layers
             }
 
             var dout_flat = outputgrad.Transpose(2, 3, 0, 1).Reshape(1, -1);
-            var dX = ImUtil.Col2Im(dout_flat, Input.Data.Shape, PoolSize, pad, Strides);
+            var dX = ImUtil.Col2Im(dout_flat, Input.Data.Shape.Dims, PoolSize, pad, Strides);
             Input.Grad = dX.Reshape(n, c, h, w);
         }
     }

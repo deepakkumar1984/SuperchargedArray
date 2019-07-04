@@ -36,8 +36,8 @@
         public override void Backward(SuperArray outputgrad)
         {
             var s = Output.Reshape(-1, 1);
-            var d = K.Diag(s) - K.Dot(s, s.Transpose());
-            Input.Grad = outputgrad * K.Sum(d, -1).Reshape(Input.Data.Shape);
+            var d = Ops.Diag(s) - Ops.Dot(s, s.Transpose());
+            Input.Grad = outputgrad * Ops.Sum(d, 1).Reshape(Input.Data.Shape);
         }
     }
 }

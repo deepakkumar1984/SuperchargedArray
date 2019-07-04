@@ -22,13 +22,13 @@ namespace SuperNeuro.Losses
         {
             var value = 1 - labels * preds;
 
-            return K.Mean(K.Square(K.Maximum(value, 0)), -1);
+            return Ops.Mean(Ops.Square(Ops.Maximum(value, 0)), 1);
         }
 
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
             float norm = 2f / preds.Shape[0];
-            return -1 * norm * labels * K.Maximum((1 - labels * preds), 0);
+            return -1 * norm * labels * Ops.Maximum((1 - labels * preds), 0);
         }
     }
 }

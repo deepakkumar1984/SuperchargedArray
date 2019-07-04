@@ -21,13 +21,13 @@ namespace SuperNeuro
             return cols;
         }
 
-        public static SuperArray Col2Im(SuperArray cols, long[] x_shape, Tuple<int, int> kernalSize, int padding = 1, int stride = 1, Tuple<int, int> dialation = null)
+        public static SuperArray Col2Im(SuperArray cols, int[] x_shape, Tuple<int, int> kernalSize, int padding = 1, int stride = 1, Tuple<int, int> dialation = null)
         {
 
             if (dialation == null)
                 dialation = Tuple.Create<int, int>(1, 1);
 
-            SuperArray im = new SuperArray(x_shape, DType.Single);
+            SuperArray im = new SuperArray(x_shape);
 
             return im;
         }

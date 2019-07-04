@@ -50,18 +50,15 @@ namespace ArrayExt.Accel.Testing
 
         public static void RunArraySimplified()
         {
-            var K = Global.OP;
             //Create an array with values
-            SuperArray a = new float[,] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
+            SuperArray a = SuperArray.Create(new float[,] { { 1, 2 }, { 3, 4 }, { 5, 6 } });
 
             //Create a array with constant value 2
-            SuperArray b = new float[3, 2];
-            //SuperArray b = new SuperArray(3, 2);
-            b.Fill(2);
+            SuperArray b = SuperArray.Constant<float>(2, (3, 2));
 
             var sum = a + b;
             //Perform Math operation on the array: 2A + Log(B) + Exp(A)
-            var r = 2 * a - K.Log(b) + K.Exp(a);
+            var r = 2 * a - Ops.Log(b) + Ops.Exp(a);
 
             //Print the Array
             r.Print();

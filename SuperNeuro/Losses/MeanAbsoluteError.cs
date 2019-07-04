@@ -26,7 +26,7 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            return K.Mean(K.Abs(preds - labels), 1).Reshape(1, -1);
+            return Ops.Mean(Ops.Abs(preds - labels), 1).Reshape(1, -1);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            return (preds - labels) / ((float)preds.Shape[0] * K.Abs(preds - labels));
+            return (preds - labels) / ((float)preds.Shape[0] * Ops.Abs(preds - labels));
         }
     }
 }

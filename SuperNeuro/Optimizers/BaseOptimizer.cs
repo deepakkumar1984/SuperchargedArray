@@ -3,14 +3,13 @@
     using SuperchargedArray;
     using SuperNeuro.Engine;
     using SuperNeuro.Layers;
+    using K = SuperchargedArray.Ops;
 
     /// <summary>
     /// 
     /// </summary>
     public abstract class BaseOptimizer 
     {
-        internal ArrayOps K = Global.OP;
-
         /// <summary>
         /// Gets or sets the name of the optimizer function
         /// </summary>

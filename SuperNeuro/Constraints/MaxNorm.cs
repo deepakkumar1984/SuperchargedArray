@@ -21,12 +21,12 @@ namespace SuperNeuro.Constraints
         /// For instance, in a Dense layer the weight matrix has shape (input_dim, output_dim), set axis to 0 to constrain each weight vector of length (input_dim,). 
         /// In a Conv2D layer, the weight SuperArray has shape  (input_depth, output_depth, rows, cols), set axis to [1, 2, 3] to constrain the weights of each filter SuperArray of size  (input_depth, rows, cols).
         /// </summary>
-        public int Axis { get; set; }
+        public uint Axis { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MaxNorm"/> class.</summary>
         /// <param name="maxValue">The maximum norm for the incoming weights.</param>
         /// <param name="axis">Integer, axis along which to calculate weight norms. </param>
-        public MaxNorm(float maxValue = 2, int axis = 0)
+        public MaxNorm(float maxValue = 2, uint axis = 0)
         {
             MaxValue = maxValue;
             Axis = axis;
@@ -37,10 +37,10 @@ namespace SuperNeuro.Constraints
         /// <returns></returns>
         internal override SuperArray Call(SuperArray w)
         {
-            SuperArray norms = K.Sqrt(K.Sum(K.Square(w), Axis));
+            SuperArray norms = Ops.Sqrt(Ops.Sum(Ops.Square(w), Axis));
 
-            var desired = K.Clip(norms, 0, MaxValue);
-            return w * (desired / (K.EPSILON + norms));
+            var desired = Ops.Clip(norms, 0, MaxValue);
+            return w * (desired / (Ops.EPSILON + norms));
         }
     }
 }

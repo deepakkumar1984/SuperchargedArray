@@ -14,7 +14,7 @@
         /// <value>
         /// The train loss.
         /// </value>
-        public List<float> TrainLosses { get; set; }
+        public List<double> TrainLosses { get; set; }
 
         /// <summary>
         /// Gets or sets the train metric history.
@@ -22,7 +22,7 @@
         /// <value>
         /// The train metric.
         /// </value>
-        public List<float> TrainMetrics { get; set; }
+        public List<double> TrainMetrics { get; set; }
 
         /// <summary>
         /// Gets or sets the value losess.
@@ -30,7 +30,7 @@
         /// <value>
         /// The value losess.
         /// </value>
-        public List<float> ValLosses { get; set; }
+        public List<double> ValLosses { get; set; }
 
         /// <summary>
         /// Gets or sets the value metrics.
@@ -38,17 +38,17 @@
         /// <value>
         /// The value metrics.
         /// </value>
-        public List<float> ValMetrics { get; set; }
+        public List<double> ValMetrics { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="History"/> class.
         /// </summary>
         public History()
         {
-            TrainLosses = new List<float>();
-            TrainMetrics = new List<float>();
-            ValLosses = new List<float>();
-            ValMetrics = new List<float>();
+            TrainLosses = new List<double>();
+            TrainMetrics = new List<double>();
+            ValLosses = new List<double>();
+            ValMetrics = new List<double>();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@
         /// <param name="trainMetric">The train metric.</param>
         /// <param name="valLoss">The value loss.</param>
         /// <param name="valMetric">The value metric.</param>
-        public void Add(List<float> trainLoss, List<float> trainMetric, List<float> valLoss, List<float> valMetric)
+        public void Add(List<double> trainLoss, List<double> trainMetric, List<double> valLoss, List<double> valMetric)
         {
             TrainLosses.Add(trainLoss.Average());
             TrainMetrics.Add(trainMetric.Average());

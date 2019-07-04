@@ -31,7 +31,7 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            return K.Mean(_logcosh(preds - labels), -1);
+            return Ops.Mean(_logcosh(preds - labels), 1);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            return -1 * K.Tanh(labels - preds) / preds.Shape[0];
+            return -1 * Ops.Tanh(labels - preds) / preds.Shape[0];
         }
     }
 }

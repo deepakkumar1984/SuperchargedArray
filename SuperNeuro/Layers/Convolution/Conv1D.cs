@@ -65,11 +65,11 @@ namespace SuperNeuro.Layers
             base.Forward(x);
             var (n, c, s) = x.GetConv1DShape();
 
-            Parameter weight = BuildParam("w", new long[] { Filters, c, KernalSize }, x.ElementType, KernalInitializer, KernalConstraint, KernalRegularizer);
+            Parameter weight = BuildParam("w", new Shape(Filters, c, KernalSize), KernalInitializer, KernalConstraint, KernalRegularizer);
             Parameter bias = null;
             if (UseBias)
             {
-                bias = BuildParam("b", new long[] { Filters, 1 }, x.ElementType, BiasInitializer, BiasConstraint, BiasRegularizer);
+                bias = BuildParam("b", new Shape(Filters, 1), BiasInitializer, BiasConstraint, BiasRegularizer);
             }
 
             int pad = 0;
@@ -89,7 +89,7 @@ namespace SuperNeuro.Layers
             xCols = ImUtil.Im2Col(x, Tuple.Create(KernalSize, KernalSize), pad, Strides);
             var wRows = weight.Data.Reshape(Filters, -1);
             
-            Output = K.Dot(wRows, xCols);
+            Output = Ops.Dot(wRows, xCols);
             if (UseBias)
             {
                 Output = Output + bias.Data;
@@ -112,13 +112,13 @@ namespace SuperNeuro.Layers
             }
 
             var dout_flat = outputgrad.Transpose(2, 0, 1).Reshape(Filters, -1);
-            var dW = K.Dot(dout_flat, xCols.Transpose());
+            var dW = Ops.Dot(dout_flat, xCols.Transpose());
             dW = dW.Reshape(Params["w"].Data.Shape);
-            var db = K.Sum(outputgrad, 0, 1, 2).Reshape(Filters, -1);
+            var db = Ops.Sum(outputgrad, new uint[] { 0, 1, 2 }).Reshape(Filters, -1);
             var W_flat = Params["w"].Data.Reshape(Filters, -1);
 
-            var dX_col = K.Dot(W_flat.Transpose(), dout_flat);
-            Input.Grad = ImUtil.Col2Im(dX_col, Input.Data.Shape, Tuple.Create(KernalSize, KernalSize), pad, Strides);
+            var dX_col = Ops.Dot(W_flat.Transpose(), dout_flat);
+            Input.Grad = ImUtil.Col2Im(dX_col, Input.Data.Shape.Dims, Tuple.Create(KernalSize, KernalSize), pad, Strides);
 
             Params["w"].Grad = dW;
             if (UseBias)

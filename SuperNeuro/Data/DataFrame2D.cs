@@ -14,13 +14,13 @@
     /// <seealso cref="SuperNeuro.Data.DataFrame" />
     public class DataFrame2D : DataFrame
     {
-        private long features;
+        private int features;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFrame2D"/> class.
         /// </summary>
         /// <param name="num_features">The number features this 2D frame have.</param>
-        public DataFrame2D(long num_features)
+        public DataFrame2D(int num_features)
             : base()
         {
             features = num_features;
@@ -28,8 +28,8 @@
 
         public override void Load(params float[] data)
         {
-            variable = new SuperArray(data.Length / features, features);
             base.Load(data);
+            Reshape(data.Length / features, features);
         }
 
 

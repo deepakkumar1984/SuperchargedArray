@@ -56,7 +56,7 @@
                 Parameter param = p.Value;
                 if (!moments.ContainsKey(param.Name))
                 {
-                    moments[param.Name] = K.Constant(0, param.Data.Shape);
+                    moments[param.Name] = Ops.Constant(0, param.Data.Shape);
                 }
 
                 moments[param.Name] = (Momentum * moments[param.Name]) - (LearningRate * param.Grad);

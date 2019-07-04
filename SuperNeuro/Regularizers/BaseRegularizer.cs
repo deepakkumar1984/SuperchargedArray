@@ -2,6 +2,7 @@
 {
     using SuperchargedArray;
     using SuperNeuro.Engine;
+    using K = SuperchargedArray.Ops;
 
     /// <summary>
     /// Regularizers allow to apply penalties on layer parameters or layer activity during optimization. These penalties are incorporated in the loss function that the network optimizes.
@@ -9,8 +10,6 @@
     /// </summary>
     public abstract class BaseRegularizer
     {
-        internal ArrayOps K = Global.OP;
-
         /// <summary>
         /// Gets or sets the name of the regularizer function
         /// </summary>

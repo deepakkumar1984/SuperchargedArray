@@ -25,7 +25,7 @@
         public override void Forward(SuperArray x)
         {
             base.Forward(x);
-            Output = K.Tanh(x);
+            Output = Ops.Tanh(x);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@
         /// <param name="outputgrad">The calculated output grad from previous layer.</param>
         public override void Backward(SuperArray outputgrad)
         {
-            Input.Grad = outputgrad * (1 - K.Square(Output));
+            Input.Grad = outputgrad * (1 - Ops.Square(Output));
         }
     }
 }

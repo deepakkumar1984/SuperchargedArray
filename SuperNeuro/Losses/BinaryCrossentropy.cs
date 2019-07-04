@@ -40,12 +40,12 @@
             SuperArray output = preds;
             if (!FromLogit)
             {
-                output = K.Clip(output, K.EPSILON, 1f - K.EPSILON);
-                output = K.Log(output / (1 - output));
+                output = Ops.Clip(output, Ops.EPSILON, 1f - Ops.EPSILON);
+                output = Ops.Log(output / (1 - output));
             }
 
-            output = K.Sigmoid(output);
-            return labels * K.Neg(K.Log(output)) + (1 - labels) * K.Neg(K.Log(1 - output));
+            output = Ops.Sigmoid(output);
+            return labels * Ops.Neg(Ops.Log(output)) + (1 - labels) * Ops.Neg(Ops.Log(1 - output));
         }
 
         /// <summary>
@@ -60,7 +60,7 @@
 
             if (!FromLogit)
             {
-                output = K.Clip(preds, K.EPSILON, 1f - K.EPSILON);
+                output = Ops.Clip(preds, Ops.EPSILON, 1f - Ops.EPSILON);
             }
 
             return (output - labels) / (output * (1 - output));

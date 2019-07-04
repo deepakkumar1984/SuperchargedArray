@@ -36,8 +36,8 @@
             base.Forward(x);
             var keepElements = x > 0;
             var keepElements_Exp = x < 0;
-            var d = Alpha * (K.Exp(K.Mul(x, keepElements_Exp)) - 1);
-            Output = K.Mul(x, keepElements) + d;
+            var d = Alpha * (Ops.Exp(x * keepElements_Exp) - 1);
+            Output = (x * keepElements) + d;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@
         {
             var keepElements = Input.Data > 0;
             var keepElements_Exp = Input.Data < 0;
-            var d = Alpha * K.Exp(K.Mul(Input.Data, keepElements_Exp));
+            var d = Alpha * Ops.Exp(Input.Data * keepElements_Exp);
             Input.Grad = outputgrad * d;
         }
     }

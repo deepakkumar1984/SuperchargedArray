@@ -26,10 +26,10 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            var pos = K.Sum(labels * preds, -1);
-            var neg = K.Max((1 - labels) * preds, -1);
+            var pos = Ops.Sum(labels * preds, 1);
+            var neg = Ops.Max((1 - labels) * preds, 1);
 
-            return K.Maximum(neg - pos + 1, 0f);
+            return Ops.Maximum(neg - pos + 1, 0f);
         }
 
         /// <summary>
@@ -40,8 +40,8 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            var diff = (1 - labels) * preds - K.Sum(labels * preds, -1);
-            return K.Maximum(diff, 0);
+            var diff = (1 - labels) * preds - Ops.Sum(labels * preds, 1);
+            return Ops.Maximum(diff, 0);
         }
     }
 }

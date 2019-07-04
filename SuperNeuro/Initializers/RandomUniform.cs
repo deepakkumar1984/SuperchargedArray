@@ -52,11 +52,9 @@
         /// </summary>
         /// <param name="shape">The shape of the SuperArray.</param>
         /// <returns></returns>
-        public override SuperArray Generate(params long[] shape)
+        public override SuperArray Generate(Shape shape)
         {
-            SuperArray x = new SuperArray(shape);
-            K.RandomUniform(x, MinVal, MaxVal, Seed);
-            return x;
+            return SuperArray.RandomUniform<float>(shape, MinVal, MaxVal, Seed);
         }
     }
 }

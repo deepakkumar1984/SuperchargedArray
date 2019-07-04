@@ -25,10 +25,10 @@
         /// <returns></returns>
         public override SuperArray Forward(SuperArray preds, SuperArray labels)
         {
-            var y_true = K.Clip(labels, K.EPSILON, 1);
-            var y_pred = K.Clip(preds, K.EPSILON, 1);
+            var y_true = Ops.Clip(labels, Ops.EPSILON, 1);
+            var y_pred = Ops.Clip(preds, Ops.EPSILON, 1);
 
-            return K.Sum(y_true * K.Log(y_true / y_pred), -1);
+            return Ops.Sum(y_true * Ops.Log(y_true / y_pred), 1);
         }
 
         /// <summary>
@@ -39,10 +39,10 @@
         /// <returns></returns>
         public override SuperArray Backward(SuperArray preds, SuperArray labels)
         {
-            var y_true = K.Clip(labels, K.EPSILON, 1);
-            var y_pred = K.Clip(preds, K.EPSILON, 1);
+            var y_true = Ops.Clip(labels, Ops.EPSILON, 1);
+            var y_pred = Ops.Clip(preds, Ops.EPSILON, 1);
 
-            return K.Maximum((-1 * (y_true / y_pred)), 0);
+            return Ops.Maximum((-1 * (y_true / y_pred)), 0);
         }
     }
 }
