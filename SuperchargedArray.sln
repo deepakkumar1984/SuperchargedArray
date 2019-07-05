@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperNeruro.Examples", "Exa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpicyNLP", "SpicyNLP\SpicyNLP.csproj", "{B4BFA746-EFD9-4E6E-B420-E8176F6FF9AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpicyLang.Exporter", "SpicyLang.Exporter\SpicyLang.Exporter.csproj", "{5CA375AB-8433-416E-872D-D4B0F04B1D4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,14 @@ Global
 		{B4BFA746-EFD9-4E6E-B420-E8176F6FF9AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B4BFA746-EFD9-4E6E-B420-E8176F6FF9AF}.Release|x64.ActiveCfg = Release|Any CPU
 		{B4BFA746-EFD9-4E6E-B420-E8176F6FF9AF}.Release|x64.Build.0 = Release|Any CPU
+		{5CA375AB-8433-416E-872D-D4B0F04B1D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CA375AB-8433-416E-872D-D4B0F04B1D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CA375AB-8433-416E-872D-D4B0F04B1D4A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5CA375AB-8433-416E-872D-D4B0F04B1D4A}.Debug|x64.Build.0 = Debug|Any CPU
+		{5CA375AB-8433-416E-872D-D4B0F04B1D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CA375AB-8433-416E-872D-D4B0F04B1D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CA375AB-8433-416E-872D-D4B0F04B1D4A}.Release|x64.ActiveCfg = Release|Any CPU
+		{5CA375AB-8433-416E-872D-D4B0F04B1D4A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

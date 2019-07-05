@@ -8,7 +8,7 @@ namespace SpicyNLP
     {
         void ToDisk(string path);
 
-        ISpicy FromDish(string path);
+        ISpicy FromDisk(string path);
 
         byte[] ToBytes();
 

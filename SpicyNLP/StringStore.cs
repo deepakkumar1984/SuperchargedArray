@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace SpicyNLP
 {
-    public class StringStore : IEnumerable, ISpicy
+    public class StringStore : IEnumerable<KeyValuePair<string, Unicode>>, ISpicy
     {
-        private Dictionary<string, string> data;
+        private Dictionary<string, Unicode> data;
 
         public int Length
         {
@@ -18,26 +18,28 @@ namespace SpicyNLP
             }
         }
 
-        public StringStore(params string[] strings)
+        public StringStore(params Unicode[] strings)
         {
-            data = new Dictionary<string, string>();
+            data = new Dictionary<string, Unicode>();
             foreach (var item in strings)
             {
-                data.Add(Helper.GetHash(item), item);
+                data.Add(Helper.GetHash(item.ToString()), item);
             }
         }
 
-        public string this[string s, bool returnHash = true]
+        public Unicode this[string hash]
         {
             get
             {
-                if(!returnHash)
-                {
-                    return data[s];
-                }
+                return data[hash];
+            }
+        }
 
-                var r = data.FirstOrDefault(x => (x.Value == s));
-                return r.Value;
+        public string this[Unicode s]
+        {
+            get
+            {
+                return data.FirstOrDefault(x => (x.Value == s)).Key;
             }
         }
 
@@ -48,18 +50,12 @@ namespace SpicyNLP
             return hash;
         }
 
-
-        public IEnumerator GetEnumerator()
-        {
-            return data.GetEnumerator();
-        }
-
         public void ToDisk(string path)
         {
             throw new NotImplementedException();
         }
 
-        public ISpicy FromDish(string path)
+        public ISpicy FromDisk(string path)
         {
             throw new NotImplementedException();
         }
@@ -72,6 +68,21 @@ namespace SpicyNLP
         public ISpicy FromBytes(byte[] data)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<KeyValuePair<string, Unicode>> GetEnumerator()
+        {
+            return data.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.GetEnumerator();
         }
     }
 }
