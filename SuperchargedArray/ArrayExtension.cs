@@ -1,34 +1,10 @@
-﻿/*
-MIT License
+﻿using SuperchargedArray.Backend.Interop;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-Copyright (c) 2019 Tech Quantum
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
- 
-*/
 namespace SuperchargedArray
 {
-    using System;
-
-    /// <summary>
-    /// Extension methods for the .NET array
-    /// </summary>
     public static class ArrayExtension
     {
         /// <summary>
@@ -36,9 +12,9 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The array.</param>
         /// <returns></returns>
-        public static long[] GetShape(this Array x)
+        public static int[] GetShape(this Array x)
         {
-            long[] shape = new long[x.Rank];
+            int[] shape = new int[x.Rank];
             for (int i = 0; i < shape.Length; i++)
                 shape[i] = x.GetLength(i);
 
@@ -50,16 +26,36 @@ namespace SuperchargedArray
         /// </summary>
         /// <param name="x">The array.</param>
         /// <returns></returns>
-        public static DType GetDType(this Array x)
+        public static DataType GetDType(this Array x)
         {
-            DType result = DType.Single;
-            if(x.GetType().Name.StartsWith("Single"))
+            DataType result = DataType.Float32;
+            if (x.GetType().Name.StartsWith("Single"))
             {
-                result = DType.Single;
+                result = DataType.Float32;
             }
             else if (x.GetType().Name.StartsWith("Double"))
             {
-                result = DType.Double;
+                result = DataType.Float64;
+            }
+            else if (x.GetType().Name.StartsWith("Int32"))
+            {
+                result = DataType.Int32;
+            }
+            else if (x.GetType().Name.StartsWith("Int64"))
+            {
+                result = DataType.Int64;
+            }
+            else if (x.GetType().Name.StartsWith("UInt32"))
+            {
+                result = DataType.UInt32;
+            }
+            else if (x.GetType().Name.StartsWith("UInt64"))
+            {
+                result = DataType.UInt64;
+            }
+            else if (x.GetType().Name.StartsWith("Byte"))
+            {
+                result = DataType.Byte;
             }
 
             return result;

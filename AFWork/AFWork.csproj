@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Backend\Algorithm.cs" />
+    <Compile Remove="Backend\Data.cs" />
+    <Compile Remove="Backend\SiaNetBackend.cs" />
+  </ItemGroup>
+
+</Project>

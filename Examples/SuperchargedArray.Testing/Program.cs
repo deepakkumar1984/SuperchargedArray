@@ -11,10 +11,10 @@ namespace ArrayExt.Accel.Testing
         {
             try
             {
-                new PerfTest().Run();
-                //Global.UseAmplifier(0);
-                //BasicExample.RunStandard();
+                BasicExample.RunStandard();
                 //BasicExample.RunArraySimplified();
+
+                SuperArray.RandomBernoulli<float>((5, 5), 0.5f).Print();
 
             }
             catch (Exception e)

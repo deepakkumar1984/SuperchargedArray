@@ -60,7 +60,7 @@ SuperArray b = new float[3, 2];
 b.Fill(2);
 
 //Perform Math operation on the array: 2A + Log(B) + Exp(A)
-var r = 2 * a - K.Log(b) + K.Exp(a);
+var r = 2 * a - Ops.Log(b) + Ops.Exp(a);
 
 //Print the Array
 r.Print();
@@ -129,7 +129,7 @@ public void RunArrayDefault(int count, SuperArray a, SuperArray b, int cpu)
 
     var K = SuperchargedArray.Global.OP;
 
-    var r = K.Trunc(a * K.Sin(b) + K.Cos(a) * K.Exp(b));
+    var r = Ops.Trunc(a * Ops.Sin(b) + Ops.Cos(a) * Ops.Exp(b));
     sw.Stop();
 
     Console.WriteLine("With Parallel Thread Time (in ms): {1}", cpu, sw.ElapsedMilliseconds);
@@ -145,7 +145,7 @@ public void RunArrayAccelerated(int count, SuperArray a, SuperArray b, int devic
 
         var K = SuperchargedArray.Accelerated.Global.OP;
 
-        var r = K.Trunc(a * K.Sin(b) + K.Cos(a) * K.Exp(b));
+        var r = Ops.Trunc(a * Ops.Sin(b) + Ops.Cos(a) * Ops.Exp(b));
         sw.Stop();
 
         Console.WriteLine("With Accelerator (in ms): " + sw.ElapsedMilliseconds);
