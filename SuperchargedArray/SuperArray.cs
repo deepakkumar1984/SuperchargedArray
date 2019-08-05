@@ -10,7 +10,7 @@ namespace SuperchargedArray
 {
     public partial class SuperArray : IDisposable
     {
-        internal AFArray variable;
+        public AFArray variable;
 
         public Shape Shape
         {
@@ -42,7 +42,7 @@ namespace SuperchargedArray
         public bool IsColumn => variable.IsColumn;
         public bool IsEmpty => variable.IsEmpty;
 
-        internal SuperArray(SuperchargedArray.Backend.AFArray x)
+        public SuperArray(SuperchargedArray.Backend.AFArray x)
         {
             variable = x;
         }
@@ -76,6 +76,11 @@ namespace SuperchargedArray
         public SuperArray Reshape(params int[] dims)
         {
             return Reshape(new Shape(dims));
+        }
+
+        public SuperArray Ravel()
+        {
+            return Reshape(ElementCount);
         }
 
         public SuperArray Transpose(bool conjugate = false)
@@ -157,10 +162,12 @@ namespace SuperchargedArray
 
         public static SuperArray operator +(SuperArray lhs, SuperArray rhs)
         {
-            if (lhs.IsScalar)
-                return lhs.List<float>()[0] + rhs;
+            if (lhs.IsScalar && rhs.IsScalar)
+                return Data.CreateArray(new float[] { lhs.List<float>()[0] + rhs.List<float>()[0] });
+            else if (lhs.IsScalar)
+                return Data.Constant<float>(lhs.List<float>()[0], rhs.variable.Dimensions) + rhs;
             else if (rhs.IsScalar)
-                return lhs + rhs.List<float>()[0];
+                return lhs.variable + Data.Constant<float>(rhs.List<float>()[0], lhs.variable.Dimensions);
 
             (lhs, rhs) = BroadcastTensor(lhs, rhs);
             return lhs.variable + rhs.variable;
@@ -178,10 +185,12 @@ namespace SuperchargedArray
 
         public static SuperArray operator -(SuperArray lhs, SuperArray rhs)
         {
-            if (lhs.IsScalar)
-                return lhs.List<float>()[0] - rhs;
+            if (lhs.IsScalar && rhs.IsScalar)
+                return Data.CreateArray(new float[] { lhs.List<float>()[0] - rhs.List<float>()[0] });
+            else if (lhs.IsScalar)
+                return Data.Constant<float>(lhs.List<float>()[0], rhs.variable.Dimensions) - rhs;
             else if (rhs.IsScalar)
-                return lhs - rhs.List<float>()[0];
+                return lhs.variable - Data.Constant<float>(rhs.List<float>()[0], lhs.variable.Dimensions);
 
             (lhs, rhs) = BroadcastTensor(lhs, rhs);
             return lhs.variable - rhs.variable;
@@ -199,10 +208,12 @@ namespace SuperchargedArray
 
         public static SuperArray operator *(SuperArray lhs, SuperArray rhs)
         {
-            if (lhs.IsScalar)
-                return lhs.List<float>()[0] * rhs;
+            if (lhs.IsScalar && rhs.IsScalar)
+                return Data.CreateArray(new float[] { lhs.List<float>()[0] * rhs.List<float>()[0] });
+            else if (lhs.IsScalar)
+                return Data.Constant(lhs.List<float>()[0], rhs.variable.Dimensions) * rhs;
             else if (rhs.IsScalar)
-                return lhs * rhs.List<float>()[0];
+                return lhs.variable * Data.Constant<float>(rhs.List<float>()[0], lhs.variable.Dimensions);
 
             (lhs, rhs) = BroadcastTensor(lhs, rhs);
             return lhs.variable * rhs.variable;
@@ -220,10 +231,13 @@ namespace SuperchargedArray
 
         public static SuperArray operator /(SuperArray lhs, SuperArray rhs)
         {
-            if (lhs.IsScalar)
-                return lhs.List<float>()[0] / rhs;
+            if (lhs.IsScalar && rhs.IsScalar)
+                return Data.CreateArray(new float[] { lhs.List<float>()[0] / rhs.List<float>()[0] });
+            else if (lhs.IsScalar)
+                return Data.Constant<float>(lhs.List<float>()[0], rhs.variable.Dimensions) / rhs;
             else if (rhs.IsScalar)
-                return lhs / rhs.List<float>()[0];
+                return lhs.variable / Data.Constant<float>(rhs.List<float>()[0], lhs.variable.Dimensions);
+            
 
             (lhs, rhs) = BroadcastTensor(lhs, rhs);
             return lhs.variable / rhs.variable;
@@ -376,7 +390,15 @@ namespace SuperchargedArray
                 rhs = rhs.Repeat(lhs.Shape[0], 0).Reshape(lhs.Shape);
             }
 
-            //lhs.Print(); rhs.Print();
+            if (lhs.Shape.Length == 1 && rhs.Shape.Length > 1)
+            {
+                lhs = lhs.Reshape(rhs.Shape);
+            }
+            else if (rhs.Shape.Length == 1 && lhs.Shape.Length > 1)
+            {
+                rhs = rhs.Reshape(lhs.Shape);
+            }
+
             return (lhs, rhs);
         }
     }

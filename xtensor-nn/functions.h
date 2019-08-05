@@ -9,7 +9,7 @@
 #include <xtensor/xarray.hpp>
 #include "variable.h"
 
-namespace xtensor{
+namespace xt{
     namespace nn{
         variable operator +(const variable& lhs, const variable& rhs);
         variable operator *(const variable& lhs, const variable& rhs);

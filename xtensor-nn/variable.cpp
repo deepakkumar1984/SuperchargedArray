@@ -4,7 +4,7 @@
 
 #include "variable.h"
 
-namespace xtensor
+namespace xt
 {
     namespace nn{
         variable::Shared::Shared() : m_calc_grad(true),
@@ -16,10 +16,10 @@ namespace xtensor
         }
 
         variable::Shared::Shared(const xt::xarray<float>& data, bool calc_grad) : m_calc_grad(calc_grad),
-                                                                          m_data(data),
-                                                                          m_inputs(),
-                                                                          m_grads(),
-                                                                          m_grad_func(nullptr)
+                                                                                  m_data(data),
+                                                                                  m_inputs(),
+                                                                                  m_grads(),
+                                                                                  m_grad_func(nullptr)
         {
         }
         variable::Shared::Shared(const xt::xarray<float>& data, const std::vector<variable>& inputs, GradFunc_t grad_func, bool calc_grad):
@@ -112,9 +112,9 @@ namespace xtensor
             if (!m_shared->m_calc_grad) return false;
             return m_shared->m_grads.size() >= 1;
         }
-        const size_t* variable::dims() const
+        auto variable::dims() const
         {
-            return m_shared->m_data.shape().data();
+            return m_shared->m_data.shape();
         }
 
         void variable::zeroGrad()
@@ -190,7 +190,6 @@ namespace xtensor
         }
         void variable::backward(bool retain_grad_graph)
         {
-            long shape[] = this->dims();
             auto ones = variable(xt::ones<float>(this->dims()), false);
             this->backward(ones, retain_grad_graph);
         }

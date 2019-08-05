@@ -37,7 +37,7 @@ using SuperchargedArray.Backend.Interop;
 
 namespace SuperchargedArray.Backend
 {
-    internal static class Vector
+    public static class Vector
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static AFArray Dot(AFArray lhs, AFArray rhs, bool lconj = false, bool rconj = false)
@@ -46,5 +46,13 @@ namespace SuperchargedArray.Backend
 			Internal.VERIFY(AFBlas.af_dot(out ptr, lhs._ptr, rhs._ptr, lconj ? af_mat_prop.AF_MAT_CONJ : af_mat_prop.AF_MAT_NONE, rconj ? af_mat_prop.AF_MAT_CONJ : af_mat_prop.AF_MAT_NONE));
 			return new AFArray(ptr);
 		}
-	}
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (AFArray, AFArray) Grad(AFArray @in)
+        {
+            IntPtr dx, dy;
+            Internal.VERIFY(AFAlgorithm.af_gradient(out dx, out dy, @in._ptr));
+            return (new AFArray(dx), new AFArray(dy));
+        }
+    }
 }

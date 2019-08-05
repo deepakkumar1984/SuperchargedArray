@@ -9,6 +9,7 @@
     using SuperNeuro.Events;
     using SuperchargedArray;
     using K = SuperchargedArray.Ops;
+    using SuperNeuro.Layers;
 
     public partial class Sequential
     {
@@ -198,17 +199,19 @@
         {
             List<float> predictions = new List<float>();
 
-            SuperArray output = x.variable;
+            BaseLayer lastLayer = null;
+
             foreach (var layer in Layers)
             {
-                if (layer.SkipPred)
-                    continue;
+                if (lastLayer == null)
+                    layer.Forward(x.variable);
+                else
+                    layer.Forward(lastLayer.Output);
 
-                layer.Forward(output);
-                output = layer.Output;
+                lastLayer = layer;
             }
 
-            predictions.AddRange(output.List<float>());
+            predictions.AddRange(lastLayer.Output.List<float>());
             DataFrame result = new DataFrame();
             result.Load(predictions.ToArray());
 

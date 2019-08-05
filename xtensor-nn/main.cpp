@@ -1,11 +1,16 @@
 #include <iostream>
 #include <xtensor/xreducer.hpp>
 #include <xtensor/xarray.hpp>
+#include "variable.h"
+#include "functions.h"
 
+using namespace xt::nn;
 int main() {
-    long shape[2] = {2,3};
-    xt::xarray<float> x = xt::ones<float>(shape);
+    auto x_array = xt::xarray<float>({2, 2});
+    x_array.fill(3);
 
-    std::cout << "Hello, World!" << std::endl;
+    auto x = new variable(x_array, true);
+    auto y = xt::nn::sigmoid(x);
+    //std::cout << grad.array().data();
     return 0;
 }

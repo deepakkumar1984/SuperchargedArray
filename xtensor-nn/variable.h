@@ -14,7 +14,7 @@
 #include <vector>
 #include <unordered_map>
 
-namespace xtensor{
+namespace xt{
     namespace nn
     {
         class variable {
@@ -57,7 +57,7 @@ namespace xtensor{
 
             bool isGradAvailable() const;
 
-            const size_t* dims() const;
+            auto dims() const;
 
             void zeroGrad();
 

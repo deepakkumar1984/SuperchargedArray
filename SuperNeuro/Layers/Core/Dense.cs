@@ -125,7 +125,7 @@
             Parameter weight = BuildParam("w", new Shape(x.Shape[1], Dim), KernelInitializer, KernelConstraint, KernelRegularizer);
             Parameter bias = null;
             Output = Ops.Dot(x, weight.Data);
-
+            
             if (UseBias)
             {
                 bias = BuildParam("b", new Shape(1, Dim), BiasInitializer, BiasConstraint, BiasRegularizer);
