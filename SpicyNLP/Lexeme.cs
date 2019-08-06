@@ -132,5 +132,40 @@ namespace SpicyNLP
 
         public float Probability { get; set; }
 
+        public Unicode Lower_
+        {
+            get
+            {
+                return ParentVocab.Strings[Lower];
+            }
+            set
+            {
+                Lower = ParentVocab.Strings.Add(value);
+            }
+        }
+
+        public Unicode Norm_
+        {
+            get
+            {
+                return ParentVocab.Strings[Norm];
+            }
+            set
+            {
+                Norm = ParentVocab.Strings.Add(value);
+            }
+        }
+
+        public Unicode Shape_
+        {
+            get
+            {
+                return ParentVocab.Strings[Shape];
+            }
+            set
+            {
+                Norm = ParentVocab.Strings.Add(value);
+            }
+        }
     }
 }
