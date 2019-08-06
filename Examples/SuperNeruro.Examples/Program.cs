@@ -1,5 +1,6 @@
 ﻿using System;
 using SuperchargedArray;
+using SuperchargedArray.Backend;
 
 namespace SuperNeruro.Examples
 {
@@ -7,11 +8,13 @@ namespace SuperNeruro.Examples
     {
         static void Main(string[] args)
         {
-            var a = SuperArray.Create(new float[,] { { 1, 2 }, { 3, 4 }, { 5, 6 } });
-            var b = SuperArray.Create(new float[] { 3, 4 });
+            var x = SuperArray.Create(new float[] { 1, 2, 3, 4 });
+            var y = SuperArray.Create(new float[] { 4, 3, 2, 1 }).Reshape(4, 1);
 
-            var c = b + a;
-            BostonHousing.Run();
+            //var c = x + y;
+
+            SuperchargedArray.Device.SetBackend(SuperchargedArray.Backend.Interop.BackendType.CPU);
+            XOR.Run();
 
             Console.ReadLine();
         }

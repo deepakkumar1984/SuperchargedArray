@@ -28,7 +28,7 @@
         public override SuperArray Calc(SuperArray preds, SuperArray labels)
         {
             preds = Ops.Clip(preds, 0, 1);
-            var r = Ops.EqualTo(Ops.Round(preds), labels);
+            var r = Ops.EqualTo(Ops.Round(preds.Ravel()), labels.Ravel());
 
             return r;
         }

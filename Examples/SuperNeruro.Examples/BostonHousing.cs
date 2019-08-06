@@ -17,8 +17,8 @@ namespace SuperNeruro.Examples
             var (x, y) = LoadTrain();
             var test = LoadTest();
             Sequential model = new Sequential();
-            model.Add(new Dense(13, activation: SuperNeuro.Engine.ActType.ReLU));
-            model.Add(new Dense(26, activation: SuperNeuro.Engine.ActType.ReLU));
+            model.Add(new Dense(32, activation: SuperNeuro.Engine.ActType.ReLU));
+            model.Add(new Dense(32, activation: SuperNeuro.Engine.ActType.ReLU));
             model.Add(new Dense(1));
 
             model.EpochEnd += Model_EpochEnd;

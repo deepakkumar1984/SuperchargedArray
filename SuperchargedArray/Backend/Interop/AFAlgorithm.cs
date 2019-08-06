@@ -107,5 +107,8 @@ namespace SuperchargedArray.Backend.Interop
 
 		[DllImport(af_config.dll, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
 		public static extern af_err af_set_intersect(out IntPtr array_out, IntPtr array_first, IntPtr array_second, bool is_unique);
-	}
+
+        [DllImport(af_config.dll, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern af_err af_gradient(out IntPtr dx, out IntPtr dy, IntPtr input);
+    }
 }

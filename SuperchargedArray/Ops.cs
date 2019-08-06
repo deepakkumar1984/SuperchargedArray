@@ -14,6 +14,24 @@ namespace SuperchargedArray
     {
         public static float EPSILON = 1e-7f;
 
+        //#region Basic
+        //public static SuperArray Add(SuperArray lhs, SuperArray rhs)
+        //{
+        //    return lhs + rhs;
+        //}
+
+        //public static SuperArray Add(float lhs, SuperArray rhs)
+        //{
+        //    return Data.Constant(lhs, rhs.variable.Dimensions) + rhs;
+        //}
+
+        //public static SuperArray Add(SuperArray lhs, float rhs)
+        //{
+        //    return Data.Constant(lhs, rhs.variable.Dimensions) + rhs;
+        //}
+        //#endregion
+
+
         #region Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SuperArray Arg(SuperArray arr) { IntPtr ptr; Internal.VERIFY(AFArith.af_arg(out ptr, arr.variable._ptr)); return new SuperArray(new AFArray(ptr)); }
@@ -128,7 +146,11 @@ namespace SuperchargedArray
             return new SuperArray(new AFArray(ptr)); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SuperArray Neg(SuperArray arr) { IntPtr ptr; Internal.VERIFY(AFArith.af_neg(out ptr, arr.variable._ptr)); return new SuperArray(new AFArray(ptr)); }
+        public static SuperArray Neg(SuperArray arr)
+        {
+            return -1 * new SuperArray(arr.variable);
+            //IntPtr ptr; Internal.VERIFY(AFArith.af_neg(out ptr, arr.variable._ptr)); return new SuperArray(new AFArray(ptr));
+        }
 
         public static SuperArray Maximum(SuperArray a, SuperArray b)
         {
