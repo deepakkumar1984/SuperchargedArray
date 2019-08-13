@@ -43,7 +43,7 @@ namespace SpicyNLP
             }
         }
 
-        public string Add(string s)
+        public string Add(Unicode s)
         {
             string hash = Helper.GetHash(s);
             data.Add(hash, s);

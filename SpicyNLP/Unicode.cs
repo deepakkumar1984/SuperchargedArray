@@ -6,7 +6,7 @@ namespace SpicyNLP
 {
     public class Unicode
     {
-        private byte[] data;
+        internal byte[] data;
 
         private int code;
 
@@ -35,6 +35,11 @@ namespace SpicyNLP
             return (other.ToString() == this.ToString());
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public static implicit operator Unicode(string s)
         {
             return new Unicode(s);
@@ -53,6 +58,16 @@ namespace SpicyNLP
         public static explicit operator int(Unicode u)
         {
             return u.code;
+        }
+
+        public static explicit operator SymbolEnum(Unicode u)
+        {
+            return (SymbolEnum)u.code;
+        }
+
+        public static explicit operator AttributeEnum(Unicode u)
+        {
+            return (AttributeEnum)u.code;
         }
     }
 }
