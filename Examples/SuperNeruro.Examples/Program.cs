@@ -8,12 +8,14 @@ namespace SuperNeruro.Examples
     {
         static void Main(string[] args)
         {
-            var x = SuperArray.Create(new float[] { 1, 2, 3, 4 });
-            var y = SuperArray.Create(new float[] { 4, 3, 2, 1 }).Reshape(4, 1);
+            SuperchargedArray.Device.SetBackend(SuperchargedArray.Backend.Interop.BackendType.CUDA);
+            var x = SuperArray.Create(new float[,] { { 1, 2 },{ 3, 4 } } );
+            //var y = AFArray.Exp(x) / (Data.Constant<float>(1, x.Dimensions) + AFArray.Exp(x));
+            var y = Ops.Sqrt(x);
+            y.Print();
+            var (dx, dy) = Ops.Grad(y);
+            dx.Print();
 
-            //var c = x + y;
-
-            SuperchargedArray.Device.SetBackend(SuperchargedArray.Backend.Interop.BackendType.CPU);
             XOR.Run();
 
             Console.ReadLine();

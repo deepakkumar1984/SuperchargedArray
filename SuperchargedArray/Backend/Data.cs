@@ -37,7 +37,7 @@ using SuperchargedArray.Backend.Interop;
 
 namespace SuperchargedArray.Backend
 {
-	internal static class Data
+	public static class Data
 	{
 
 		#region Create array from host data

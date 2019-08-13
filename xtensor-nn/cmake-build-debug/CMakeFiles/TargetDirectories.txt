@@ -1,3 +1,0 @@
-C:/Work/git/SuperchargedArray/xtensor-nn/cmake-build-debug/CMakeFiles/xtensor_nn.dir
-C:/Work/git/SuperchargedArray/xtensor-nn/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Work/git/SuperchargedArray/xtensor-nn/cmake-build-debug/CMakeFiles/rebuild_cache.dir

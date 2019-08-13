@@ -37,7 +37,7 @@ using SuperchargedArray.Backend.Interop;
 
 namespace SuperchargedArray.Backend
 {
-    internal static class Algorithm
+    public static class Algorithm
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Complex Sum(AFArray arr)
@@ -158,6 +158,14 @@ namespace SuperchargedArray.Backend
             IntPtr idx;
             Internal.VERIFY(AFStatistics.af_topk(out ptr, out idx, arr._ptr, k, dim, order));
             return new AFArray(idx);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (AFArray, AFArray) Grad(AFArray @in)
+        {
+            IntPtr dx, dy;
+            Internal.VERIFY(AFAlgorithm.af_gradient(out dx, out dy, @in._ptr));
+            return (new AFArray(dx), new AFArray(dy));
         }
     }
 }

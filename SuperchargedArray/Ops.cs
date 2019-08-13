@@ -407,6 +407,12 @@ namespace SuperchargedArray
 
         #region Misc
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (SuperArray, SuperArray) Grad(SuperArray x)
+        {
+            var (dx, dy) = Algorithm.Grad(x.variable);
+            return (new SuperArray(dx), new SuperArray(dy));
+        }
+
         public static SuperArray Diag(SuperArray arr)
         {
             return Data.Diag(arr.variable);

@@ -47,12 +47,5 @@ namespace SuperchargedArray.Backend
 			return new AFArray(ptr);
 		}
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static (AFArray, AFArray) Grad(AFArray @in)
-        {
-            IntPtr dx, dy;
-            Internal.VERIFY(AFAlgorithm.af_gradient(out dx, out dy, @in._ptr));
-            return (new AFArray(dx), new AFArray(dy));
-        }
     }
 }

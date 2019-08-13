@@ -37,7 +37,7 @@ using SuperchargedArray.Backend.Interop;
 
 namespace SuperchargedArray.Backend
 {
-    internal static class Util
+    public static class Util
 	{
 		#region Printing
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
